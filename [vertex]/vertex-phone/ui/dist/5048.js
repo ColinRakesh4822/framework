@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvertex_phone=self.webpackChunkvertex_phone||[]).push([[5048],{65048:(e,l,o)=>{o.r(l),o.d(l,{Categories:()=>n});var a=o(85077),r=o(8901),c=o(65412),t=o(25384),n=[{label:"Services",color:a.A[500]},{label:"Want-To-Buy",color:r.A[500]},{label:"Want-To-Sell",color:c.A[500]},{label:"Help Wanted",color:t.A[500]}]}}]);

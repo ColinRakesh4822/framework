@@ -1,0 +1,18 @@
+fx_version 'cerulean'
+games { 'gta5' }
+lua54 'yes'
+client_script "@vertex-base/components/cl_error.lua"
+client_script "@vertex-pwnzor/client/check.lua"
+
+client_scripts {
+    '@vertex-polyzone/client.lua',
+    '@vertex-polyzone/BoxZone.lua',
+    '@vertex-polyzone/EntityZone.lua',
+    'shared/**/*.lua',
+    'client/**/*.lua'
+}
+
+server_scripts {
+    'shared/**/*.lua',
+    'server/**/*.lua',
+}

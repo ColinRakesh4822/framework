@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvertex_phone=self.webpackChunkvertex_phone||[]).push([[1456],{91456:(e,r,n)=>{n.r(r),n.d(r,{default:()=>c});var a=n(55429),t=(n(15647),(0,n(45942).A)((function(e){return{wrapper:{height:"100%",background:e.palette.secondary.main}}})));const c=function(e){var r=t();return a.createElement("div",{className:r.wrapper},"Coming ... Someday")}}}]);
