@@ -1,15 +1,15 @@
 AddEventHandler('Reputation:Shared:DependencyUpdate', RepComponents)
 function RepComponents()
-	Fetch = exports['mythic-base']:FetchComponent('Fetch')
-	Callbacks = exports['mythic-base']:FetchComponent('Callbacks')
-	Database = exports['mythic-base']:FetchComponent('Database')
-	Middleware = exports['mythic-base']:FetchComponent('Middleware')
-	Logger = exports['mythic-base']:FetchComponent('Logger')
-	Database = exports['mythic-base']:FetchComponent('Database')
+	Fetch = exports['vertex-base']:FetchComponent('Fetch')
+	Callbacks = exports['vertex-base']:FetchComponent('Callbacks')
+	Database = exports['vertex-base']:FetchComponent('Database')
+	Middleware = exports['vertex-base']:FetchComponent('Middleware')
+	Logger = exports['vertex-base']:FetchComponent('Logger')
+	Database = exports['vertex-base']:FetchComponent('Database')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
-	exports['mythic-base']:RequestDependencies('Reputation', {
+	exports['vertex-base']:RequestDependencies('Reputation', {
 		'Fetch',
 		'Callbacks',
 		'Database',
@@ -38,14 +38,14 @@ _REP = {
 			local char = Fetch:Source(source):GetData('Character')
 			if char ~= nil then
 				local reps = char:GetData('Reputations') or {}
-                local level = 0
+				local level = 0
 				if reps[id] ~= nil then
-                    for k, v in ipairs(GlobalState[string.format('Rep:%s', id)].levels) do
-                        if v.value <= reps[id] then
-                            level = k
-                        end
-                    end
-                    return level
+					for k, v in ipairs(GlobalState[string.format('Rep:%s', id)].levels) do
+						if v.value <= reps[id] then
+							level = k
+						end
+					end
+					return level
 				else
 					return 0
 				end
@@ -71,14 +71,14 @@ _REP = {
 					}
 
 					for k, v in ipairs(repData.levels) do
-                        if v.value <= val then
+						if v.value <= val then
 							repCurrent = {
 								level = k,
 								label = v.label,
 								value = v.value,
 							}
-                        end
-                    end
+						end
+					end
 
 					local repNext = {
 						level = repCurrent.level + 1
@@ -127,14 +127,14 @@ _REP = {
 					}
 
 					for k, v in ipairs(repData.levels) do
-                        if v.value <= val then
+						if v.value <= val then
 							repCurrent = {
 								level = k,
 								label = v.label,
 								value = v.value,
 							}
-                        end
-                    end
+						end
+					end
 
 					local repNext = {
 						level = repCurrent.level + 1
@@ -171,7 +171,7 @@ _REP = {
 	Modify = {
 		Add = function(self, source, id, amount)
 			if GlobalState[string.format('Rep:%s', id)] ~= nil then
-                local rep = GlobalState[string.format('Rep:%s', id)]
+				local rep = GlobalState[string.format('Rep:%s', id)]
 				local char = Fetch:Source(source):GetData('Character')
 				if char ~= nil then
 					local reps = char:GetData('Reputations') or {}
@@ -194,7 +194,7 @@ _REP = {
 		end,
 		Remove = function(self, source, id, amount)
 			if GlobalState[string.format('Rep:%s', id)] ~= nil then
-                local rep = GlobalState[string.format('Rep:%s', id)]
+				local rep = GlobalState[string.format('Rep:%s', id)]
 
 				local plyr = Fetch:Source(source)
 				if plyr ~= nil then
@@ -215,5 +215,5 @@ _REP = {
 }
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
-	exports['mythic-base']:RegisterComponent('Reputation', _REP)
+	exports['vertex-base']:RegisterComponent('Reputation', _REP)
 end)

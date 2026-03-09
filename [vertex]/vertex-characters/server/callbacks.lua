@@ -17,7 +17,7 @@ function RegisterCallbacks()
 			Wait(100)
 		end
 
-		local motd = GetConvar('motd', 'Welcome to Mythic RP')
+		local motd = GetConvar('motd', 'Welcome to vertex RP')
 		Database.Game:find({
 			collection = 'changelogs',
 			options = {
@@ -441,7 +441,8 @@ function GeneratePhoneNumber()
 	return phone
 end
 
-RegisterNetEvent('Characters:Server:LastLocation',function(coords) -- Probably Going to make the server explode but ¯\_(ツ)_/¯
-	local src = source
-	_tempLastLocation[src] = coords
-end)
+RegisterNetEvent('Characters:Server:LastLocation',
+	function(coords)                                               -- Probably Going to make the server explode but ¯\_(ツ)_/¯
+		local src = source
+		_tempLastLocation[src] = coords
+	end)

@@ -12,7 +12,7 @@ Spawn = {
     end,
     Init = function(self)
         local ped = PlayerPedId()
---      ShutdownLoadingScreenNui()
+        --      ShutdownLoadingScreenNui()
         SetEntityCoords(ped, 600.1, 507.49, 644.86)
         FreezeEntityPosition(ped, true)
         SetEntityVisible(ped, false)
@@ -38,7 +38,7 @@ Spawn = {
         RequestModel(model)
 
         while not HasModelLoaded(model) do
-          Wait(500)
+            Wait(500)
         end
         SetPlayerModel(PlayerId(), model)
         player = PlayerPedId()
@@ -85,5 +85,5 @@ Spawn = {
 }
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
-    exports['mythic-base']:RegisterComponent('Spawn', Spawn)
+    exports['vertex-base']:RegisterComponent('Spawn', Spawn)
 end)

@@ -3,8 +3,8 @@ game 'gta5'
 lua54 'yes'
 use_experimental_fxv2_oal 'yes'
 
-client_script '@mythic-base/components/cl_error.lua'
-client_script '@mythic-pwnzor/client/check.lua'
+client_script '@vertex-base/components/cl_error.lua'
+client_script '@vertex-pwnzor/client/check.lua'
 
 client_scripts {
     'config.lua',
@@ -12,7 +12,7 @@ client_scripts {
 }
 
 server_scripts {
-	'config.lua',
+    'config.lua',
     'server/**/*.lua',
 }
 

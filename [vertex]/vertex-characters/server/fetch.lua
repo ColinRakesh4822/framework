@@ -65,6 +65,6 @@ FETCH = {
 
 AddEventHandler('Proxy:Shared:ExtendReady', function(component)
 	if component == 'Fetch' then
-		exports['mythic-base']:ExtendComponent(component, FETCH)
+		exports['vertex-base']:ExtendComponent(component, FETCH)
 	end
 end)

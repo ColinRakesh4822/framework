@@ -9,12 +9,12 @@ end)
 
 
 local function loadModel(model)
-	if IsModelInCdimage(model) then
-		while not HasModelLoaded(model) do
-			RequestModel(model)
-			Wait(5)
-		end
-	end
+    if IsModelInCdimage(model) then
+        while not HasModelLoaded(model) do
+            RequestModel(model)
+            Wait(5)
+        end
+    end
 end
 
 local previews = {
@@ -30,9 +30,9 @@ local peds = {}
 RegisterNUICallback('GetData', function(data, cb)
     cb('ok')
 
-	while LocalPlayer.state.ID == nil do
-		Wait(1)
-	end
+    while LocalPlayer.state.ID == nil do
+        Wait(1)
+    end
 
     Callbacks:ServerCallback('Characters:GetServerData', {}, function(serverData)
         SendNUIMessage({
@@ -41,9 +41,10 @@ RegisterNUICallback('GetData', function(data, cb)
         })
 
         Callbacks:ServerCallback('Characters:GetCharacters', {}, function(characters)
-            SetEntityCoords(PlayerPedId(),  685.865, 576.222, 132.841, 0.0, 0.0, 0.0, false)
+            SetEntityCoords(PlayerPedId(), 685.865, 576.222, 132.841, 0.0, 0.0, 0.0, false)
 
-            local cam2 = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA', 685.865, 576.222, 132.841, 338.730, 0.00, 0.00, 75.00, false, 0)
+            local cam2 = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA', 685.865, 576.222, 132.841, 338.730, 0.00, 0.00,
+                75.00, false, 0)
             SetCamActiveWithInterp(cam2, cam, 1000, true, true)
             RenderScriptCams(true, false, 1, true, true)
             TransitionFromBlurred(500)
@@ -170,7 +171,7 @@ RegisterNUICallback('PlayCharacter', function(data, cb)
     Callbacks:ServerCallback('Characters:GetCharacterData', data.character.ID, function(cData)
         cData.spawn = data.spawn
         TriggerEvent('Characters:Client:SetData', -1, cData, function()
-            exports['mythic-base']:FetchComponent('Spawn'):SpawnToWorld(cData, function()
+            exports['vertex-base']:FetchComponent('Spawn'):SpawnToWorld(cData, function()
                 LocalPlayer.state.canUsePhone = true
                 if data.spawn.event ~= nil then
                     Callbacks:ServerCallback(data.spawn.event, data.spawn, function()

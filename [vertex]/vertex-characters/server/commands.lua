@@ -1,6 +1,6 @@
 function RegisterCommands()
 	Chat:RegisterStaffCommand('logout', function(source, args, rawCommand)
-		exports['mythic-base']:FetchComponent('Execute'):Client(source, 'Characters', 'Logout')
+		exports['vertex-base']:FetchComponent('Execute'):Client(source, 'Characters', 'Logout')
 	end, {
 		help = 'Logout',
 	}, 0)
@@ -9,7 +9,8 @@ function RegisterCommands()
 		local player = Fetch:SID(tonumber(args[1]))
 		if player ~= nil then
 			Reputation.Modify:Add(player:GetData('Source'), args[2], tonumber(args[3]))
-			Chat.Send.System:Single(source, string.format('%s Rep Added For %s To State ID %s', args[3], args[2], args[1]))
+			Chat.Send.System:Single(source,
+				string.format('%s Rep Added For %s To State ID %s', args[3], args[2], args[1]))
 		else
 			Chat.Send.System:Single(source, 'Invalid Target')
 		end
@@ -35,7 +36,8 @@ function RegisterCommands()
 		local player = Fetch:SID(tonumber(args[1]))
 		if player ~= nil then
 			Reputation.Modify:Remove(player:GetData('Source'), args[2], tonumber(args[3]))
-			Chat.Send.System:Single(source, string.format('%s Rep Removed For %s From State ID %s', args[3], args[2], args[1]))
+			Chat.Send.System:Single(source,
+				string.format('%s Rep Removed For %s From State ID %s', args[3], args[2], args[1]))
 		else
 			Chat.Send.System:Single(source, 'Invalid Target')
 		end
