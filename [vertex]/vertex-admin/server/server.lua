@@ -151,7 +151,14 @@ function RegisterChatCommands()
 		help = "[Admin] Toggle NoClip",
 	}, 0)
 
-	Chat:RegisterAdminCommand("noclip:dev", function(source, args, rawCommand)
+	Chat:RegisterAdminCommand("nc", function(source, args, rawCommand)
+		TriggerClientEvent("Admin:Client:NoClip", source, false)
+	end, {
+		help = "[Admin] Toggle NoClip",
+	}, 0)
+
+
+	Chat:RegisterAdminCommand("freecam", function(source, args, rawCommand)
 		TriggerClientEvent("Admin:Client:NoClip", source, true)
 	end, {
 		help = "[Developer] Toggle Developer Mode NoClip",
