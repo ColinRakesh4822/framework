@@ -23,6 +23,39 @@ const useStyles = makeStyles((theme) => ({
         gap: 8,
         zIndex: 50,
     },
+    statusRight: {
+        position: 'absolute',
+        bottom: 30,
+        right: 20,
+        display: 'flex',
+        gap: 8,
+        alignItems: 'center',
+        zIndex: 50,
+    },
+    healthRowContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 4,
+    },
+    voiceRowWrapper: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+        width: 250,
+        paddingLeft: 20, // To align under the health bar, pushing past the icon
+    },
+    voiceBarsContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 4,
+    },
+    voiceBar: {
+        width: 12,
+        height: 3,
+        borderRadius: 2,
+        background: 'rgba(20, 20, 20, 0.6)',
+        transition: 'background 0.2s',
+    },
     healthRowWrapper: {
         display: 'flex',
         alignItems: 'center',
@@ -202,7 +235,47 @@ export default withTheme(() => {
         );
     };
 
-    const rightElements = statuses
+    const voiceStatus = statuses.find(s => s.name === 'voice' || s.icon === 'microphone' || s.icon === 'microphone-alt');
+    const otherStatuses = statuses.filter(s => s.name !== 'voice' && s.icon !== 'microphone' && s.icon !== 'microphone-alt');
+
+    const renderVoiceLines = () => {
+        if (!voiceStatus) return null;
+
+        const val = voiceStatus.value;
+        // Make sure it catches any variant of white (uppercase, rgb, rgba) and forces it to blue
+        let color = voiceStatus.color || '#3399ff';
+        if (typeof color === 'string') {
+            const safeColor = color.toLowerCase().replace(/\s/g, '');
+            if (safeColor === '#ffffff' || safeColor === '#fff' || safeColor === 'rgb(255,255,255)' || safeColor === 'rgba(255,255,255,1)') {
+                color = '#3399ff';
+            }
+        } else {
+            color = '#3399ff';
+        }
+
+        let activeLines = 1;
+        if (val <= 3) {
+            activeLines = val;
+        } else if (val < 10) {
+            activeLines = val <= 2.0 ? 1 : val <= 4.0 ? 2 : 3;
+        } else {
+            activeLines = val >= 66 ? 3 : val >= 33 ? 2 : 1;
+        }
+
+        return (
+            <CSSTransition key="voice-status" timeout={500} classNames="fade">
+                <div className={classes.statusRight}>
+                    <div className={classes.voiceBarsContainer}>
+                        <div className={classes.voiceBar} style={{ background: activeLines >= 1 ? color : 'rgba(20, 20, 20, 0.6)' }} />
+                        <div className={classes.voiceBar} style={{ background: activeLines >= 2 ? color : 'rgba(20, 20, 20, 0.6)' }} />
+                        <div className={classes.voiceBar} style={{ background: activeLines >= 3 ? color : 'rgba(20, 20, 20, 0.6)' }} />
+                    </div>
+                </div>
+            </CSSTransition>
+        );
+    };
+
+    const rightElements = otherStatuses
         .sort((a, b) => a.options.id - b.options.id)
         .map((status, i) => {
             if (
@@ -257,6 +330,10 @@ export default withTheme(() => {
                 </TransitionGroup>
 
             </div>
+
+            <TransitionGroup>
+                {renderVoiceLines()}
+            </TransitionGroup>
         </div>
     );
 });

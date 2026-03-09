@@ -170,7 +170,7 @@ RegisterNUICallback('PlayCharacter', function(data, cb)
     Callbacks:ServerCallback('Characters:GetCharacterData', data.character.ID, function(cData)
         cData.spawn = data.spawn
         TriggerEvent('Characters:Client:SetData', -1, cData, function()
-            exports['vertex-base']:FetchComponent('Spawn'):SpawnToWorld(cData, function()
+            exports['mythic-base']:FetchComponent('Spawn'):SpawnToWorld(cData, function()
                 LocalPlayer.state.canUsePhone = true
                 if data.spawn.event ~= nil then
                     Callbacks:ServerCallback(data.spawn.event, data.spawn, function()

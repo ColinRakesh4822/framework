@@ -27,15 +27,15 @@ export default () => {
 		},
 		palette: {
 			primary: {
-				main: '#8a0000',
-				light: '#ff2100',
-				dark: '#560000',
+				main: '#208692',
+				light: '#4db8c4',
+				dark: '#0e5a62',
 				contrastText: '#ffffff',
 			},
 			secondary: {
-				main: '#141414',
-				light: '#1c1c1c',
-				dark: '#0f0f0f',
+				main: '#121025',
+				light: '#1c1a30',
+				dark: '#0a0914',
 				contrastText: '#ffffff',
 			},
 			error: {

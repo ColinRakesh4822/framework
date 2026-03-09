@@ -5,7 +5,7 @@ export default {
 		/// #endif
 
 		/* eslint-disable no-unreachable */
-		return fetch(`https://vertex-characters/${event}`, {
+		return fetch(`https://mythic-characters/${event}`, {
 			method: 'post',
 			headers: {
 				'Content-type': 'application/json; charset=UTF-8',

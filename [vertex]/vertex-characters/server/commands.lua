@@ -1,6 +1,6 @@
 function RegisterCommands()
 	Chat:RegisterStaffCommand('logout', function(source, args, rawCommand)
-		exports['vertex-base']:FetchComponent('Execute'):Client(source, 'Characters', 'Logout')
+		exports['mythic-base']:FetchComponent('Execute'):Client(source, 'Characters', 'Logout')
 	end, {
 		help = 'Logout',
 	}, 0)

@@ -85,5 +85,5 @@ Spawn = {
 }
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
-    exports['vertex-base']:RegisterComponent('Spawn', Spawn)
+    exports['mythic-base']:RegisterComponent('Spawn', Spawn)
 end)

@@ -1,8 +1,10 @@
 import { APP_RESET, APP_SHOW, APP_HIDE, SET_STATE } from '../../actions/types';
 import { STATE_SPLASH } from '../../util/States';
 
+const isNUI = typeof window.invokeNative !== 'undefined';
+
 export const initialState = {
-	hidden: true,
+	hidden: !isNUI ? false : true,
 	state: STATE_SPLASH,
 };
 

@@ -17,7 +17,7 @@ function RegisterCallbacks()
 			Wait(100)
 		end
 
-		local motd = GetConvar('motd', 'Welcome to vertex RP')
+		local motd = GetConvar('motd', 'Welcome to Mythic RP')
 		Database.Game:find({
 			collection = 'changelogs',
 			options = {

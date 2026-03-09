@@ -1,15 +1,15 @@
 AddEventHandler('Reputation:Shared:DependencyUpdate', RepComponents)
 function RepComponents()
-	Fetch = exports['vertex-base']:FetchComponent('Fetch')
-	Callbacks = exports['vertex-base']:FetchComponent('Callbacks')
-	Database = exports['vertex-base']:FetchComponent('Database')
-	Middleware = exports['vertex-base']:FetchComponent('Middleware')
-	Logger = exports['vertex-base']:FetchComponent('Logger')
-	Database = exports['vertex-base']:FetchComponent('Database')
+	Fetch = exports['mythic-base']:FetchComponent('Fetch')
+	Callbacks = exports['mythic-base']:FetchComponent('Callbacks')
+	Database = exports['mythic-base']:FetchComponent('Database')
+	Middleware = exports['mythic-base']:FetchComponent('Middleware')
+	Logger = exports['mythic-base']:FetchComponent('Logger')
+	Database = exports['mythic-base']:FetchComponent('Database')
 end
 
 AddEventHandler('Core:Shared:Ready', function()
-	exports['vertex-base']:RequestDependencies('Reputation', {
+	exports['mythic-base']:RequestDependencies('Reputation', {
 		'Fetch',
 		'Callbacks',
 		'Database',
@@ -215,5 +215,5 @@ _REP = {
 }
 
 AddEventHandler('Proxy:Shared:RegisterReady', function()
-	exports['vertex-base']:RegisterComponent('Reputation', _REP)
+	exports['mythic-base']:RegisterComponent('Reputation', _REP)
 end)

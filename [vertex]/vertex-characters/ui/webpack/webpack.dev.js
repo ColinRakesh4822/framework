@@ -3,11 +3,11 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = require('./webpack.common')({
-    modt: 'development',
+    mode: 'development',
     entry: './src/app.js',
     output: {
         path: path.join(__dirname, '../dist'),
-        filename: 'index.js',
+        filename: 'main.js',
     },
     devServer: {
         port: 3000,

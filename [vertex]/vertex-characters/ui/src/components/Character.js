@@ -2,47 +2,111 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'react-moment';
-import { List, ListItem, Collapse, ListItemText } from '@mui/material';
+import { Collapse } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const useStyles = makeStyles((theme) => ({
-	wrapper: {
+const useStyles = makeStyles(() => ({
+	card: {
 		display: 'block',
-		padding: 25,
-		color: theme.palette.text.main,
-		borderBottom: `1px solid ${theme.palette.border.divider}`,
-		transition: 'background ease-in 0.15s',
+		padding: '16px 20px',
+		borderBottom: '1px solid rgba(32,134,146,0.08)',
+		transition: 'background 0.2s ease',
 		userSelect: 'none',
+		cursor: 'pointer',
+		position: 'relative',
 		'&:first-of-type': {
-			borderTop: `1px solid ${theme.palette.border.divider}`,
+			borderTop: '1px solid rgba(32,134,146,0.08)',
 		},
 		'&:hover': {
-			borderColor: '#2f2f2f',
-			transition: 'border-color ease-in 0.15s',
-			cursor: 'pointer',
+			background: 'rgba(32,134,146,0.05)',
 		},
 		'&.selected': {
-			background: theme.palette.secondary.light,
+			background: 'rgba(32,134,146,0.08)',
+			borderBottom: '1px solid rgba(32,134,146,0.2)',
 		},
 	},
-	highlight: {
-		color: theme.palette.primary.main,
+	accentBar: {
+		position: 'absolute',
+		left: 0,
+		top: 0,
+		bottom: 0,
+		width: 3,
+		background: '#208692',
+		boxShadow: '0 0 8px rgba(32,134,146,0.6)',
+		opacity: 0,
+		transition: 'opacity 0.2s ease',
 	},
-	left: {
-		display: 'inline-block',
-		width: '75%',
+	accentBarVisible: {
+		opacity: 1,
 	},
-	right: {
-		display: 'inline-block',
-		width: '25%',
-		textAlign: 'right',
+	topRow: {
+		display: 'flex',
+		alignItems: 'flex-start',
+		justifyContent: 'space-between',
+		marginBottom: 4,
 	},
-	actionButton: {
-		display: 'inline-block',
-		width: '40%',
+	name: {
+		fontFamily: "'Orbitron', sans-serif",
+		fontSize: 13,
+		fontWeight: 700,
+		color: '#ffffff',
+		letterSpacing: '0.05em',
+	},
+	genderIcon: {
+		fontSize: 11,
+		color: 'rgba(32,134,146,0.6)',
+		marginLeft: 8,
+	},
+	lastPlayed: {
+		fontSize: 11,
+		color: 'rgba(255,255,255,0.3)',
+		fontFamily: "'Rajdhani', sans-serif",
+		letterSpacing: '0.03em',
+	},
+	lastPlayedValue: {
+		color: 'rgba(32,134,146,0.7)',
+	},
+	never: {
+		color: 'rgba(255,255,255,0.25)',
+		fontStyle: 'italic',
 	},
 	details: {
-		display: 'block',
+		marginTop: 14,
+		paddingTop: 12,
+		borderTop: '1px solid rgba(32,134,146,0.1)',
+		display: 'flex',
+		flexWrap: 'wrap',
+		gap: 8,
+	},
+	detailChip: {
+		display: 'flex',
+		flexDirection: 'column',
+		padding: '6px 12px',
+		background: 'rgba(18,16,37,0.8)',
+		border: '1px solid rgba(32,134,146,0.15)',
+		borderRadius: 2,
+		minWidth: 100,
+	},
+	chipLabel: {
+		fontSize: 9,
+		fontWeight: 700,
+		letterSpacing: '0.25em',
+		textTransform: 'uppercase',
+		color: 'rgba(32,134,146,0.6)',
+		marginBottom: 3,
+	},
+	chipValue: {
+		fontSize: 12,
+		fontWeight: 600,
+		color: 'rgba(255,255,255,0.8)',
+		fontFamily: "'Rajdhani', sans-serif",
+		letterSpacing: '0.03em',
+	},
+	chipSub: {
+		fontSize: 10,
+		color: 'rgba(32,134,146,0.6)',
+		marginTop: 1,
 	},
 }));
 
@@ -50,77 +114,71 @@ export default ({ character }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const selected = useSelector((state) => state.characters.selected);
+	const isSelected = selected?.ID === character.ID;
 
 	const onClick = () => {
-		if (selected?.ID == character.ID) {
-			dispatch({
-				type: 'DESELECT_CHARACTER',
-			});
-		} else {
-			dispatch({
-				type: 'SELECT_CHARACTER',
-				payload: {
-					character: character,
-				},
-			});
-		}
+		dispatch({
+			type: isSelected ? 'DESELECT_CHARACTER' : 'SELECT_CHARACTER',
+			payload: { character },
+		});
 	};
 
+	const genderLabel = Number(character.Gender) === 0 ? 'male' : 'female';
+	const jobs = character?.Jobs?.length > 0 ? character.Jobs : null;
+
 	return (
-		<ListItem
-			button
-			className={`${classes.wrapper}${selected?.ID == character?.ID ? ' selected' : ''}`}
+		<div
+			className={`${classes.card}${isSelected ? ' selected' : ''}`}
 			onClick={onClick}
 		>
-			<div>
-				<div>
-					<span className={classes.headerText}>
-						{character.First} {character.Last}
-					</span>
-				</div>
-				<div>
-					<span>
-						Last Played:{' '}
-						{+character.LastPlayed === -1 ? (
-							<span className={classes.highlight}>Never</span>
-						) : (
-							<span className={classes.highlight}>
-								<small>
-									<Moment date={+character.LastPlayed} format="M/D/YYYY h:mm:ss A" withTitle />
-								</small>
-							</span>
-						)}
-					</span>
-				</div>
+			<div className={`${classes.accentBar}${isSelected ? ` ${classes.accentBarVisible}` : ''}`} />
+			<div className={classes.topRow}>
+				<span className={classes.name}>
+					{character.First} {character.Last}
+					<FontAwesomeIcon icon={['fas', genderLabel]} className={classes.genderIcon} />
+				</span>
+				<span className={classes.lastPlayed}>
+					{+character.LastPlayed === -1 ? (
+						<span className={classes.never}>Never played</span>
+					) : (
+						<span className={classes.lastPlayedValue}>
+							<Moment date={+character.LastPlayed} fromNow />
+						</span>
+					)}
+				</span>
 			</div>
-			<Collapse in={selected?.ID == character?.ID} collapsedSize={0}>
+			<Collapse in={isSelected} collapsedSize={0}>
 				<div className={classes.details}>
-					<List>
-						<ListItem>
-							<ListItemText primary="State ID" secondary={character.SID} />
-						</ListItem>
-						{character?.Jobs?.length > 0 ? 
-							character.Jobs.map((job, index) => {
-								return (
-									<ListItem>
-										<ListItemText
-											primary={`Job #${index + 1}`}
-											secondary={job.Workplace ? `${job.Workplace.Name} - ${job.Grade.Name}` : `${job.Name} - ${job.Grade.Name}`}
-										/>
-									</ListItem>
-								)
-							})
-							:
-							<ListItem>
-								<ListItemText
-									primary="Job"
-									secondary="Unemployed"
-								/>
-							</ListItem>
-						}
-					</List>
+					<div className={classes.detailChip}>
+						<span className={classes.chipLabel}>State ID</span>
+						<span className={classes.chipValue}>#{character.SID}</span>
+					</div>
+					{character.Phone && (
+						<div className={classes.detailChip}>
+							<span className={classes.chipLabel}>Phone</span>
+							<span className={classes.chipValue}>{character.Phone}</span>
+						</div>
+					)}
+					{jobs ? (
+						jobs.map((job, i) => (
+							<div key={i} className={classes.detailChip}>
+								<span className={classes.chipLabel}>Job {jobs.length > 1 ? `#${i + 1}` : ''}</span>
+								<span className={classes.chipValue}>
+									{job.Workplace ? job.Workplace.Name : job.Name}
+								</span>
+								{job.Grade && (
+									<span className={classes.chipSub}>{job.Grade.Name}</span>
+								)}
+							</div>
+						))
+					) : (
+						<div className={classes.detailChip}>
+							<span className={classes.chipLabel}>Job</span>
+							<span className={classes.chipValue}>Unemployed</span>
+						</div>
+					)}
 				</div>
 			</Collapse>
-		</ListItem>
+		</div>
 	);
 };
