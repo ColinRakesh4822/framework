@@ -1,6 +1,6 @@
 function RegisterChatCommands()
 	-- Spawning and Deleting Temporary Admin Vehicles
-	Chat:RegisterAdminCommand("sv", function(source, args, rawCommand)
+	Chat:RegisterAdminCommand("car", function(source, args, rawCommand)
 		local vehModel = GetHashKey(args[1])
 		Callbacks:ClientCallback(
 			source,
