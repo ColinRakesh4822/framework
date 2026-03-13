@@ -1,6 +1,8 @@
 fx_version 'cerulean'
 games { 'gta5' }
 lua54 'yes'
+
+version '1.0.0'
 client_script "@vertex-pwnzor/client/check.lua"
 client_scripts {
     'sh_init.lua',

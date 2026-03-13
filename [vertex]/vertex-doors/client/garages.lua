@@ -559,6 +559,7 @@ function CreateGaragePolyZones()
     }, {
         door_garage_id = 'dpd_gate3',
     })
+
 end
 
 local rLimited = false
@@ -566,10 +567,33 @@ local rLimited = false
 function DoGarageKeyFobAction()
     if LocalPlayer.state.loggedIn and not rLimited then
         local playerCoords = GetEntityCoords(GLOBAL_PED)
+        local targetDoorId = nil
+
         local inZone = Polyzone:IsCoordsInZone(playerCoords, false, 'door_garage_id')
         if inZone and inZone.door_garage_id then
-            if Doors:CheckRestriction(inZone.door_garage_id) then
-                Callbacks:ServerCallback('Doors:ToggleLocks', inZone.door_garage_id, function(success, newState)
+            targetDoorId = inZone.door_garage_id
+        end
+
+        if DOORS_STATE then
+            local closestDist = 999
+            local closestDoor = nil
+            for k, v in pairs(DOORS_STATE) do
+                if v.special and v.coords then
+                    local dist = #(playerCoords - v.coords)
+                    if dist <= 15.0 and dist < closestDist then
+                        closestDist = dist
+                        closestDoor = k
+                    end
+                end
+            end
+            if closestDoor then
+                targetDoorId = closestDoor
+            end
+        end
+
+        if targetDoorId then
+            if Doors:CheckRestriction(targetDoorId) then
+                Callbacks:ServerCallback('Doors:ToggleLocks', targetDoorId, function(success, newState)
                     if success then
                         if newState then
                             UISounds.Play:FrontEnd(-1, "OOB_Cancel", "GTAO_FM_Events_Soundset")

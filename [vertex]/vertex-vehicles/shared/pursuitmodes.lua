@@ -1,9 +1,9 @@
 _performanceUpgrades = {
-    engine = 11,
-    transmission = 13,
-    brakes = 12,
-    suspension = 15,
-    turbo = 18,
+	engine = 11,
+	transmission = 13,
+	brakes = 12,
+	suspension = 15,
+	turbo = 18,
 }
 
 --[[
@@ -23,539 +23,849 @@ Array of objects containing the changes
 fieldType - Float, Vector, Int
 multiplier - if true is a multiplier of the current value
 
-
 ]]
 
 _pursuitModeConfig = {
-    -- [`leo4`] = {
-    --     {
-    --         name = 'A',
-    --         performance = {
-    --             engine = -1,
-    --             transmission = -1,
-    --             brakes = -1,
-    --             suspension = -1,
-    --             turbo = false,
-    --         },
-    --         handling = false, -- Reset
-    --     },
-    --     {
-    --         name = 'A+',
-    --         performance = {
-    --             engine = -1,
-    --             transmission = -1,
-    --             brakes = -1,
-    --             suspension = -1,
-    --             turbo = true,
-    --         },
-    --         handling = {
-    --             {
-    --                 field = 'fInitialDriveForce',
-    --                 fieldType = 'Float',
-    --                 multiplier = true,
-    --                 value = 10.0,
-    --             },
-    --         }
-    --     },
-    --     {
-    --         name = 'S',
-    --     },
-    --     {
-    --         name = 'S+',
-    --     }
-    -- }
-    [`em20srt`] = {
-        {
-            name = 'A',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = false,
-            },
-            handling = false, -- Reset
-        },
-        {
-            name = 'A+',
-            performance = {
-                engine = 4,
-                transmission = 3,
-                brakes = 3,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.311000,
-                },
-            }
-        },
-        {
-            name = 'S',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.281000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 1.80000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 190.000000,
-                },
-            },
-        },
-        {
-            name = 'S+',
-            performance = {
-                engine = 4,
-                transmission = 4,
-                brakes = 4,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.386000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.2,
-                },
-                {
-                    field = 'fClutchChangeRateScaleUpShift',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.900000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 200.000000,
-                },
-            },
-        },
-    },
-
-
-
-    [`policebikerb`] = {
-        {
-            name = 'A',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = false,
-            },
-            handling = false, -- Reset
-        },
-        {
-            name = 'A+',
-            performance = {
-                engine = 4,
-                transmission = 3,
-                brakes = 3,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.505069,
-                },
-            }
-        },
-        {
-            name = 'S',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.505069,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 1.80000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 190.000000,
-                },
-            },
-        },
-        {
-            name = 'S+',
-            performance = {
-                engine = 4,
-                transmission = 4,
-                brakes = 4,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = true,
-                    value = 2.5,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.2,
-                },
-                {
-                    field = 'fClutchChangeRateScaleUpShift',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.650000,
-                },
-            },
-        },
-    },
-
-
-
-
-    [`em21ltz`] = {
-        {
-            name = 'A',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = false,
-            },
-            handling = false, -- Reset
-        },
-        {
-            name = 'A+',
-            performance = {
-                engine = 4,
-                transmission = 3,
-                brakes = 3,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.305000,
-                },
-            }
-        },
-        {
-            name = 'S',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.315000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 1.80000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 190.000000,
-                },
-            },
-        },
-        {
-            name = 'S+',
-            performance = {
-                engine = 4,
-                transmission = 4,
-                brakes = 4,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.465000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.2,
-                },
-                {
-                    field = 'fClutchChangeRateScaleUpShift',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.650000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 220.000000,
-                },
-            },
-        },
-    },
-
-
-
-
-    [`RBDEMON`] = {
-        {
-            name = 'A',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = false,
-            },
-            handling = false, -- Reset
-        },
-        {
-            name = 'A+',
-            performance = {
-                engine = 4,
-                transmission = 3,
-                brakes = 3,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.305000,
-                },
-            }
-        },
-        {
-            name = 'S',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.315000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 1.80000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 190.000000,
-                },
-            },
-        },
-        {
-            name = 'S+',
-            performance = {
-                engine = 4,
-                transmission = 4,
-                brakes = 4,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.465000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.2,
-                },
-                {
-                    field = 'fClutchChangeRateScaleUpShift',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 3.250000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 220.000000,
-                },
-            },
-        },
-    },
-    [`21c318muscle`] = {
-        {
-            name = 'A',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = false,
-            },
-            handling = false, -- Reset
-        },
-        {
-            name = 'A+',
-            performance = {
-                engine = 4,
-                transmission = 3,
-                brakes = 3,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.345000,
-                },
-            }
-        },
-        {
-            name = 'S',
-            performance = {
-                engine = -1,
-                transmission = -1,
-                brakes = -1,
-                suspension = -1,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.355000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 1.80000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 190.000000,
-                },
-            },
-        },
-        {
-            name = 'S+',
-            performance = {
-                engine = 4,
-                transmission = 4,
-                brakes = 4,
-                suspension = 4,
-                turbo = true,
-            },
-            handling = {
-                {
-                    field = 'fInitialDriveForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 0.465000,
-                },
-                {
-                    field = 'fBrakeForce',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 2.2,
-                },
-                {
-                    field = 'fClutchChangeRateScaleUpShift',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 3.250000,
-                },
-                {
-                    field = 'fInitialDriveMaxFlatVel',
-                    fieldType = 'Float',
-                    multiplier = false,
-                    value = 220.000000,
-                },
-            },
-        },
-    },
-
-
-
-
+	-- [`example`] = {
+	--     {
+	--         name = 'A',
+	--         performance = {
+	--             engine = -1,
+	--             transmission = -1,
+	--             brakes = -1,
+	--             suspension = -1,
+	--             turbo = false,
+	--         },
+	--         handling = false, -- Reset
+	--     },
+	--     {
+	--         name = 'A+',
+	--         performance = {
+	--             engine = -1,
+	--             transmission = -1,
+	--             brakes = -1,
+	--             suspension = -1,
+	--             turbo = true,
+	--         },
+	--         handling = {
+	--             {
+	--                 field = 'fInitialDriveForce',
+	--                 fieldType = 'Float',
+	--                 multiplier = false,
+	--                 value = 10.0,
+	--             },
+	--         }
+	--     },
+	--     {
+	--         name = 'S',
+	--     },
+	--     {
+	--         name = 'S+',
+	--     }
+	-- }
+	[`nkstx`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.275,
+				},
+			},
+		},
+		{
+			name = "S",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 2,
+				turbo = true,
+			},
+			topSpeed = 170.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.32,
+				},
+			},
+		},
+	},
+	[`nkvstr`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.275,
+				},
+			},
+		},
+		{
+			name = "S",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 2,
+				turbo = true,
+			},
+			topSpeed = 170.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.32,
+				},
+			},
+		},
+	},
+	[`NKVIGERO2`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.285,
+				},
+			},
+		},
+		{
+			name = "S",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 2,
+				turbo = true,
+			},
+			topSpeed = 170.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.33,
+				},
+			},
+		},
+	},
+	[`NKDOMINATOR3`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.275,
+				},
+			},
+		},
+		{
+			name = "S",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 2,
+				turbo = true,
+			},
+			topSpeed = 170.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.33,
+				},
+			},
+		},
+	},
+	[`nkcaracara2`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.275,
+				},
+			},
+		},
+	},
+	[`nkballer7`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.275,
+				},
+			},
+		},
+	},
+	[`nktenf`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.285,
+				},
+			},
+		},
+		{
+			name = "S",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 2,
+				turbo = true,
+			},
+			topSpeed = 170.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.33,
+				},
+			},
+		},
+	},
+	[`nktraining`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.275,
+				},
+			},
+		},
+	},
+	[`NKGRANGER2`] = {
+		{
+			name = "D",
+			performance = {
+				engine = -1,
+				transmission = -1,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			handling = false, -- Reset
+			topSpeed = 120.0,
+		},
+		{
+			name = "C",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 130.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.20,
+				},
+			},
+		},
+		{
+			name = "B",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = false,
+			},
+			topSpeed = 150.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.23,
+				},
+			},
+		},
+		{
+			name = "A",
+			performance = {
+				engine = 3,
+				transmission = 3,
+				brakes = 3,
+				suspension = 0,
+				turbo = true,
+			},
+			topSpeed = 160.0,
+			handling = {
+				{
+					field = "fInitialDriveForce",
+					fieldType = "Float",
+					multiplier = false,
+					value = 0.275,
+				},
+			},
+		},
+	},
+	-- [`policebretro`] = {
+	-- 	{
+	-- 		name = "D",
+	-- 		performance = {
+	-- 			engine = -1,
+	-- 			transmission = -1,
+	-- 			brakes = -1,
+	-- 			suspension = -1,
+	-- 			turbo = false,
+	-- 		},
+	-- 		handling = false, -- Reset
+	-- 		topSpeed = 120.0,
+	-- 	},
+	-- 	{
+	-- 		name = "C",
+	-- 		performance = {
+	-- 			engine = -1,
+	-- 			transmission = -1,
+	-- 			brakes = -1,
+	-- 			suspension = -1,
+	-- 			turbo = false,
+	-- 		},
+	-- 		handling = {
+	-- 			{
+	-- 				field = "fInitialDriveForce",
+	-- 				fieldType = "Float",
+	-- 				multiplier = false,
+	-- 				value = 0.20,
+	-- 			},
+	-- 		},
+	-- 		topSpeed = 130.0,
+	-- 	},
+	-- 	{
+	-- 		name = "B",
+	-- 		performance = {
+	-- 			engine = -1,
+	-- 			transmission = -1,
+	-- 			brakes = -1,
+	-- 			suspension = -1,
+	-- 			turbo = false,
+	-- 		},
+	-- 		handling = {
+	-- 			{
+	-- 				field = "fInitialDriveForce",
+	-- 				fieldType = "Float",
+	-- 				multiplier = false,
+	-- 				value = 0.23,
+	-- 			},
+	-- 		},
+	-- 		topSpeed = 150.0,
+	-- 	},
+	-- 	{
+	-- 		name = "A",
+	-- 		performance = {
+	-- 			engine = -1,
+	-- 			transmission = -1,
+	-- 			brakes = -1,
+	-- 			suspension = -1,
+	-- 			turbo = false,
+	-- 		},
+	-- 		handling = {
+	-- 			{
+	-- 				field = "fInitialDriveForce",
+	-- 				fieldType = "Float",
+	-- 				multiplier = false,
+	-- 				value = 0.275,
+	-- 			},
+	-- 		},
+	-- 		topSpeed = 160.0,
+	-- 	},
+	-- },
 }
