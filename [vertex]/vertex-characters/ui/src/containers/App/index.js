@@ -27,15 +27,15 @@ export default () => {
 		},
 		palette: {
 			primary: {
-				main: '#208692',
-				light: '#4db8c4',
-				dark: '#0e5a62',
+				main: '#1C8292',
+				light: '#44AABA',
+				dark: '#005A6A',
 				contrastText: '#ffffff',
 			},
 			secondary: {
-				main: '#121025',
-				light: '#1c1a30',
-				dark: '#0a0914',
+				main: '#000000',
+				light: '#1f1f1f',
+				dark: '#000000',
 				contrastText: '#ffffff',
 			},
 			error: {
@@ -78,7 +78,7 @@ export default () => {
 			MuiPaper: {
 				styleOverrides: {
 					root: {
-                        background: '#0f0f0f',
+						background: '#0f0f0f',
 					},
 				},
 			},

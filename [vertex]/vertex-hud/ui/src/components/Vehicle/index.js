@@ -8,136 +8,88 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         position: 'absolute',
+        right: '2vw',
+        bottom: '3vh',
+        width: 140,
+        height: 140,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,0.8))',
+    },
+    svgGauge: {
+        position: 'absolute',
+        top: 0,
         left: 0,
-        right: 0,
-        margin: 'auto',
-        width: 'fit-content',
-        filter: `drop-shadow(0 0 2px ${theme.palette.secondary.dark}e0)`,
-        fontSize: 30,
-        color: theme.palette.text.main,
-        textAlign: 'center',
+        width: '100%',
+        height: '100%',
+        transform: 'rotate(-135deg)', // start bottom left
     },
-    speed: {},
-    speedText: {
-        fontSize: 50,
-        color: theme.palette.text.main,
-        display: 'inline-block',
-        transition: 'color ease-in 0.15s',
-        '& .filler': {
-            color: theme.palette.text.alt,
-        },
+    gaugeTrack: {
+        fill: 'none',
+        stroke: 'rgba(255, 255, 255, 0.15)',
+        strokeWidth: 4,
+        strokeLinecap: 'round',
     },
-    speedTextOff: {
-        fontSize: 50,
-        color: theme.palette.primary.main,
-        textTransform: 'uppercase',
-        display: 'inline-block',
+    gaugeTrackTicks: {
+        fill: 'none',
+        stroke: 'rgba(255, 255, 255, 0.4)',
+        strokeWidth: 6,
+        strokeDasharray: '2 18',
+    },
+    gaugeFill: {
+        fill: 'none',
+        stroke: '#ff9800', // orange color like typical circuit RPM
+        strokeWidth: 4,
+        strokeLinecap: 'round',
+        transition: 'stroke-dashoffset 0.1s linear, stroke 0.3s ease',
+    },
+    innerCircle: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        marginTop: 15,
     },
     speedMeasure: {
-        fontSize: 25,
-        color: theme.palette.text.alt,
-        marginLeft: 10,
+        fontSize: 14,
+        fontFamily: 'Akshar, sans-serif',
+        color: 'rgba(255, 255, 255, 0.6)',
+        fontWeight: 600,
+        letterSpacing: 1,
+        marginBottom: -5,
     },
-    icons: {
+    speedText: {
+        fontSize: 42,
+        fontFamily: 'Akshar, sans-serif',
+        color: '#fff',
+        fontWeight: 600,
+        lineHeight: 1,
         display: 'flex',
-        gridGap: 0,
+        alignItems: 'baseline',
+        '& .filler': {
+            color: 'rgba(255, 255, 255, 0.2)',
+        },
+    },
+    gearText: {
+        fontSize: 16,
+        fontFamily: 'Akshar, sans-serif',
+        fontWeight: 'bold',
+        color: '#ff9800', // match the gauge
+        marginTop: -2,
+    },
+    iconsRow: {
+        position: 'absolute',
+        bottom: -25,
+        display: 'flex',
         justifyContent: 'center',
+        gap: 12,
+        width: '100%',
     },
-    seatbeltIcon: {
-        fontSize: 25,
-        color: theme.palette.warning.dark,
-        animation: '$flash linear 1s infinite',
-    },
-    checkEngine: {
-        margin: '0 30px',
-        fontSize: 25,
-        color: theme.palette.warning.dark,
-        animation: '$flash linear 1s infinite',
-    },
-    cruiseIcon: {
-        margin: '0 15px',
-        fontSize: 25,
-        color: theme.palette.primary.main,
-    },
-    fuel100: {
-        margin: '0 15px',
-        fontSize: 25,
-        color: theme.palette.success.dark,
-    },
-    fuel75: {
-        margin: '0 15px',
-        fontSize: 25,
-        color: theme.palette.success.main,
-    },
-    fuel50: {
-        margin: '0 15px',
-        fontSize: 25,
-        color: theme.palette.warning.main,
-    },
-    fuel25: {
-        margin: '0 15px',
-        fontSize: 25,
-        color: theme.palette.error.main,
-        animation: '$flash linear 1.5s infinite',
-    },
-    fuel10: {
-        margin: '0 15px',
-        fontSize: 25,
-        color: theme.palette.error.main,
-        animation: '$flash linear 1s infinite',
-    },
-    fuel0: {
-        margin: '0 15px',
-        fontSize: 25,
-        color: theme.palette.error.main,
-        animation: '$flash linear 0.5s infinite',
-    },
-    iconWrapper: {
-        position: 'relative',
-        height: 50,
-        width: 50,
-        '&.low': {
-            animation: '$flash linear 0.5s infinite',
-        },
-    },
-    iconProg: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        margin: 'auto',
-        zIndex: 5,
-    },
-    iconAvatar: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        margin: 'auto',
-        background: theme.palette.secondary.dark,
-        '& svg': {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            margin: 'auto',
-            color: theme.palette.text.main,
-        },
-    },
-    '@keyframes flash': {
-        '0%': {
-            opacity: 1,
-        },
-        '50%': {
-            opacity: 0.1,
-        },
-        '100%': {
-            opacity: 1,
-        },
-    },
+    seatbeltIcon: { color: theme.palette.warning.dark },
+    checkEngine: { color: theme.palette.error.main },
+    cruiseIcon: { color: theme.palette.success.main },
 }));
 
 export default () => {
@@ -149,10 +101,18 @@ export default () => {
     const speed = useSelector((state) => state.vehicle.speed);
     const speedMeasure = useSelector((state) => state.vehicle.speedMeasure);
     const seatbelt = useSelector((state) => state.vehicle.seatbelt);
-    const checkEngine = useSelector(state => state.vehicle.checkEngine);
     const seatbeltHide = useSelector((state) => state.vehicle.seatbeltHide);
     const cruise = useSelector((state) => state.vehicle.cruise);
+    const checkEngine = useSelector((state) => state.vehicle.checkEngine);
+
     const [speedStr, setSpeedStr] = useState(speed.toString());
+
+    // SVG arc math
+    // 2 * PI * r = circumference
+    // r = 60, C = 377
+    const radius = 64;
+    const circumference = 2 * Math.PI * radius;
+    const offsetLength = circumference * 0.75; // 270 degree arc
 
     useEffect(() => {
         if (speed === 0) {
@@ -166,62 +126,73 @@ export default () => {
         }
     }, [speed]);
 
+    // calculate fill percentage (assume max 200 mph)
+    const fillPercent = Math.min(speed / 160, 1);
+    const dashOffset = offsetLength - fillPercent * offsetLength;
+
     return (
         <Fade in={showing}>
-            <div
-                className={classes.wrapper}
-                style={{
-                    bottom:
-                        config.statusIcons || config.statusNumbers ? 50 : 20,
-                }}
-            >
+            <div className={classes.wrapper}>
+                {ignition && (
+                    <svg className={classes.svgGauge} viewBox="0 0 140 140">
+                        {/* Background Arc */}
+                        <circle
+                            cx="70"
+                            cy="70"
+                            r={radius}
+                            className={classes.gaugeTrack}
+                            strokeDasharray={`${offsetLength} ${circumference}`}
+                        />
+                        {/* Ticks overlay */}
+                        <circle
+                            cx="70"
+                            cy="70"
+                            r={radius}
+                            className={classes.gaugeTrackTicks}
+                            strokeDasharray={`${offsetLength} ${circumference}`}
+                        />
+                        {/* Fill Arc */}
+                        <circle
+                            cx="70"
+                            cy="70"
+                            r={radius}
+                            className={classes.gaugeFill}
+                            strokeDasharray={`${offsetLength} ${circumference}`}
+                            strokeDashoffset={circumference - offsetLength + dashOffset}
+                            style={{ stroke: speed > 100 ? '#e74c3c' : '#ff9800' }}
+                        />
+                    </svg>
+                )}
+
+                <div className={classes.innerCircle}>
+                    {ignition ? (
+                        <>
+                            <div className={classes.speedMeasure}>{speedMeasure}</div>
+                            <div className={classes.speedText}>
+                                {ReactHtmlParser(speedStr)}
+                            </div>
+                            <div className={classes.gearText}>D</div>
+                        </>
+                    ) : (
+                        <div className={classes.speedText}>
+                            <span className="filler">OFF</span>
+                        </div>
+                    )}
+                </div>
+
                 <Fade in={ignition}>
-                    <div className={classes.icons}>
-                        <Fade in={!seatbelt && !seatbeltHide}>
-                            <span>
-                                <FontAwesomeIcon
-                                    className={classes.seatbeltIcon}
-                                    style={{ gridColumn: 1 }}
-                                    icon={['fas', 'triangle-exclamation']}
-                                />
-                            </span>
-                        </Fade>
-                        <Fade in={checkEngine}>
-                            <span>
-                                <FontAwesomeIcon
-                                    className={classes.checkEngine}
-                                    style={{ gridColumn: 1 }}
-                                    icon={['fas', 'screwdriver-wrench']}
-                                />
-                            </span>
-                        </Fade>
+                    <div className={classes.iconsRow}>
+                        {!seatbelt && !seatbeltHide && (
+                            <FontAwesomeIcon icon={['fas', 'triangle-exclamation']} className={classes.seatbeltIcon} />
+                        )}
+                        {checkEngine && (
+                            <FontAwesomeIcon icon={['fas', 'screwdriver-wrench']} className={classes.checkEngine} />
+                        )}
                         {cruise && (
-                            <Fade in={cruise}>
-                                <span>
-                                    <FontAwesomeIcon
-                                        className={classes.cruiseIcon}
-                                        style={{ gridColumn: 1 }}
-                                        icon={['fas', 'gauge']}
-                                    />
-                                </span>
-                            </Fade>
+                            <FontAwesomeIcon icon={['fas', 'gauge']} className={classes.cruiseIcon} />
                         )}
                     </div>
                 </Fade>
-                <div className={classes.speed}>
-                    {ignition ? (
-                        <div>
-                            <span className={classes.speedText}>
-                                {ReactHtmlParser(speedStr)}
-                            </span>
-                            <span className={classes.speedMeasure}>
-                                {speedMeasure}
-                            </span>
-                        </div>
-                    ) : (
-                        <span className={classes.speedTextOff}>Off</span>
-                    )}
-                </div>
             </div>
         </Fade>
     );

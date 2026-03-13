@@ -17,152 +17,120 @@ const useStyles = makeStyles((theme) => ({
     statusContainer: {
         position: 'absolute',
         bottom: 20,
-        left: 20,
+        left: '3vh',
         display: 'flex',
-        flexDirection: 'column',
-        gap: 8,
+        flexDirection: 'row',
+        gap: 12,
         zIndex: 50,
+        alignItems: 'flex-end',
     },
-    statusRight: {
-        position: 'absolute',
-        bottom: 30,
-        right: 20,
-        display: 'flex',
-        gap: 8,
-        alignItems: 'center',
-        zIndex: 50,
-    },
-    healthRowContent: {
+    barsColumn: {
         display: 'flex',
         flexDirection: 'column',
         gap: 4,
     },
-    voiceRowWrapper: {
+    barRow: {
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
-        gap: 12,
-        width: 250,
-        paddingLeft: 20, // To align under the health bar, pushing past the icon
+        gap: 8,
     },
-    voiceBarsContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 4,
-    },
-    voiceBar: {
-        width: 12,
-        height: 3,
-        borderRadius: 2,
-        background: 'rgba(20, 20, 20, 0.6)',
-        transition: 'background 0.2s',
-    },
-    healthRowWrapper: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 15,
-    },
-    statusRow: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        width: 250,
-    },
-    statusIcon: {
-        color: '#fff',
-        fontSize: 14,
+    rowIcon: {
+        color: '#FFFFFF',
+        fontSize: 12,
         width: 16,
         textAlign: 'center',
-        filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.5))',
+        filter: 'drop-shadow(0px 0px 1px rgba(0,0,0,0.8))',
+        opacity: 0.9,
     },
-    statusText: {
-        color: '#fff',
-        fontSize: 14,
-        fontFamily: 'Oswald, sans-serif',
-        width: 25,
-        fontWeight: 'bold',
-        textAlign: 'right',
-        textShadow: '0 1px 2px rgba(0,0,0,0.8)',
-    },
-    healthBg: {
-        background: 'rgba(20, 20, 20, 0.6)',
+    healthBarBg: {
+        width: 160,
         height: 6,
-        flex: 1,
-        borderRadius: 4,
+        background: 'rgba(21, 21, 21, 0.5)',
+        borderRadius: 3,
         overflow: 'hidden',
     },
-    healthBar: {
+    healthBarInner: {
         height: '100%',
-        background: '#1df22b', // Matched vivid lime green
-        transition: 'width 0.2s',
-        borderRadius: 4,
-        boxShadow: '0 0 5px rgba(29, 242, 43, 0.3)',
+        backgroundColor: '#00e676',
+        transition: 'width 0.5s ease-in-out',
+        borderRadius: 3,
+        boxShadow: '0 0 8px rgba(0, 230, 118, 0.4)',
     },
     healthBarDead: {
         height: '100%',
-        background: '#fff',
-        transition: 'width 0.2s',
-        borderRadius: 4,
+        backgroundColor: '#e74c3c',
+        transition: 'width 0.5s ease-in-out',
+        borderRadius: 3,
     },
-    armorContainer: {
-        display: 'flex',
-        gap: 4,
-        flex: 1,
-    },
-    armorBg: {
-        background: 'rgba(20, 20, 20, 0.6)',
+    armorBarBg: {
+        width: 160,
         height: 6,
-        flex: 1,
-        borderRadius: 4,
+        background: 'rgba(21, 21, 21, 0.5)',
+        borderRadius: 3,
         overflow: 'hidden',
     },
-    armorBar: {
+    armorBarInner: {
         height: '100%',
-        background: '#0a84ff',
-        transition: 'width 0.2s',
-        borderRadius: 4,
+        backgroundColor: '#00d2ff',
+        transition: 'width 0.5s ease-in-out',
+        borderRadius: 3,
+        boxShadow: '0 0 8px rgba(0, 210, 255, 0.4)',
     },
-    fuelBg: {
-        background: 'rgba(20, 20, 20, 0.6)',
+    fuelBarBg: {
+        width: 160,
         height: 6,
-        flex: 1,
-        borderRadius: 4,
+        background: 'rgba(21, 21, 21, 0.5)',
+        borderRadius: 3,
         overflow: 'hidden',
     },
-    fuelBar: {
+    fuelBarInner: {
         height: '100%',
-        background: theme.palette.warning.main,
-        transition: 'width 0.2s',
-        borderRadius: 4,
+        backgroundColor: '#f39c12',
+        transition: 'width 0.5s ease-in-out',
+        borderRadius: 3,
+        boxShadow: '0 0 8px rgba(243, 156, 18, 0.4)',
+    },
+    rowValue: {
+        color: '#FFFFFF',
+        fontSize: 13,
+        fontFamily: 'Akshar, sans-serif',
+        fontWeight: 600,
+        textShadow: '0px 0px 2px rgba(0,0,0,0.8)',
+        width: 24,
+        textAlign: 'left',
     },
     smallStatusesContainer: {
         display: 'flex',
+        flexDirection: 'row',
         gap: 10,
         alignItems: 'center',
+        marginBottom: 2,
     },
     smallStatusWrapper: {
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
+        gap: 5,
     },
     smallStatusBg: {
-        background: 'rgba(20, 20, 20, 0.6)',
         width: 3,
-        height: 14,
+        height: 16,
+        background: 'rgba(21, 21, 21, 0.5)',
         borderRadius: 2,
-        overflow: 'hidden',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        flexDirection: 'column-reverse',
+        overflow: 'hidden',
     },
     smallStatusBar: {
         width: '100%',
-        transition: 'height 0.2s',
+        transition: 'height 0.2s ease-in-out',
         borderRadius: 2,
     },
     smallStatusIcon: {
-        color: '#fff',
+        color: '#FFFFFF',
         fontSize: 12,
-        filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.5))',
+        filter: 'drop-shadow(0px 0px 1px rgba(0,0,0,0.8))',
     },
 }));
 
@@ -182,15 +150,15 @@ export default withTheme(() => {
         if (!inVeh || fuelHide) return null;
         return (
             <CSSTransition key="fuel" timeout={500} classNames="fade">
-                <div className={classes.statusRow}>
-                    <FontAwesomeIcon icon="gas-pump" className={classes.statusIcon} />
-                    <div className={classes.fuelBg}>
+                <div className={classes.barRow}>
+                    <FontAwesomeIcon icon="gas-pump" className={classes.rowIcon} />
+                    <div className={classes.fuelBarBg}>
                         <div
-                            className={classes.fuelBar}
+                            className={classes.fuelBarInner}
                             style={{ width: `${fuel}%` }}
                         />
                     </div>
-                    <span className={classes.statusText}>{fuel}</span>
+                    <div className={classes.rowValue}>{Math.round(fuel)}</div>
                 </div>
             </CSSTransition>
         );
@@ -198,15 +166,15 @@ export default withTheme(() => {
 
     const GetHealth = () => {
         return (
-            <div className={classes.statusRow}>
-                <FontAwesomeIcon icon="heart" className={classes.statusIcon} />
-                <div className={classes.healthBg}>
+            <div className={classes.barRow}>
+                <FontAwesomeIcon icon="heart" className={classes.rowIcon} />
+                <div className={classes.healthBarBg}>
                     <div
-                        className={isDead ? classes.healthBarDead : classes.healthBar}
+                        className={isDead ? classes.healthBarDead : classes.healthBarInner}
                         style={{ width: isDead ? '100%' : `${health}%` }}
                     />
                 </div>
-                <span className={classes.statusText}>{health}</span>
+                <div className={classes.rowValue}>{Math.round(health)}</div>
             </div>
         );
     };
@@ -214,66 +182,20 @@ export default withTheme(() => {
     const GetArmor = () => {
         if (armor <= 0 || isDead) return null;
 
-        let firstSegment = Math.min(100, (armor / 50) * 100);
-        let secondSegment = Math.max(0, ((armor - 50) / 50) * 100);
-
         return (
             <CSSTransition key="armor" timeout={500} classNames="fade">
-                <div className={classes.statusRow}>
-                    <FontAwesomeIcon icon="shield" className={classes.statusIcon} />
-                    <div className={classes.armorContainer}>
-                        <div className={classes.armorBg}>
-                            <div className={classes.armorBar} style={{ width: `${firstSegment}%` }} />
-                        </div>
-                        <div className={classes.armorBg}>
-                            <div className={classes.armorBar} style={{ width: `${secondSegment}%` }} />
-                        </div>
+                <div className={classes.barRow}>
+                    <FontAwesomeIcon icon="shield" className={classes.rowIcon} />
+                    <div className={classes.armorBarBg}>
+                        <div className={classes.armorBarInner} style={{ width: `${armor}%` }} />
                     </div>
-                    <span className={classes.statusText}>{armor}</span>
+                    <div className={classes.rowValue}>{Math.round(armor)}</div>
                 </div>
             </CSSTransition>
         );
     };
 
-    const voiceStatus = statuses.find(s => s.name === 'voice' || s.icon === 'microphone' || s.icon === 'microphone-alt');
-    const otherStatuses = statuses.filter(s => s.name !== 'voice' && s.icon !== 'microphone' && s.icon !== 'microphone-alt');
-
-    const renderVoiceLines = () => {
-        if (!voiceStatus) return null;
-
-        const val = voiceStatus.value;
-        // Make sure it catches any variant of white (uppercase, rgb, rgba) and forces it to blue
-        let color = voiceStatus.color || '#3399ff';
-        if (typeof color === 'string') {
-            const safeColor = color.toLowerCase().replace(/\s/g, '');
-            if (safeColor === '#ffffff' || safeColor === '#fff' || safeColor === 'rgb(255,255,255)' || safeColor === 'rgba(255,255,255,1)') {
-                color = '#3399ff';
-            }
-        } else {
-            color = '#3399ff';
-        }
-
-        let activeLines = 1;
-        if (val <= 3) {
-            activeLines = val;
-        } else if (val < 10) {
-            activeLines = val <= 2.0 ? 1 : val <= 4.0 ? 2 : 3;
-        } else {
-            activeLines = val >= 66 ? 3 : val >= 33 ? 2 : 1;
-        }
-
-        return (
-            <CSSTransition key="voice-status" timeout={500} classNames="fade">
-                <div className={classes.statusRight}>
-                    <div className={classes.voiceBarsContainer}>
-                        <div className={classes.voiceBar} style={{ background: activeLines >= 1 ? color : 'rgba(20, 20, 20, 0.6)' }} />
-                        <div className={classes.voiceBar} style={{ background: activeLines >= 2 ? color : 'rgba(20, 20, 20, 0.6)' }} />
-                        <div className={classes.voiceBar} style={{ background: activeLines >= 3 ? color : 'rgba(20, 20, 20, 0.6)' }} />
-                    </div>
-                </div>
-            </CSSTransition>
-        );
-    };
+    const otherStatuses = statuses;
 
     const rightElements = otherStatuses
         .sort((a, b) => a.options.id - b.options.id)
@@ -281,7 +203,8 @@ export default withTheme(() => {
             if (
                 (status.value >= 90 && status?.options?.hideHigh) ||
                 (status.value === 0 && status?.options?.hideZero) ||
-                (isDead && !status?.options?.visibleWhileDead)
+                (isDead && !status?.options?.visibleWhileDead) ||
+                (status.name === 'voice' && false) // We keep voice here to match circuit HUD 1:1
             )
                 return null;
 
@@ -296,8 +219,9 @@ export default withTheme(() => {
                             <div
                                 className={classes.smallStatusBar}
                                 style={{
-                                    background: status.color ? status.color : theme.palette.text.main,
+                                    backgroundColor: status.color ? status.color : theme.palette.text.main,
                                     height: `${status.value}%`,
+                                    boxShadow: `0 0 6px ${status.color ? status.color : theme.palette.text.main}60`,
                                 }}
                             />
                         </div>
@@ -313,27 +237,20 @@ export default withTheme(() => {
     return (
         <div className={classes.statusWrapper}>
             <div className={classes.statusContainer}>
-
-                <TransitionGroup style={{ display: 'flex', flexDirection: 'column' }}>
-                    {GetArmor()}
-                </TransitionGroup>
-
-                <div className={classes.healthRowWrapper}>
+                <div className={classes.barsColumn}>
+                    <TransitionGroup component={null}>
+                        {GetArmor()}
+                    </TransitionGroup>
                     {GetHealth()}
-                    <TransitionGroup className={classes.smallStatusesContainer}>
-                        {rightElements}
+                    <TransitionGroup component={null}>
+                        {GetFuel()}
                     </TransitionGroup>
                 </div>
 
-                <TransitionGroup style={{ display: 'flex', flexDirection: 'column' }}>
-                    {GetFuel()}
+                <TransitionGroup component="div" className={classes.smallStatusesContainer}>
+                    {rightElements}
                 </TransitionGroup>
-
             </div>
-
-            <TransitionGroup>
-                {renderVoiceLines()}
-            </TransitionGroup>
         </div>
     );
 });

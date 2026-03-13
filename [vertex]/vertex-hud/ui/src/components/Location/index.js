@@ -17,23 +17,30 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 50,
     },
     pill: {
-        background: 'rgba(30, 30, 30, 0.7)',
+        background: 'rgba(21, 21, 21, 0.8)',
         color: '#fff',
-        borderRadius: 20,
-        padding: '6px 14px',
+        borderRadius: 8,
+        padding: '4px 12px',
         display: 'flex',
         alignItems: 'center',
-        gap: 8,
+        gap: 10,
         fontSize: 14,
-        fontWeight: 'bold',
+        fontFamily: 'Akshar, sans-serif',
+        fontWeight: 700,
+        letterSpacing: 0.2,
         textShadow: '0px 0px 2px rgba(0,0,0,0.8)',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.4)',
+    },
+    iconWrapper: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     icon: {
-        color: '#00a8ff',
+        color: '#00d2ff',
+        fontSize: 14,
     },
     cross: {
-        color: '#00a8ff',
+        color: '#00d2ff',
         margin: '0 4px',
     }
 }));
@@ -49,12 +56,16 @@ export default () => {
     return (
         <div className={classes.locationContainer}>
             <div className={classes.pill}>
-                <FontAwesomeIcon icon="compass" className={classes.icon} />
+                <div className={classes.iconWrapper}>
+                    <FontAwesomeIcon icon="compass" className={classes.icon} />
+                </div>
                 <span>{location.direction}</span>
             </div>
 
             <div className={classes.pill}>
-                <FontAwesomeIcon icon="location-dot" className={classes.icon} />
+                <div className={classes.iconWrapper}>
+                    <FontAwesomeIcon icon="location-dot" className={classes.icon} />
+                </div>
                 <span>
                     {location.main}
                     {location.cross !== '' ? (
@@ -67,7 +78,9 @@ export default () => {
             </div>
 
             <div className={classes.pill}>
-                <FontAwesomeIcon icon="map" className={classes.icon} />
+                <div className={classes.iconWrapper}>
+                    <FontAwesomeIcon icon="map" className={classes.icon} />
+                </div>
                 <span>{location.area}</span>
             </div>
         </div>
