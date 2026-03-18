@@ -26,93 +26,141 @@ export default () => {
 
   const muiTheme = createTheme({
     typography: {
-      fontFamily: ["Exo"],
+      fontFamily: ["Outfit", "Inter", "sans-serif"],
       fontWeightRegular: 400,
     },
+
     palette: {
       primary: {
-        main: "#7BDCFFFF",
-        light: "#9CEDFFFF",
-        dark: "#0098CAFF",
+        main: "#0ea5e9",
+        light: "#38bdf8",
+        dark: "#0284c7",
         contrastText: "#ffffff",
       },
       secondary: {
-        main: "#141414",
-        light: "#1c1c1c",
-        dark: "#0f0f0f",
+        main: "#0b0f19",
+        light: "#1e293b",
+        dark: "#030712",
         contrastText: "#ffffff",
       },
       error: {
-        main: "#6e1616",
-        light: "#a13434",
-        dark: "#430b0b",
+        main: "#ef4444",
+        light: "#f87171",
+        dark: "#b91c1c",
       },
       success: {
-        main: "#52984a",
-        light: "#60eb50",
-        dark: "#244a20",
+        main: "#10b981",
+        light: "#34d399",
+        dark: "#047857",
       },
       warning: {
-        main: "#f09348",
-        light: "#f2b583",
-        dark: "#b05d1a",
+        main: "#f59e0b",
+        light: "#fbbf24",
+        dark: "#b45309",
       },
       info: {
-        main: "#247ba5",
-        light: "#247ba5",
-        dark: "#175878",
+        main: "#3b82f6",
+        light: "#60a5fa",
+        dark: "#1d4ed8",
       },
       text: {
-        main: theme === "dark" ? "#ffffff" : "#2e2e2e",
-        alt: theme === "dark" ? "rgba(255, 255, 255, 0.7)" : "#858585",
-        info: theme === "dark" ? "#919191" : "#919191",
+        main: "#ffffff",
+        alt: "#94a3b8", 
+        info: "#64748b",
         light: "#ffffff",
         dark: "#000000",
       },
       alt: {
-        green: "#008442",
-        greenDark: "#064224",
+        green: "#10b981",
+        greenDark: "#065f46",
       },
       border: {
-        main: theme === "dark" ? "#e0e0e008" : "#e0e0e008",
+        main: "rgba(14,165,233,0.15)",
         light: "#ffffff",
-        dark: "#26292d",
-        input:
-          theme === "dark"
-            ? "rgba(255, 255, 255, 0.23)"
-            : "rgba(0, 0, 0, 0.23)",
-        divider:
-          theme === "dark"
-            ? "rgba(255, 255, 255, 0.12)"
-            : "rgba(0, 0, 0, 0.12)",
+        dark: "#1e293b",
+        input: "rgba(255, 255, 255, 0.2)",
+        divider: "rgba(14,165,233,0.08)",
       },
-      mode: theme,
+      mode: "dark",
     },
+
     components: {
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
-            fontSize: 16,
-            backgroundColor: "#151515",
-            border: "1px solid rgba(255, 255, 255, 0.23)",
-            boxShadow: `0 0 10px #000`,
+            fontSize: 14,
+            fontFamily: "'Outfit', sans-serif",
+            backgroundColor: "#0b0f19",
+            border: "1px solid rgba(14,165,233,0.2)",
+            boxShadow: "0 0 20px rgba(0,0,0,0.6)",
+            borderRadius: 8,
           },
         },
       },
       MuiPaper: {
         styleOverrides: {
           root: {
-            background: "#151515",
+            background: "#0b0f19",
+          },
+        },
+      },
+      MuiMenu: {
+        styleOverrides: {
+          paper: {
+            background: "#1e293b !important",
+            border: "1px solid rgba(14,165,233,0.15)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+            borderRadius: "8px !important",
+            marginTop: 4,
+          },
+          list: {
+            padding: "4px 0",
+          },
+        },
+      },
+
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: 13,
+            fontWeight: 500,
+            color: "#94a3b8",
+            padding: "8px 16px",
+            transition: "all 0.15s ease",
+            "&:hover": {
+              background: "rgba(14,165,233,0.08)",
+              color: "#ffffff",
+            },
+            "&.Mui-selected": {
+              background: "rgba(14,165,233,0.12)",
+              color: "#0ea5e9",
+              "&:hover": {
+                background: "rgba(14,165,233,0.18)",
+              },
+            },
           },
         },
       },
       MuiAutocomplete: {
         styleOverrides: {
           paper: {
-            boxShadow: "0 0 25px #000",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+            background: "#1e293b",
+            border: "1px solid rgba(14,165,233,0.15)",
+            borderRadius: 8,
           },
         },
       },
+      MuiSelect: {
+        styleOverrides: {
+          icon: {
+            color: "rgba(14,165,233,0.5)",
+            transition: "color 0.2s ease",
+          },
+        },
+      },
+
       MuiBackdrop: {
         styleOverrides: {
           root: {
@@ -129,36 +177,41 @@ export default () => {
             right: "0.5em !important",
             position: "absolute !important",
           },
+          ".Toastify__toast": {
+            fontFamily: "'Outfit', sans-serif",
+            background: "#0b0f19",
+            border: "1px solid rgba(14,165,233,0.15)",
+            borderRadius: "8px",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+          },
           ".tox-dialog-wrap__backdrop": {
             height: "90% !important",
             width: "90% !important",
             margin: "auto !important",
-            background: "#151515bf !important",
+            background: "rgba(11,15,25,0.75) !important",
           },
           ".tox-statusbar__branding": {
             display: "none !important",
           },
-          "*": ({ theme }) => ({
+          "*": {
             "&::-webkit-scrollbar": {
-              width: 6,
+              width: 4,
             },
             "&::-webkit-scrollbar-thumb": {
-              background: theme.palette.primary.main,
-              borderRadius: 3,
-              opacity: 0.45,
+              background: "rgba(14,165,233,0.3)",
+              borderRadius: 8,
               transition: "background ease-in 0.15s",
             },
             "&::-webkit-scrollbar-thumb:hover": {
-              background: theme.palette.primary.main,
-              opacity: 0.6,
+              background: "#0ea5e9",
             },
             "&::-webkit-scrollbar-track": {
               background: "transparent",
             },
-          }),
+          },
           html: {
             background:
-              process.env.NODE_ENV != "production" ? "#1e1e1e" : "transparent",
+              process.env.NODE_ENV != "production" ? "#0b0f19" : "transparent",
             "input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
               {
                 WebkitAppearance: "none",
@@ -168,7 +221,8 @@ export default () => {
           body: {
             position: "relative",
             zIndex: -15,
-            backgroundColor: "#0b0a0a",
+            backgroundColor: "#0b0f19",
+
             position: "absolute",
             top: 0,
             bottom: 0,
@@ -177,10 +231,13 @@ export default () => {
             margin: "auto",
             height: "90%",
             width: "60%",
-            borderRadius: 10,
+            borderRadius: 2,
             overflowY: "auto",
             overflowX: "hidden",
             paddingRight: "0px !important",
+            border: "none",
+            boxShadow: "none",
+            background: "transparent",
 
             ".item-enter": {
               opacity: 0,

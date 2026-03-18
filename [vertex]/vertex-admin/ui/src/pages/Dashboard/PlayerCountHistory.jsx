@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { useTheme } from "@material-ui/core/styles";
 import moment from "moment";
@@ -20,45 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = [
-  {
-    name: "Page A",
-    count: 10,
-  },
-  {
-    name: "Page B",
-    count: 10,
-  },
-  {
-    name: "Page C",
-    count: 32,
-  },
-  {
-    name: "Page D",
-    count: 64,
-  },
-  {
-    name: "Page E",
-    count: 128,
-  },
-  {
-    name: "Page F",
-    count: 10,
-  },
-  {
-    name: "Page F",
-    count: 10,
-  },
-  {
-    name: "Page F",
-    count: 10,
-  },
-  {
-    name: "Page F",
-    count: 20,
-  },
-];
-
 export default ({ current, history }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -66,17 +26,17 @@ export default ({ current, history }) => {
 
   useEffect(() => {
     const now = moment().unix();
-    let cunts = history.map((h) => {
+    let entries = history.map((h) => {
       return { ...h, name: moment.unix(h.time).format("HH:mm") };
     });
 
-    cunts.push({
+    entries.push({
       time: now,
       count: current,
       name: "Now",
     });
 
-    setPHistory(cunts);
+    setPHistory(entries);
   }, [history, current]);
 
   return (
@@ -92,15 +52,44 @@ export default ({ current, history }) => {
           bottom: 0,
         }}
       >
-        <XAxis dataKey="name" />
-        <YAxis allowDecimals={false} />
+        <defs>
+          <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+            <stop offset="95%" stopColor={theme.palette.primary.main} stopOpacity={0.0} />
+          </linearGradient>
+        </defs>
+        <XAxis
+          dataKey="name"
+          tick={{ fill: theme.palette.text.alt, fontSize: 11, fontFamily: "'Outfit', sans-serif" }}
+          axisLine={{ stroke: theme.palette.border.main }}
+          tickLine={{ stroke: theme.palette.border.main }}
+        />
+        <YAxis
+          allowDecimals={false}
+          tick={{ fill: theme.palette.text.alt, fontSize: 11, fontFamily: "'Outfit', sans-serif" }}
+          axisLine={{ stroke: theme.palette.border.main }}
+          tickLine={{ stroke: theme.palette.border.main }}
+        />
+        <Tooltip
+          contentStyle={{
+            background: theme.palette.secondary.main,
+            border: `1px solid ${theme.palette.border.main}`,
+            borderRadius: 8,
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: 13,
+            color: '#fff',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.4)'
+          }}
+        />
         <Area
           type="monotone"
           dataKey="count"
           stroke={theme.palette.primary.main}
-          fill={theme.palette.primary.light}
+          strokeWidth={2}
+          fill="url(#chartGradient)"
         />
       </AreaChart>
     </ResponsiveContainer>
   );
 };
+

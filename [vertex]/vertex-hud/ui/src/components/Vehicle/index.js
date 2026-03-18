@@ -1,199 +1,258 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { Fade, useTheme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import ReactHtmlParser from 'react-html-parser';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Box, Typography, Fade } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
-    wrapper: {
-        position: 'absolute',
-        right: '2vw',
-        bottom: '3vh',
-        width: 140,
-        height: 140,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,0.8))',
-    },
-    svgGauge: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        transform: 'rotate(-135deg)', // start bottom left
-    },
-    gaugeTrack: {
-        fill: 'none',
-        stroke: 'rgba(255, 255, 255, 0.15)',
-        strokeWidth: 4,
-        strokeLinecap: 'round',
-    },
-    gaugeTrackTicks: {
-        fill: 'none',
-        stroke: 'rgba(255, 255, 255, 0.4)',
-        strokeWidth: 6,
-        strokeDasharray: '2 18',
-    },
-    gaugeFill: {
-        fill: 'none',
-        stroke: '#ff9800', // orange color like typical circuit RPM
-        strokeWidth: 4,
-        strokeLinecap: 'round',
-        transition: 'stroke-dashoffset 0.1s linear, stroke 0.3s ease',
-    },
-    innerCircle: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 10,
-        marginTop: 15,
-    },
-    speedMeasure: {
-        fontSize: 14,
-        fontFamily: 'Akshar, sans-serif',
-        color: 'rgba(255, 255, 255, 0.6)',
-        fontWeight: 600,
-        letterSpacing: 1,
-        marginBottom: -5,
-    },
-    speedText: {
-        fontSize: 42,
-        fontFamily: 'Akshar, sans-serif',
-        color: '#fff',
-        fontWeight: 600,
-        lineHeight: 1,
-        display: 'flex',
-        alignItems: 'baseline',
-        '& .filler': {
-            color: 'rgba(255, 255, 255, 0.2)',
-        },
-    },
-    gearText: {
-        fontSize: 16,
-        fontFamily: 'Akshar, sans-serif',
-        fontWeight: 'bold',
-        color: '#ff9800', // match the gauge
-        marginTop: -2,
-    },
-    iconsRow: {
-        position: 'absolute',
-        bottom: -25,
-        display: 'flex',
-        justifyContent: 'center',
-        gap: 12,
-        width: '100%',
-    },
-    seatbeltIcon: { color: theme.palette.warning.dark },
-    checkEngine: { color: theme.palette.error.main },
-    cruiseIcon: { color: theme.palette.success.main },
+const Wrapper = styled(Box)(() => ({
+  width: '12vw',
+  height: '12vw',
+  minWidth: '150px',
+  minHeight: '150px',
+  maxWidth: '220px',
+  maxHeight: '220px',
+  borderRadius: '50%',
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
 }));
 
-export default () => {
-    const classes = useStyles();
+const Container = styled(Box)(({ position = 'right' }) => ({
+  position: 'absolute',
+  bottom: '1vh',
+  right: '2vw', // Override position setting if layout is forced
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  zIndex: 1000,
+}));
 
-    const config = useSelector((state) => state.hud.config);
-    const showing = useSelector((state) => state.vehicle.showing);
-    const ignition = useSelector((state) => state.vehicle.ignition);
-    const speed = useSelector((state) => state.vehicle.speed);
-    const speedMeasure = useSelector((state) => state.vehicle.speedMeasure);
-    const seatbelt = useSelector((state) => state.vehicle.seatbelt);
-    const seatbeltHide = useSelector((state) => state.vehicle.seatbeltHide);
-    const cruise = useSelector((state) => state.vehicle.cruise);
-    const checkEngine = useSelector((state) => state.vehicle.checkEngine);
+const Labels = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: 12,
+  marginTop: -16,
+}));
 
-    const [speedStr, setSpeedStr] = useState(speed.toString());
+const LabelColumn = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: 4,
+}));
 
-    // SVG arc math
-    // 2 * PI * r = circumference
-    // r = 60, C = 377
-    const radius = 64;
-    const circumference = 2 * Math.PI * radius;
-    const offsetLength = circumference * 0.75; // 270 degree arc
+const LabelText = styled(Typography)(() => ({
+  color: '#ccc',
+  fontSize: '0.7vw',
+  minFontSize: '10px',
+  fontWeight: 500,
+  '@media (min-width: 1920px)': {
+    fontSize: '12px',
+  },
+}));
 
-    useEffect(() => {
-        if (speed === 0) {
-            setSpeedStr(`<span class="filler">000</span>`);
-        } else if (speed < 10) {
-            setSpeedStr(`<span class="filler">00</span>${speed.toString()}`);
-        } else if (speed < 100) {
-            setSpeedStr(`<span class="filler">0</span>${speed.toString()}`);
-        } else {
-            setSpeedStr(speed.toString());
-        }
-    }, [speed]);
+const LabelBar = styled(Box)(({ color, width = '100%' }) => ({
+  height: '0.3vh',
+  minHeight: '2px',
+  width: width,
+  backgroundColor: color,
+  borderRadius: '2px',
+  transition: 'width 0.3s ease, background-color 0.3s ease',
+}));
 
-    // calculate fill percentage (assume max 200 mph)
-    const fillPercent = Math.min(speed / 160, 1);
-    const dashOffset = offsetLength - fillPercent * offsetLength;
+const TickContainer = styled(Box)(() => ({
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  top: 0,
+  left: 0,
+  borderRadius: '50%',
+  pointerEvents: 'none',
+}));
 
-    return (
-        <Fade in={showing}>
-            <div className={classes.wrapper}>
-                {ignition && (
-                    <svg className={classes.svgGauge} viewBox="0 0 140 140">
-                        {/* Background Arc */}
-                        <circle
-                            cx="70"
-                            cy="70"
-                            r={radius}
-                            className={classes.gaugeTrack}
-                            strokeDasharray={`${offsetLength} ${circumference}`}
-                        />
-                        {/* Ticks overlay */}
-                        <circle
-                            cx="70"
-                            cy="70"
-                            r={radius}
-                            className={classes.gaugeTrackTicks}
-                            strokeDasharray={`${offsetLength} ${circumference}`}
-                        />
-                        {/* Fill Arc */}
-                        <circle
-                            cx="70"
-                            cy="70"
-                            r={radius}
-                            className={classes.gaugeFill}
-                            strokeDasharray={`${offsetLength} ${circumference}`}
-                            strokeDashoffset={circumference - offsetLength + dashOffset}
-                            style={{ stroke: speed > 100 ? '#e74c3c' : '#ff9800' }}
-                        />
-                    </svg>
-                )}
+const Arc = styled('svg')({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  transform: 'rotate(135deg)',
+  overflow: 'visible',
+});
 
-                <div className={classes.innerCircle}>
-                    {ignition ? (
-                        <>
-                            <div className={classes.speedMeasure}>{speedMeasure}</div>
-                            <div className={classes.speedText}>
-                                {ReactHtmlParser(speedStr)}
-                            </div>
-                            <div className={classes.gearText}>D</div>
-                        </>
-                    ) : (
-                        <div className={classes.speedText}>
-                            <span className="filler">OFF</span>
-                        </div>
-                    )}
-                </div>
+const Speedometer = () => {
+  const config = useSelector((state) => state.hud.config);
+  const showing = useSelector((state) => state.vehicle.showing);
+  const ignition = useSelector((state) => state.vehicle.ignition);
+  const speed = useSelector((state) => state.vehicle.speed);
+  const speedMeasure = useSelector((state) => state.vehicle.speedMeasure);
+  const seatbelt = useSelector((state) => state.vehicle.seatbelt);
+  const fuel = useSelector((state) => state.vehicle.fuel) || 0;
+  const rawRpm = useSelector((state) => state.vehicle.rpm) || 0;
+  const gear = useSelector((state) => state.vehicle.gear) || 1;
 
-                <Fade in={ignition}>
-                    <div className={classes.iconsRow}>
-                        {!seatbelt && !seatbeltHide && (
-                            <FontAwesomeIcon icon={['fas', 'triangle-exclamation']} className={classes.seatbeltIcon} />
-                        )}
-                        {checkEngine && (
-                            <FontAwesomeIcon icon={['fas', 'screwdriver-wrench']} className={classes.checkEngine} />
-                        )}
-                        {cruise && (
-                            <FontAwesomeIcon icon={['fas', 'gauge']} className={classes.cruiseIcon} />
-                        )}
-                    </div>
-                </Fade>
-            </div>
-        </Fade>
-    );
+  const maxRpm = 1.0; // Normalized in FiveM Lua from 0.0 to 1.0 usually
+  const totalArc = 270;
+  const rpmPercent = Math.min((rawRpm / maxRpm) * 100, 100);
+  const angle = (rpmPercent / 100) * totalArc;
+
+  if (!showing) return null;
+
+  return (
+    <Fade in={true}>
+      <Container position={config.vehicleHudPosition}>
+        <Box mt={10}>
+          <Wrapper>
+            <Arc width="220" height="220">
+              {/* Background Arc */}
+              <circle
+                r="100"
+                cx="110"
+                cy="110"
+                fill="none"
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth="8"
+                strokeDasharray={`${2 * Math.PI * 100 * (totalArc / 360)} ${2 * Math.PI * 100}`}
+                strokeLinecap="round"
+              />
+
+              {/* Foreground Arc (Yellow RPM/Speed Indicator) */}
+              {rawRpm > 0 && (
+                <circle
+                  r="100"
+                  cx="110"
+                  cy="110"
+                  fill="none"
+                  stroke="#F5BD1F"
+                  strokeWidth="8"
+                  strokeDasharray={`${(2 * Math.PI * 100 * (angle / 360)).toFixed(2)} ${2 * Math.PI * 100}`}
+                  strokeLinecap="round"
+                  transform="rotate(0 110 110)"
+                />
+              )}
+            </Arc>
+
+            {/* Tick Marks */}
+            <TickContainer>
+              {Array.from({ length: 8 }).map((_, i) => {
+                const totalTicks = 8;
+                const startAngle = 135;
+                const endAngle = 405;
+                const tickAngle = startAngle + (i * (endAngle - startAngle)) / (totalTicks - 1);
+                const rad = (tickAngle * Math.PI) / 180;
+
+                const center = 110;
+                const radiusTick = 98;
+                const radiusText = 120;
+
+                const tickX = center + radiusTick * Math.cos(rad);
+                const tickY = center + radiusTick * Math.sin(rad);
+                const textX = center + radiusText * Math.cos(rad);
+                const textY = center + radiusText * Math.sin(rad);
+
+                return (
+                  <React.Fragment key={i}>
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        width: 3,
+                        height: 12,
+                        backgroundColor: '#ffffff',
+                        opacity: 0.8,
+                        top: tickY,
+                        left: tickX,
+                        transform: `translate(-50%, -50%) rotate(${tickAngle + 90}deg)`,
+                        transformOrigin: 'center center',
+                        borderRadius: i === 0 || i === 7 ? '0 0 2px 2px' : 0,
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        position: 'absolute',
+                        top: textY,
+                        left: textX,
+                        transform: 'translate(-50%, -50%)',
+                        fontSize: 15,
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        fontFamily: '"Oswald"',
+                      }}
+                    >
+                      {i + 1}
+                    </Typography>
+                  </React.Fragment>
+                );
+              })}
+            </TickContainer>
+
+            {/* Speed & Gear in Center */}
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: '#ccc',
+                  textTransform: 'uppercase',
+                  letterSpacing: 1.2,
+                  lineHeight: 1,
+                  fontFamily: '"Oswald"',
+                }}
+              >
+                {speedMeasure}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 44,
+                  fontWeight: 800,
+                  color: '#ffffff',
+                  fontFamily: '"Oswald"',
+                  letterSpacing: '1px',
+                  lineHeight: 1.1,
+                  marginTop: '1px',
+                }}
+              >
+                {String(speed).padStart(3, '0')}
+              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  marginTop: '3px',
+                }}
+              >
+                <div style={{ width: 2, height: 16, background: '#F5BD1F' }}></div>
+                <Typography
+                  sx={{
+                    fontSize: 16,
+                    fontWeight: 800,
+                    color: '#ffffff',
+                    fontFamily: '"Oswald"',
+                    lineHeight: 1,
+                  }}
+                >
+                  {gear}
+                </Typography>
+              </Box>
+            </Box>
+          </Wrapper>
+        </Box>
+      </Container>
+    </Fade>
+  );
 };
+
+export default Speedometer;

@@ -268,37 +268,11 @@ RegisterNUICallback("Crafting:Craft", function(data, cb)
 							end
 							LocalPlayer.state.crafting = false
 						end)
-					else
-						-- Progress completed successfully, end crafting and give items
-						Callbacks:ServerCallback("Crafting:End", {}, function(bench)
-							SendNUIMessage({
-								type = "END_CRAFTING",
-							})
-							if Animations and Animations.Emotes and Animations.Emotes.ForceCancel then
-								Animations.Emotes:ForceCancel()
-							end
-							if bench ~= nil and LocalPlayer.state.craftingOpen then
-								Crafting.Benches:Open(bench) -- Refresh bench bcuz item counts
-							end
-							LocalPlayer.state.crafting = false
-						end)
 					end
 				end)
 				if state.data ~= nil then
-					if Animations and Animations.Emotes and Animations.Emotes.Play then
 					Animations.Emotes:Play(state.data.animation, true, state.data.time, true)
 				end
-				end
-			else
-				-- Instant craft (time = 0), give items immediately
-				Callbacks:ServerCallback("Crafting:End", {}, function(bench)
-					SendNUIMessage({
-						type = "END_CRAFTING",
-					})
-					if bench ~= nil and LocalPlayer.state.craftingOpen then
-						Crafting.Benches:Open(bench) -- Refresh bench bcuz item counts
-					end
-				end)
 			end
 			cb(true)
 		else
@@ -314,9 +288,7 @@ RegisterNUICallback("Crafting:End", function(data, cb)
 		SendNUIMessage({
 			type = "END_CRAFTING",
 		})
-		if Animations and Animations.Emotes and Animations.Emotes.ForceCancel then
-			Animations.Emotes:ForceCancel()
-		end
+		Animations.Emotes:ForceCancel()
 		if state ~= nil then
 			if LocalPlayer.state.craftingOpen then
 				Crafting.Benches:Open(state) -- Refresh bench bcuz item counts
@@ -330,12 +302,8 @@ RegisterNUICallback("Crafting:Cancel", function(data, cb)
 	Callbacks:ServerCallback("Crafting:Cancel", {}, function(state)
 		cb(state)
 		if state then
-			if Progress then
 			Progress:Cancel(true)
-			end
-			if Animations and Animations.Emotes and Animations.Emotes.ForceCancel then
-				Animations.Emotes:ForceCancel()
-			end
+			Animations.Emotes:ForceCancel()
 		end
 		LocalPlayer.state.crafting = false
 	end)

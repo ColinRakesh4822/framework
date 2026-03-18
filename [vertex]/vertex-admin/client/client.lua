@@ -182,3 +182,17 @@ function DoAdminVehicleAction(action)
         end)
     end
 end
+
+
+
+-- RegisterNetEvent("wk:fixVehicle")
+-- AddEventHandler("wk:fixVehicle", function()
+--     local p = PlayerPedId()
+--     if IsPedInAnyVehicle(p) then
+--         local q = GetVehiclePedIsIn(p)
+--         SetVehicleEngineHealth(q, 9999)
+--         SetVehiclePetrolTankHealth(q, 9999)
+--         SetVehicleFixed(q)
+--         Execute:Client(source, "Notification", "Success", "Fixed Vehicle")
+--     end
+-- end)

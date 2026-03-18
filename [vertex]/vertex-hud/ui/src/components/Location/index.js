@@ -2,50 +2,42 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCompass, faMapMarkerAlt, faMap } from '@fortawesome/free-solid-svg-icons';
 
-const useStyles = makeStyles((theme) => ({
-    locationContainer: {
-        position: 'absolute',
-        top: 20,
-        left: 0,
-        right: 0,
+const useStyles = makeStyles(() => ({
+    hudWrapper: {
+        position: 'fixed',
+        top: 15,
+        left: '50%',
+        transform: 'translateX(-50%)',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 10,
-        pointerEvents: 'none',
-        zIndex: 50,
+        gap: 12,
+        zIndex: 1000,
     },
     pill: {
-        background: 'rgba(21, 21, 21, 0.8)',
-        color: '#fff',
-        borderRadius: 8,
-        padding: '4px 12px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
+        background: '#1a1a1aee',
+        padding: '6px 14px',
+        borderRadius: 20,
+        color: 'white',
         fontSize: 14,
-        fontFamily: 'Akshar, sans-serif',
         fontWeight: 700,
-        letterSpacing: 0.2,
-        textShadow: '0px 0px 2px rgba(0,0,0,0.8)',
-    },
-    iconWrapper: {
         display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
+        gap: 8,
+        boxShadow: '0 0 8px #1a1a1a85',
     },
     icon: {
-        color: '#00d2ff',
         fontSize: 14,
+        opacity: 0.85,
+        color: '#00c3ffff'
     },
     cross: {
-        color: '#00d2ff',
+        color: '#00c3ffff',
         margin: '0 4px',
     }
 }));
 
-export default () => {
+const LocationHUD = () => {
     const classes = useStyles();
     const isShowing = useSelector((state) => state.location.showing);
     const location = useSelector((state) => state.location.location);
@@ -54,18 +46,16 @@ export default () => {
     if (!isShowing || isBlindfolded) return null;
 
     return (
-        <div className={classes.locationContainer}>
+        <div className={classes.hudWrapper}>
+            {/* Direction */}
             <div className={classes.pill}>
-                <div className={classes.iconWrapper}>
-                    <FontAwesomeIcon icon="compass" className={classes.icon} />
-                </div>
-                <span>{location.direction}</span>
+                <FontAwesomeIcon icon={faCompass} className={classes.icon} />
+                {location.direction}
             </div>
 
+            {/* Main street / road */}
             <div className={classes.pill}>
-                <div className={classes.iconWrapper}>
-                    <FontAwesomeIcon icon="location-dot" className={classes.icon} />
-                </div>
+                <FontAwesomeIcon icon={faMapMarkerAlt} className={classes.icon} />
                 <span>
                     {location.main}
                     {location.cross !== '' ? (
@@ -77,12 +67,13 @@ export default () => {
                 </span>
             </div>
 
+            {/* Area / district */}
             <div className={classes.pill}>
-                <div className={classes.iconWrapper}>
-                    <FontAwesomeIcon icon="map" className={classes.icon} />
-                </div>
-                <span>{location.area}</span>
+                <FontAwesomeIcon icon={faMap} className={classes.icon} />
+                {location.area}
             </div>
         </div>
     );
 };
+
+export default LocationHUD;

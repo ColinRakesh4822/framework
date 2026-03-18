@@ -28,4 +28,16 @@ function CreateVendingMachines()
             },
         }, 3.0)
     end
+    Targeting:AddObject(`v_ret_247_donuts`, 'cookie-bite', {
+        {
+            text = 'Grab Donut',
+            icon = 'cookie-bite', 
+            event = 'Shop:Client:GetDonut',
+            minDist = 3.0,
+        },
+    }, 3.0)
 end
+
+RegisterNetEvent('Shop:Client:GetDonut', function()
+    TriggerServerEvent('Shop:Server:GetDonut')
+end)

@@ -9,6 +9,8 @@ export const initialState = {
     checkEngine: false,
     fuel: 100,
     fuelHide: false,
+    rpm: 0,
+    gear: 1,
 };
 
 export default (state = initialState, action) => {
@@ -31,7 +33,9 @@ export default (state = initialState, action) => {
         case 'UPDATE_SPEED':
             return {
                 ...state,
-                speed: action.payload.speed,
+                speed: action.payload.speed ?? state.speed,
+                rpm: action.payload.rpm ?? state.rpm,
+                gear: action.payload.gear ?? state.gear,
             };
         case 'UPDATE_SPEED_MEASURE':
             return {

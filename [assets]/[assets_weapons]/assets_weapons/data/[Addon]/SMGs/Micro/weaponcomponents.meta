@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CWeaponComponentInfoBlob>
+  <Data>
+  </Data>
+  <Infos>
+    <Item type="CWeaponComponentClipInfo">
+      <Name>COMPONENT_PROSMG_CLIP_01</Name>
+      <Model>w_sb_microsmg_mag1</Model>
+      <LocName>WCTPROSMG_CLIP1</LocName>
+      <LocDesc>WCDPROSMG_CLIP1</LocDesc>
+      <AttachBone>AAPClip</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="false" />
+      <CreateObject value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="0" />
+      <HudRange value="0" />
+      <ClipSize value="25" />
+      <ReloadData ref="RELOAD_DEFAULT" />
+    </Item>
+    <Item type="CWeaponComponentClipInfo">
+      <Name>COMPONENT_PROSMG_CLIP_02</Name>
+      <Model>w_sb_microsmg_mag2</Model>
+      <LocName>WCTPROSMG_CLIP2</LocName>
+      <LocDesc>WCDPROSMG_CLIP2</LocDesc>
+      <AttachBone>AAPClip</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="true" />
+      <CreateObject value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="0" />
+      <HudRange value="0" />
+      <ClipSize value="50" />
+      <ReloadData ref="RELOAD_LARGE" />
+    </Item>
+	<!--LAST MINUTE CUT-->
+    <!--<Item type="CWeaponComponentClipInfo">
+      <Name>COMPONENT_PROSMG_CLIP_03</Name>
+      <Model>w_sb_prosmg_mag3</Model>
+      <LocName>WCTPROSMG_CLIP3</LocName>
+      <LocDesc>WCDPROSMG_CLIP3</LocDesc>
+      <AttachBone>AAPClip</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="true" />
+      <CreateObject value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="0" />
+      <HudRange value="0" />
+      <ClipSize value="100" />
+      <ReloadData ref="RELOAD_LARGE" />
+    </Item>-->
+    <Item type="CWeaponComponentSuppressorInfo">
+      <Name>COMPONENT_PROSMG_EXTENDED_BARREL</Name>
+      <Model>w_sb_prosmg_barrel</Model>
+      <LocName>WCT_PROSMG_BARREL</LocName>
+      <LocDesc>WCD_PROSMG_BARREL</LocDesc>
+      <AttachBone>AAPSupp</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="true" />
+      <CreateObject value="true" />
+      <ApplyWeaponTint value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="5" />
+      <HudRange value="0" />
+      <MuzzleBone>Gun_SuMuzzle</MuzzleBone>
+      <FlashFX />
+      <ShouldSilence value="false" />
+    </Item>
+	<Item type="CWeaponComponentInfo">
+      <Name>COMPONENT_PROSMG_STOCK_01</Name>
+      <Model>w_sb_prosmg_stock1</Model>
+      <LocName>WCT_PROSMG_STOCK_01</LocName>
+      <LocDesc>WCD_PROSMG_STOCK_01</LocDesc>
+      <AttachBone>AAPBarrel</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="true" />
+      <CreateObject value="true" />
+	  <ApplyWeaponTint value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="10" />
+      <HudRange value="0" />
+    </Item>
+	<Item type="CWeaponComponentInfo">
+      <Name>COMPONENT_PROSMG_STOCK_02</Name>
+      <Model>w_sb_prosmg_stock2</Model>
+      <LocName>WCT_PROSMG_STOCK_02</LocName>
+      <LocDesc>WCD_PROSMG_STOCK_02</LocDesc>
+      <AttachBone>AAPBarrel</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="true" />
+      <CreateObject value="true" />
+	  <ApplyWeaponTint value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="10" />
+      <HudRange value="0" />
+    </Item>
+    <Item type="CWeaponComponentSuppressorInfo">
+      <Name>COMPONENT_PROSMG_SUPPRESSOR_01</Name>
+      <Model>w_sb_prosmg_supp1</Model>
+      <LocName>WCT_PROSMG_SUPP_01</LocName>
+      <LocDesc>WCD_PROSMG_SUPP_01</LocDesc>
+      <AttachBone>AAPSupp</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="true" />
+      <CreateObject value="true" />
+      <ApplyWeaponTint value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="5" />
+      <HudRange value="0" />
+      <MuzzleBone>Gun_SuMuzzle</MuzzleBone>
+      <FlashFx>muz_pistol_silencer</FlashFx>
+    </Item>
+	<!--LAST MINUTE CUT-->
+    <!--<Item type="CWeaponComponentSuppressorInfo">
+      <Name>COMPONENT_PROSMG_SUPPRESSOR_02</Name>
+      <Model>w_sb_prosmg_supp2</Model>
+      <LocName>WCT_MUZZ</LocName>
+      <LocDesc>WCD_MUZZ</LocDesc>
+      <AttachBone>AAPSupp</AttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="true" />
+      <CreateObject value="true" />
+      <ApplyWeaponTint value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="5" />
+      <HudRange value="0" />
+      <MuzzleBone>Gun_SuMuzzle</MuzzleBone>
+      <FlashFx>muz_pistol_silencer</FlashFx>
+    </Item>-->
+  </Infos>
+  <InfoBlobName>DLC - Micro SMG Mk II</InfoBlobName>
+</CWeaponComponentInfoBlob>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CWeaponModelInfo__InitDataList>
+	<InitDatas>
+	
+		<Item>
+		  <modelName>w_ar_militarycarbine</modelName>
+		  <txdName>w_ar_militarycarbine</txdName>
+		  <ptfxAssetName>NULL</ptfxAssetName>
+		  <lodDist value="50"/>
+		</Item>
+		<Item>
+		  <modelName>w_at_carbine_carryhandle</modelName>
+		  <txdName>w_at_carbine_carryhandle</txdName>
+		  <ptfxAssetName>NULL</ptfxAssetName>
+		  <lodDist value="50"/>
+		</Item>
+		
+
+	</InitDatas>
+</CWeaponModelInfo__InitDataList>

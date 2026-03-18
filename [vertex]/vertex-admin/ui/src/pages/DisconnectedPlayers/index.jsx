@@ -17,6 +17,26 @@ import { Loader } from '../../components';
 
 import Player from './Player';
 
+const inputSx = {
+	'& .MuiOutlinedInput-root': {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 14,
+		color: '#fff',
+		background: 'rgba(255,255,255,0.03)',
+		borderRadius: '2px',
+		'& fieldset': { borderColor: 'rgba(32,134,146,0.2)' },
+		'&:hover fieldset': { borderColor: 'rgba(32,134,146,0.5)' },
+		'&.Mui-focused fieldset': { borderColor: '#208692', borderWidth: '1px' },
+	},
+	'& .MuiInputLabel-root': {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 13,
+		fontWeight: 600,
+		color: 'rgba(255,255,255,0.35)',
+		'&.Mui-focused': { color: '#208692' },
+	},
+};
+
 const useStyles = makeStyles((theme) => ({
 	wrapper: {
 		padding: '20px 10px 20px 20px',
@@ -85,35 +105,6 @@ export default (props) => {
             })).json()
             if (res) setResults(res);
         } catch(e) {
-            // setResults([
-            //     {
-            //         AccountID: 1,
-            //         Source: 1,
-            //         Name: 'Dr Nick',
-            //         Character: {
-            //             First: 'Walter',
-            //             Last: 'Western',
-            //             SID: 3
-            //         },
-            //         Disconnected: true,
-			// 		DisconnectedTime: 1641993114,
-			// 		Reconnected: 6,
-            //     },
-            //     {
-            //         AccountID: 2,
-            //         Source: 2,
-            //         Name: 'Panda',
-            //         // Character: {
-            //         //     First: 'Willy',
-            //         //     Last: 'Western',
-            //         //     SID: 4
-            //         // }
-            //         Disconnected: true,
-			// 		DisconnectedTime: 1641995507,
-			// 		Reconnected: 3,
-            //     },
-            // ])
-            //console.log(e)
         }
 
         setLoading(false);
@@ -139,6 +130,7 @@ export default (props) => {
                             value={searched}
                             onChange={(e) => setSearched(e.target.value)}
                             label="Search"
+                            sx={inputSx}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">

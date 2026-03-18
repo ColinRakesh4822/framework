@@ -1,0 +1,35 @@
+Monitor
+- prop_monitor_w_large
+- sf_prop_sf_monitor_b_02a
+- sf_prop_sf_monitor_stu_01a
+
+Tv
+- prop_tv_flat_01
+- vw_prop_vw_cinema_tv_01
+
+Exterior doors
+
+- puerta_garaje (vehicle garage door)
+- hei_prop_station_gate (rear parking door)
+- prop_facgate_07b  (front parking door)
+- prop_com_gar_door_01 (vanilla mrpd garage doors)
+- puertas_ext_doble_lspd (non automatic ext door)
+- puertas_ext_lspd (non automatic ext door)
+- puerta_automatica_lspd (automatic door)
+
+Interior doors
+- puerta_automatica_lspd (automatic door)
+- sf_prop_sf_door_glass_01a (normal glass door)
+- ch_prop_ch_service_door_01a (gray doors)
+- ch_prop_ch_service_door_02a (gray + big window door)
+- ch_prop_ch_service_door_02d (gray + little window door)
+- p_celdas_pd_puerta (cells door)
+- sf_prop_sf_door_bth_01a (reception black wood doors)
+- sf_prop_sf_door_apt_r_01a (first floor big doors)
+- puerta_secreta_sheriff (sheriff room secret door)
+
+Flags
+- v_corp_bk_flag
+- hei_heist_flag01
+
+[this YTD file is only if you want to change the vanilla logos: hei_heist_dlc_police_txd (not included in MRPD files)]

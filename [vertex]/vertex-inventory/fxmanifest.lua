@@ -1,3 +1,5 @@
+--shared_scripts { '@FiniAC/fini_events.lua' }
+
 fx_version 'cerulean'
 games { 'gta5' } -- 'gta5' for GTAv / 'rdr3' for Red Dead 2, 'gta5','rdr3' for both
 lua54 'yes'
@@ -6,15 +8,17 @@ client_script "@vertex-base/components/cl_error.lua"
 client_script "@vertex-pwnzor/client/check.lua"
 server_script "@oxmysql/lib/MySQL.lua"
 
-description 'Vertex Inventory'
-name 'Vertex: inventory'
-author 'ColinRakesh482'
-version 'v1.0.0'
+description 'ARP Inventory'
+name 'ARP: vertex-inventory'
+author 'Cool People Team (Mainly Alzar)'
+version '1.0.1'
+url 'https://authenticrp.com'
 
-ui_page 'ui/dist/index.html'
+ui_page 'ui/build/index.html'
 
 files {
-    'ui/dist/*.*',
+    'ui/build/*.*',
+    'ui/build/assets/*.*',
     "ui/images/items/*.webp"
 }
 
@@ -23,6 +27,8 @@ client_scripts {
 }
 
 shared_scripts {
+    '@ox_lib/init.lua',
+    
     'config.lua',
     'schematic_config.lua',
     'items/**/*.lua',

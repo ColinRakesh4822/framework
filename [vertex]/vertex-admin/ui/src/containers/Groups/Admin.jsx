@@ -14,6 +14,10 @@ import {
 	DisconnectedPlayers,
 	PlayerView,
 	CurrentVehicle,
+	SearchItems,
+	DoorLockTool,
+	ElevatorTool,
+	PedManagement,
 } from '../../pages';
 
 import Titlebar from '../../components/Titlebar';
@@ -65,6 +69,10 @@ export default () => {
 							<Route exact path="/players" component={Players} />
 							<Route exact path="/disconnected-players" component={DisconnectedPlayers} />
 							<Route exact path="/current-vehicle" component={CurrentVehicle} />
+							<Route exact path="/items-database" component={SearchItems} />
+							<Route exact path="/door-lock-tool" component={DoorLockTool} />
+							<Route exact path="/elevator-tool" component={ElevatorTool} />
+							<Route exact path="/ped-management" component={PedManagement} />
 							<Route exact path="/player/:id" component={PlayerView} />
                             <Route component={Error} />
                         </Switch>

@@ -322,7 +322,7 @@ _itemsSource["loot"] = {
 		metalic = false,
 		weight = 2.5,
 		gemProperties = {
-			prop = "bzzz_prop_mine_diamond_b",
+			color = 67,
 		},
 	},
 	{
@@ -339,7 +339,7 @@ _itemsSource["loot"] = {
 		metalic = false,
 		weight = 0.5,
 		gemProperties = {
-			prop = "bzzz_prop_mine_emerald_b",
+			color = 53,
 		},
 	},
 	{
@@ -356,7 +356,7 @@ _itemsSource["loot"] = {
 		metalic = false,
 		weight = 0.5,
 		gemProperties = {
-			prop = "bzzz_prop_mine_sapphire_b",
+			color = 79,
 		},
 	},
 	{
@@ -373,7 +373,7 @@ _itemsSource["loot"] = {
 		metalic = false,
 		weight = 0.5,
 		gemProperties = {
-			prop = "bzzz_prop_mine_ruby_b",
+			color = 35,
 		},
 	},
 	{
@@ -390,7 +390,7 @@ _itemsSource["loot"] = {
 		metalic = false,
 		weight = 0.5,
 		gemProperties = {
-			prop = "prop_gem_emerald_01",
+			color = 145,
 		},
 	},
 	{
@@ -407,7 +407,7 @@ _itemsSource["loot"] = {
 		metalic = false,
 		weight = 0.5,
 		gemProperties = {
-			prop = "bzzz_prop_mine_gold_b",
+			color = 38,
 		},
 	},
 	{
@@ -424,7 +424,7 @@ _itemsSource["loot"] = {
 		metalic = false,
 		weight = 0.5,
 		gemProperties = {
-			prop = "prop_gem_emerald_01",
+			color = 65,
 		},
 	},
 	{

@@ -69,6 +69,34 @@ const admin = [
 		label: 'Current Vehicle',
 		path: '/current-vehicle',
 		exact:  true,
+	},
+	{
+		name: 'items-database',
+		icon: ['fas', 'box-open'],
+		label: 'Items Database',
+		path: '/items-database',
+		exact: true,
+	},
+	{
+		name: 'door-lock-tool',
+		icon: ['fas', 'door-open'],
+		label: 'Door Lock Tool',
+		path: '/door-lock-tool',
+		exact: true,
+	},
+	{
+		name: 'elevator-tool',
+		icon: ['fas', 'elevator'],
+		label: 'Elevator Tool',
+		path: '/elevator-tool',
+		exact: true,
+	},
+	{
+		name: 'ped-management',
+		icon: ['fas', 'person'],
+		label: 'Ped Management',
+		path: '/ped-management',
+		exact: true,
 	}
 ];
 
@@ -100,5 +128,33 @@ const developer = [
 		label: 'Current Vehicle',
 		path: '/current-vehicle',
 		exact:  true,
+	},
+	{
+		name: 'items-database',
+		icon: ['fas', 'box-open'],
+		label: 'Items Database',
+		path: '/items-database',
+		exact: true,
+	},
+	{
+		name: 'door-lock-tool',
+		icon: ['fas', 'door-open'],
+		label: 'Door Lock Tool',
+		path: '/door-lock-tool',
+		exact: true,
+	},
+	{
+		name: 'elevator-tool',
+		icon: ['fas', 'elevator'],
+		label: 'Elevator Tool',
+		path: '/elevator-tool',
+		exact: true,
+	},
+	{
+		name: 'ped-management',
+		icon: ['fas', 'person'],
+		label: 'Ped Management',
+		path: '/ped-management',
+		exact: true,
 	}
 ];

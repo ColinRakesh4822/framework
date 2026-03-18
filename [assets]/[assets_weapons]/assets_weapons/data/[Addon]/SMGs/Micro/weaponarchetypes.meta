@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CWeaponModelInfo__InitDataList>
+	<InitDatas>
+	
+		<Item>
+			<modelName>w_sb_prosmg</modelName>
+			<txdName>w_sb_prosmg</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>
+		<!--LAST MINUTE CUT-->
+		<!--
+		<Item>
+			<modelName>w_sb_prosmg_mag1</modelName>
+			<txdName>w_sb_prosmg_mag1</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>
+		<Item>
+			<modelName>w_sb_prosmg_mag2</modelName>
+			<txdName>w_sb_prosmg_mag1</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>
+		<Item>
+			<modelName>w_sb_prosmg_mag3</modelName>
+			<txdName>w_sb_prosmg_mag1</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>-->
+		<Item>
+			<modelName>w_sb_prosmg_barrel</modelName>
+			<txdName>w_sb_prosmg_barrel</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>
+		<Item>
+			<modelName>w_sb_prosmg_stock1</modelName>
+			<txdName>w_sb_prosmg</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>
+		<Item>
+			<modelName>w_sb_prosmg_stock2</modelName>
+			<txdName>w_sb_prosmg</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>
+		<Item>
+			<modelName>w_sb_prosmg_supp1</modelName>
+			<txdName>w_sb_prosmg_supp1</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>
+		<!--LAST MINUTE CUT-->
+		<!--<Item>
+			<modelName>w_sb_prosmg_supp2</modelName>
+			<txdName>w_sb_prosmg_supp2</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="30"/>
+		</Item>-->
+
+	</InitDatas>
+</CWeaponModelInfo__InitDataList>

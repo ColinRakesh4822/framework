@@ -1,24 +1,24 @@
 _entityTypes = {
 	{
 		id = 1,
-		slots = 28,
+		slots = 30,
 		capacity = 200,
-		name = "Personal Storage",
+		name = 'Personal Storage',
 	},
 	{
 		id = 2,
 		slots = 500,
 		capacity = 2000,
-		name = "Player Holding",
+		name = 'Player Holding',
 	},
 	{
 		id = 3,
-		slots = 8,
+		slots = 10,
 		capacity = 150,
-		name = "Secured Compartment",
+		name = 'Secured Compartment',
 		restriction = {
 			job = {
-				id = "police",
+				id = 'police',
 				duty = true,
 			},
 		},
@@ -27,15 +27,15 @@ _entityTypes = {
 		id = 4,
 		slots = 20,
 		capacity = 200,
-		name = "Trunk",
+		name = 'Trunk',
 		isVehicle = true,
 		isTrunk = true,
 	},
 	{
 		id = 5,
-		slots = 4,
+		slots = 5,
 		capacity = 200,
-		name = "Glovebox",
+		name = 'Glovebox',
 		isVehicle = true,
 		isGlovebox = true,
 	},
@@ -44,27 +44,25 @@ _entityTypes = {
 		slots = 40,
 		capacity = 200,
 		shop = true,
-		IsShop = true,
 		itemSet = 18,
-		name = "Liquor Store",
+		name = 'Liquor Store',
 	},
 	{
 		id = 7,
 		slots = 40,
 		capacity = 200,
 		shop = true,
-		IsShop = true,
 		itemSet = 2,
-		name = "Hardware Store",
+		name = 'Hardware Store',
 	},
 	{
 		id = 8,
 		slots = 30,
 		capacity = 10000,
-		name = "Police Evidence",
+		name = 'Police Evidence',
 		restriction = {
 			job = {
-				id = "police",
+				id = 'police',
 				duty = true,
 			},
 		},
@@ -73,10 +71,10 @@ _entityTypes = {
 		id = 9,
 		slots = 500,
 		capacity = 200,
-		name = "Police Trash",
+		name = 'Police Trash',
 		restriction = {
 			job = {
-				id = "police",
+				id = 'police',
 				duty = true,
 			},
 		},
@@ -85,170 +83,165 @@ _entityTypes = {
 		id = 10,
 		slots = 40,
 		capacity = 1000,
-		name = "Dropzone",
+		name = 'Dropzone',
 	},
 	{
 		id = 11,
 		slots = 40,
 		capacity = 200,
 		shop = true,
-		IsShop = true,
 		itemSet = 1,
-		name = "Shop",
+		name = 'Shop',
 	},
 	{
 		id = 12,
 		slots = 40,
 		capacity = 200,
 		shop = true,
-		IsShop = false,
 		itemSet = 4,
-		name = "Ammunation",
+		name = 'Ammunation',
 	},
 	{
 		id = 13,
 		slots = 20,
 		capacity = 400,
-		name = "Apartment Storage Tier 1",
+		name = 'Apartment Storage Tier 1',
 	},
 	{
 		id = 14,
-		slots = 24,
+		slots = 25,
 		capacity = 450,
-		name = "Apartment Storage Tier 2",
+		name = 'Apartment Storage Tier 2',
 	},
 	{
 		id = 15,
-		slots = 28,
+		slots = 30,
 		capacity = 500,
-		name = "Apartment Storage Tier 3",
+		name = 'Apartment Storage Tier 3',
 	},
 	{
 		id = 16,
 		slots = 50,
 		capacity = 200,
-		name = "Trash Container",
+		name = 'Trash Container',
 	},
 	{
 		id = 17,
 		slots = 400,
 		capacity = 200,
-		name = "Shipping Container",
+		name = 'Shipping Container',
 	},
 	{
 		id = 18,
 		slots = 800,
 		capacity = 200,
-		name = "Warehouse",
+		name = 'Warehouse',
 	},
 	{
 		id = 19,
-		slots = 4,
+		slots = 5,
 		capacity = 8,
-		name = "Drinks Holder",
+		name = 'Drinks Holder',
 	},
 	{
 		id = 20,
-		slots = 8,
+		slots = 10,
 		capacity = 10,
-		name = "Small Food Bag",
+		name = 'Small Food Bag',
 	},
 	{
 		id = 21,
-		slots = 8,
+		slots = 10,
 		capacity = 15,
-		name = "Food Bag",
+		name = 'Food Bag',
 	},
 	{
 		id = 22,
-		slots = 16,
+		slots = 20,
 		capacity = 50,
-		name = "Box",
+		name = 'Box',
 	},
 	{
 		id = 23,
-		slots = 152,
+		slots = 155,
 		capacity = 2000,
-		name = "Burger Shot Freezer",
+		name = 'Burger Shot Freezer',
 		restriction = {
 			job = {
-				id = "burgershot",
+				id = 'burgershot',
 			},
 		},
 	},
 	{
 		id = 24,
-		slots = 52,
+		slots = 55,
 		capacity = 500,
-		name = "Burger Shot Food Warmer",
+		name = 'Burger Shot Food Warmer',
 		restriction = {
 			job = {
-				id = "burgershot",
+				id = 'burgershot',
 			},
 		},
 	},
 	{
 		id = 25,
-		slots = 8,
+		slots = 10,
 		capacity = 100,
-		name = "Order Pick Up",
+		name = 'Order Pick Up',
 	},
 	{
 		id = 26,
-		slots = 32,
+		slots = 35,
 		capacity = 200,
-		name = "Medical Supply",
+		name = 'Medical Supply',
 		shop = true,
-		IsShop = false,
 		free = true,
 		itemSet = 7,
 		restriction = {
 			job = {
-				id = "ems",
+				id = 'ems',
 				duty = true,
 			},
 		},
 	},
 	{
 		id = 27,
-		slots = 32,
+		slots = 35,
 		capacity = 200,
-		name = "PD Armory",
+		name = 'PD Armory',
 		shop = true,
-		IsShop = false,
 		free = true,
 		itemSet = 6,
 		restriction = {
 			job = {
-				id = "police",
+				id = 'police',
 				duty = true,
 			},
 		},
 	},
 	{
 		id = 28,
-		slots = 16,
+		slots = 20,
 		capacity = 100,
-		name = "Hunting Supplies",
+		name = 'Hunting Supplies',
 		shop = true,
-		IsShop = true,
 		itemSet = 8,
 	},
 	{
 		id = 29,
 		slots = 2,
 		capacity = 10,
-		name = "Hidden Compartment",
+		name = 'Hidden Compartment',
 		isVehicle = true,
 	},
 	{
 		id = 30,
-		slots = 48,
+		slots = 50,
 		capacity = 300,
-		name = "Last Train Food Warmer",
+		name = 'Last Train Food Warmer',
 		restriction = {
 			job = {
-				id = "lasttrain",
+				id = 'lasttrain',
 			},
 		},
 	},
@@ -256,10 +249,10 @@ _entityTypes = {
 		id = 31,
 		slots = 160,
 		capacity = 3500,
-		name = "Last Train Cold Storage",
+		name = 'Last Train Cold Storage',
 		restriction = {
 			job = {
-				id = "lasttrain",
+				id = 'lasttrain',
 			},
 		},
 	},
@@ -268,10 +261,10 @@ _entityTypes = {
 		id = 32,
 		slots = 120,
 		capacity = 8000,
-		name = "Redline Part Storage",
+		name = 'Redline Part Storage',
 		restriction = {
 			job = {
-				id = "redline",
+				id = 'redline',
 			},
 		},
 	},
@@ -279,10 +272,10 @@ _entityTypes = {
 		id = 33,
 		slots = 60,
 		capacity = 600,
-		name = "Mirror Autos Part Storage",
+		name = 'Mirror Autos Part Storage',
 		restriction = {
 			job = {
-				id = "mirror_autos",
+				id = 'mirror_autos',
 			},
 		},
 	},
@@ -290,10 +283,10 @@ _entityTypes = {
 		id = 34,
 		slots = 60,
 		capacity = 600,
-		name = "Hayes Part Storage",
+		name = 'Hayes Part Storage',
 		restriction = {
 			job = {
-				id = "hayes_autos",
+				id = 'hayes_autos',
 			},
 		},
 	},
@@ -301,10 +294,10 @@ _entityTypes = {
 		id = 35,
 		slots = 60,
 		capacity = 600,
-		name = "Harmony Part Storage",
+		name = 'Harmony Part Storage',
 		restriction = {
 			job = {
-				id = "harmony_repairs",
+				id = 'harmony_repairs',
 			},
 		},
 	},
@@ -312,10 +305,10 @@ _entityTypes = {
 		id = 36,
 		slots = 60,
 		capacity = 600,
-		name = "Paleto Garage Part Storage",
+		name = 'Paleto Garage Part Storage',
 		restriction = {
 			job = {
-				id = "paleto_garage",
+				id = 'paleto_garage',
 			},
 		},
 	},
@@ -324,106 +317,99 @@ _entityTypes = {
 		id = 47,
 		slots = 60,
 		capacity = 4000,
-		name = "Redline Mini Storage",
+		name = 'Redline Mini Storage',
 		restriction = {
 			job = {
-				id = "redline",
+				id = 'redline',
 			},
 		},
 	},
 	{
 		id = 37,
-		slots = 32,
+		slots = 35,
 		capacity = 200,
-		name = "DOC Armory",
+		name = 'DOC Armory',
 		shop = true,
-		IsShop = false,
 		free = true,
 		itemSet = 9,
 		restriction = {
 			job = {
-				id = "prison",
+				id = 'prison',
 				duty = true,
-				workplace = "corrections",
+				workplace = 'corrections',
 			},
 		},
 	},
 	{
 		id = 38,
-		slots = 8,
+		slots = 10,
 		capacity = 200,
-		name = "Vending",
+		name = 'Vending',
 		shop = true,
-		IsShop = false,
 		itemSet = 10,
 	},
 	{
 		id = 39,
-		slots = 8,
+		slots = 10,
 		capacity = 200,
-		name = "Vending",
+		name = 'Vending',
 		shop = true,
-		IsShop = false,
 		itemSet = 11,
 	},
 	{ -- Drinks
 		id = 40,
-		slots = 8,
+		slots = 10,
 		capacity = 200,
-		name = "Vending",
+		name = 'Vending',
 		shop = true,
-		IsShop = false,
 		itemSet = 12,
 	},
 	{ -- Food
 		id = 41,
-		slots = 8,
+		slots = 10,
 		capacity = 200,
-		name = "Vending",
+		name = 'Vending',
 		shop = true,
-		IsShop = false,
 		itemSet = 13,
 	},
 	{ -- Pharmacy
 		id = 42,
-		slots = 32,
+		slots = 35,
 		capacity = 200,
-		name = "Pharmacy",
+		name = 'Pharmacy',
 		shop = true,
-		IsShop = true,
 		itemSet = 14,
 	},
 	{ -- Fuel Pump
 		id = 43,
-		slots = 8,
+		slots = 10,
 		capacity = 200,
-		name = "Fuel Stations",
+		name = 'Fuel Stations',
 		shop = true,
-		IsShop = false,
 		itemSet = 15,
 	},
 	{
 		id = 44,
 		slots = 120,
 		capacity = 5000,
-		name = "PD Evidence Locker",
+		name = 'PD Evidence Locker',
 	},
 	{
 		id = 45,
-		slots = 24,
+		slots = 25,
 		capacity = 200,
-		name = "Personal Government Locker",
+		name = 'Personal Government Locker',
 	},
 	{
 		id = 46,
 		slots = 60,
 		capacity = 400,
-		name = "DOJ Safe",
+		name = 'DOJ Safe',
 		restriction = {
 			job = {
-				id = "government",
-				workplace = "doj",
-				grade = "sjudge",
+				id = 'government',
+				workplace = 'doj',
+				grade = 'sjudge',
 			},
 		},
 	},
@@ -432,10 +418,10 @@ _entityTypes = {
 		id = 49,
 		slots = 60,
 		capacity = 3000,
-		name = "Tuner Part Storage",
+		name = 'Tuner Part Storage',
 		restriction = {
 			job = {
-				id = "tuna",
+				id = 'tuna',
 			},
 		},
 	},
@@ -444,131 +430,131 @@ _entityTypes = {
 		id = 50,
 		slots = 30,
 		capacity = 300,
-		name = "Tuner Mini Storage",
+		name = 'Tuner Mini Storage',
 		restriction = {
 			job = {
-				id = "tuna",
+				id = 'tuna',
 			},
 		},
 	},
 
 	{
 		id = 51,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Redline Safe",
+		name = 'Redline Safe',
 		restriction = {
 			job = {
-				id = "redline",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'redline',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 52,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Sterling Construction Safe",
+		name = 'Sterling Construction Safe',
 		restriction = {
 			job = {
-				id = "sterling_construction",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'sterling_construction',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 53,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Pizza This Safe",
+		name = 'Pizza This Safe',
 		restriction = {
 			job = {
-				id = "pizza_this",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'pizza_this',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 54,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Avast Arcade Safe",
+		name = 'Avast Arcade Safe',
 		restriction = {
 			job = {
-				id = "avast_arcade",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'avast_arcade',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 55,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "UwU Cafe Safe",
+		name = 'UwU Cafe Safe',
 		restriction = {
 			job = {
-				id = "uwu",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'uwu',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 56,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "PDM Safe",
+		name = 'PDM Safe',
 		restriction = {
 			job = {
-				id = "pdm",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'pdm',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 57,
-		slots = 108,
+		slots = 110,
 		capacity = 2000,
-		name = "UwU Cafe Freezer",
+		name = 'UwU Cafe Freezer',
 		restriction = {
 			job = {
-				id = "uwu",
+				id = 'uwu',
 			},
 		},
 	},
 
 	{
 		id = 58,
-		slots = 16,
+		slots = 20,
 		capacity = 200,
-		name = "UwU Cafe",
+		name = 'UwU Cafe',
 		restriction = {
 			job = {
-				id = "uwu",
+				id = 'uwu',
 			},
 		},
 	},
 
 	{
 		id = 59,
-		slots = 96,
+		slots = 100,
 		capacity = 2000,
-		name = "Pizza This Freezer",
+		name = 'Pizza This Freezer',
 		restriction = {
 			job = {
-				id = "pizza_this",
+				id = 'pizza_this',
 			},
 		},
 	},
 
 	{
 		id = 60,
-		slots = 32,
+		slots = 35,
 		capacity = 600,
-		name = "Pizza This",
+		name = 'Pizza This',
 		restriction = {
 			job = {
-				id = "pizza_this",
+				id = 'pizza_this',
 			},
 		},
 	},
@@ -578,86 +564,84 @@ _entityTypes = {
 		slots = 40,
 		capacity = 1000,
 		shop = true,
-		IsShop = true,
 		itemSet = 16,
-		name = "Food Wholesaler",
+		name = 'Food Wholesaler',
 		restriction = {
 			job = {
 				id = false,
-				permissionKey = "JOB_USE_WHOLESALER",
+				permissionKey = 'JOB_USE_WHOLESALER',
 			},
 		},
 	},
 
 	{
 		id = 62,
-		slots = 4,
+		slots = 5,
 		capacity = 1000,
 		shop = true,
-		IsShop = true,
 		itemSet = 17,
-		name = "Smoke on the Water",
+		name = 'Smoke on the Water',
 	},
 	{
 		id = 63,
-		slots = 64,
+		slots = 65,
 		capacity = 3000,
-		name = "Sterling Construction",
+		name = 'Sterling Construction',
 		restriction = {
 			job = {
-				id = "sterling_construction",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'sterling_construction',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 64,
-		slots = 64,
+		slots = 65,
 		capacity = 3000,
-		name = "Blackline",
+		name = 'Blackline',
 		restriction = {
 			job = {
-				id = "blackline",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'blackline',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 65,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Tuna Safe",
+		name = 'Tuna Safe',
 		restriction = {
 			job = {
-				id = "tuna",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'tuna',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 66,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Triad Safe",
+		name = 'Triad Safe',
 		restriction = {
 			job = {
-				id = "triad",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'triad',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 67,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Bowling Safe",
+		name = 'Bowling Safe',
 		restriction = {
 			job = {
-				id = "bowling",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'bowling',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
@@ -666,10 +650,10 @@ _entityTypes = {
 		id = 68,
 		slots = 60,
 		capacity = 500,
-		name = "Bobs Balls Fridge",
+		name = 'Bobs Balls Fridge',
 		restriction = {
 			job = {
-				id = "bowling",
+				id = 'bowling',
 			},
 		},
 	},
@@ -678,10 +662,10 @@ _entityTypes = {
 		id = 69,
 		slots = 140,
 		capacity = 3000,
-		name = "UwU Cafe Storage",
+		name = 'UwU Cafe Storage',
 		restriction = {
 			job = {
-				id = "uwu",
+				id = 'uwu',
 			},
 		},
 	},
@@ -690,33 +674,33 @@ _entityTypes = {
 		id = 70,
 		slots = 80,
 		capacity = 1200,
-		name = "2 Buen Vino Rd Storage",
+		name = '2 Buen Vino Rd Storage',
 		restriction = {
 			job = {
-				id = "dgang",
+				id = 'dgang',
 			},
 		},
 	},
 
 	{
 		id = 71,
-		slots = 164,
+		slots = 165,
 		capacity = 4000,
-		name = "Tire Nutz Part Storage",
+		name = 'Tire Nutz Part Storage',
 		restriction = {
 			job = {
-				id = "tirenutz",
+				id = 'tirenutz',
 			},
 		},
 	},
 	{
 		id = 72,
-		slots = 164,
+		slots = 165,
 		capacity = 4000,
-		name = "Hayes Part Storage",
+		name = 'Hayes Part Storage',
 		restriction = {
 			job = {
-				id = "hayes",
+				id = 'hayes',
 			},
 		},
 	},
@@ -724,53 +708,51 @@ _entityTypes = {
 		id = 73,
 		slots = 100,
 		capacity = 2000,
-		name = "Atomic Part Storage",
+		name = 'Atomic Part Storage',
 		restriction = {
 			job = {
-				id = "atomic",
+				id = 'atomic',
 			},
 		},
 	},
 	{
 		id = 74,
-		slots = 16,
+		slots = 20,
 		capacity = 1000,
 		shop = true,
-		IsShop = true,
 		itemSet = 5,
-		name = "Digital Den",
+		name = 'Digital Den',
 	},
 
 	{
 		id = 75,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Hayes Safe",
+		name = 'Hayes Safe',
 		restriction = {
 			job = {
-				id = "hayes",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'hayes',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 76,
-		slots = 4,
+		slots = 5,
 		capacity = 200,
 		shop = true,
-		IsShop = true,
 		itemSet = 19,
-		name = "Winery",
+		name = 'Winery',
 	},
 
 	{
 		id = 77,
 		slots = 40,
 		capacity = 150,
-		name = "Pizza This Wine Cellar",
+		name = 'Pizza This Wine Cellar',
 		restriction = {
 			job = {
-				id = "pizza_this",
+				id = 'pizza_this',
 			},
 		},
 	},
@@ -779,10 +761,10 @@ _entityTypes = {
 		id = 78,
 		slots = 80,
 		capacity = 1000,
-		name = "Avast Arcade Fridge",
+		name = 'Avast Arcade Fridge',
 		restriction = {
 			job = {
-				id = "avast_arcade",
+				id = 'avast_arcade',
 			},
 		},
 	},
@@ -791,10 +773,10 @@ _entityTypes = {
 		id = 79,
 		slots = 140,
 		capacity = 2000,
-		name = "Bean Machine",
+		name = 'Bean Machine',
 		restriction = {
 			job = {
-				id = "beanmachine",
+				id = 'beanmachine',
 			},
 		},
 	},
@@ -802,80 +784,80 @@ _entityTypes = {
 		id = 80,
 		slots = 140,
 		capacity = 2000,
-		name = "Bean Machine",
+		name = 'Bean Machine',
 		restriction = {
 			job = {
-				id = "beanmachine",
+				id = 'beanmachine',
 			},
 		},
 	},
 
 	{
 		id = 81,
-		slots = 164,
+		slots = 165,
 		capacity = 1500,
-		name = "Tequi-la-la Storage",
+		name = 'Tequi-la-la Storage',
 		restriction = {
 			job = {
-				id = "tequila",
+				id = 'tequila',
 			},
 		},
 	},
 	{
 		id = 82,
-		slots = 64,
+		slots = 65,
 		capacity = 800,
-		name = "Tequi-la-la Fridge",
+		name = 'Tequi-la-la Fridge',
 		restriction = {
 			job = {
-				id = "tequila",
+				id = 'tequila',
 			},
 		},
 	},
 
 	{
 		id = 83,
-		slots = 164,
+		slots = 165,
 		capacity = 5000,
-		name = "Vanilla Unicorn Storage",
+		name = 'Vanilla Unicorn Storage',
 		restriction = {
 			job = {
-				id = "unicorn",
+				id = 'unicorn',
 			},
 		},
 	},
 	{
 		id = 84,
-		slots = 64,
+		slots = 65,
 		capacity = 800,
-		name = "Vanilla Unicorn Fridge",
+		name = 'Vanilla Unicorn Fridge',
 		restriction = {
 			job = {
-				id = "unicorn",
+				id = 'unicorn',
 			},
 		},
 	},
 	{
 		id = 85,
-		slots = 60,
+		slots = 55,
 		capacity = 1200,
-		name = "VU Safe",
+		name = 'VU Safe',
 		restriction = {
 			job = {
-				id = "unicorn",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'unicorn',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 86,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Dynasty8 Safe",
+		name = 'Dynasty8 Safe',
 		restriction = {
 			job = {
-				id = "realestate",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'realestate',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
@@ -883,21 +865,21 @@ _entityTypes = {
 		id = 87,
 		slots = 140,
 		capacity = 2000,
-		name = "Bakery Storage",
+		name = 'Bakery Storage',
 		restriction = {
 			job = {
-				id = "bakery",
+				id = 'bakery',
 			},
 		},
 	},
 	{
 		id = 88,
-		slots = 32,
+		slots = 35,
 		capacity = 600,
-		name = "Bakery",
+		name = 'Bakery',
 		restriction = {
 			job = {
-				id = "bakery",
+				id = 'bakery',
 			},
 		},
 	},
@@ -906,22 +888,22 @@ _entityTypes = {
 		id = 89,
 		slots = 140,
 		capacity = 4000,
-		name = "Noodle Exchange Freezer",
+		name = 'Noodle Exchange Freezer',
 		restriction = {
 			job = {
-				id = "noodle",
+				id = 'noodle',
 			},
 		},
 	},
 
 	{
 		id = 90,
-		slots = 32,
+		slots = 35,
 		capacity = 600,
-		name = "Noodle Exchange",
+		name = 'Noodle Exchange',
 		restriction = {
 			job = {
-				id = "noodle",
+				id = 'noodle',
 			},
 		},
 	},
@@ -930,102 +912,102 @@ _entityTypes = {
 		id = 91,
 		slots = 200,
 		capacity = 2,
-		name = "Card Holder",
+		name = 'Card Holder',
 	},
 
 	{
 		id = 92,
 		slots = 164,
 		capacity = 4000,
-		name = "Harmony Part Storage",
+		name = 'Harmony Part Storage',
 		restriction = {
 			job = {
-				id = "harmony",
+				id = 'harmony',
 			},
 		},
 	},
 
 	{
 		id = 93,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Nutz Safe",
+		name = 'Nutz Safe',
 		restriction = {
 			job = {
-				id = "tirenutz",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'tirenutz',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 94,
-		slots = 164,
+		slots = 165,
 		capacity = 4000,
-		name = "Smoke on the Water",
+		name = 'Smoke on the Water',
 		restriction = {
 			job = {
-				id = "weed",
+				id = 'weed',
 			},
 		},
 	},
 	{
 		id = 95,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Smoke on the Water Safe",
+		name = 'Smoke on the Water Safe',
 		restriction = {
 			job = {
-				id = "weed",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'weed',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 96,
-		slots = 64,
+		slots = 65,
 		capacity = 800,
-		name = "Triad Fridge",
+		name = 'Triad Fridge',
 		restriction = {
 			job = {
-				id = "triad",
+				id = 'triad',
 			},
 		},
 	},
 	{
 		id = 97,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Tequi-la-la Safe",
+		name = 'Tequi-la-la Safe',
 		restriction = {
 			job = {
-				id = "tequila",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'tequila',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 98,
-		slots = 164,
+		slots = 165,
 		capacity = 4000,
-		name = "Traid Records Storage",
+		name = 'Traid Records Storage',
 		restriction = {
 			job = {
-				id = "triad",
+				id = 'triad',
 			},
 		},
 	},
 
 	{
 		id = 100,
-		slots = 48,
+		slots = 50,
 		capacity = 1500,
-		name = "Digital Den Small Storage",
+		name = 'Digital Den Small Storage',
 		restriction = {
 			job = {
-				id = "digitalden",
+				id = 'digitalden',
 			},
 		},
 	},
@@ -1033,69 +1015,69 @@ _entityTypes = {
 		id = 101,
 		slots = 80,
 		capacity = 3000,
-		name = "Digital Den Storage",
+		name = 'Digital Den Storage',
 		restriction = {
 			job = {
-				id = "digitalden",
+				id = 'digitalden',
 			},
 		},
 	},
 	{
 		id = 102,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Digital Den Safe",
+		name = 'Digital Den Safe',
 		restriction = {
 			job = {
-				id = "digitalden",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'digitalden',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 103,
-		slots = 164,
+		slots = 165,
 		capacity = 4000,
-		name = "Super Performance Part Storage",
+		name = 'Super Performance Part Storage',
 		restriction = {
 			job = {
-				id = "superperformance",
+				id = 'superperformance',
 			},
 		},
 	},
 	{
 		id = 104,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Super Performance Safe",
+		name = 'Super Performance Safe',
 		restriction = {
 			job = {
-				id = "superperformance",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'superperformance',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 	{
 		id = 105,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Noodle Exchange Safe",
+		name = 'Noodle Exchange Safe',
 		restriction = {
 			job = {
-				id = "noodle",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'noodle',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 106,
-		slots = 156,
+		slots = 160,
 		capacity = 8000,
-		name = "Auto Exotics Part Storage",
+		name = 'Auto Exotics Part Storage',
 		restriction = {
 			job = {
-				id = "autoexotics",
+				id = 'autoexotics',
 			},
 		},
 	},
@@ -1103,83 +1085,81 @@ _entityTypes = {
 		id = 107,
 		slots = 100,
 		capacity = 4000,
-		name = "Auto Exotics Mini Storage",
+		name = 'Auto Exotics Mini Storage',
 		restriction = {
 			job = {
-				id = "autoexotics",
+				id = 'autoexotics',
 			},
 		},
 	},
 	{
 		id = 108,
-		slots = 52,
+		slots = 55,
 		capacity = 600,
-		name = "Auto Exotics Safe",
+		name = 'Auto Exotics Safe',
 		restriction = {
 			job = {
-				id = "autoexotics",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'autoexotics',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 109,
-		slots = 164,
+		slots = 165,
 		capacity = 4000,
-		name = "Rockford Records Storage",
+		name = 'Rockford Records Storage',
 		restriction = {
 			job = {
-				id = "rockford_records",
+				id = 'rockford_records',
 			},
 		},
 	},
 
 	{
 		id = 110,
-		slots = 64,
+		slots = 65,
 		capacity = 800,
-		name = "Rockford Records Fridge",
+		name = 'Rockford Records Fridge',
 		restriction = {
 			job = {
-				id = "rockford_records",
+				id = 'rockford_records',
 			},
 		},
 	},
 
 	{
 		id = 111,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Rockford Records Safe",
+		name = 'Rockford Records Safe',
 		restriction = {
 			job = {
-				id = "rockford_records",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'rockford_records',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 99,
-		slots = 16,
+		slots = 20,
 		capacity = 100,
-		name = "Fishing Supplies",
+		name = 'Fishing Supplies',
 		shop = true,
-		IsShop = true,
 		itemSet = 20,
 	},
 	{ -- Advanced Fishing Supplies
 		id = 112,
-		slots = 16,
+		slots = 20,
 		capacity = 100,
-		name = "Reputation Level 3+",
+		name = 'Reputation Level 3+',
 		shop = true,
-		IsShop = true,
 		itemSet = 21,
 		restriction = {
 			rep = {
-				id = "Fishing",
+				id = 'Fishing',
 				level = 3,
 			}
 		},
@@ -1189,38 +1169,37 @@ _entityTypes = {
 		id = 113,
 		slots = 80,
 		capacity = 3000,
-		name = "Gruppe 6 Storage",
+		name = 'Gruppe 6 Storage',
 		restriction = {
 			job = {
-				id = "securoserv",
+				id = 'securoserv',
 			},
 		},
 	},
 	{
 		id = 114,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Gruppe 6 Safe",
+		name = 'Gruppe 6 Safe',
 		restriction = {
 			job = {
-				id = "securoserv",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'securoserv',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 115,
-		slots = 16,
+		slots = 20,
 		capacity = 100,
-		name = "DOJ Shop",
+		name = 'DOJ Shop',
 		shop = true,
-		IsShop = true,
 		itemSet = 22,
 		restriction = {
 			job = {
-				id = "government",
-				workplace = "doj",
+				id = 'government',
+				workplace = 'doj',
 			},
 		},
 	},
@@ -1228,11 +1207,11 @@ _entityTypes = {
 		id = 116,
 		slots = 80,
 		capacity = 3000,
-		name = "DOJ Storage",
+		name = 'DOJ Storage',
 		restriction = {
 			job = {
-				id = "government",
-				workplace = "doj",
+				id = 'government',
+				workplace = 'doj',
 			},
 		},
 	},
@@ -1241,22 +1220,22 @@ _entityTypes = {
 		id = 117,
 		slots = 100,
 		capacity = 8000,
-		name = "Ferrari Pawn Storage",
+		name = 'Ferrari Pawn Storage',
 		restriction = {
 			job = {
-				id = "ferrari_pawn",
+				id = 'ferrari_pawn',
 			},
 		},
 	},
 	{
 		id = 118,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Ferrari Pawn Safe",
+		name = 'Ferrari Pawn Safe',
 		restriction = {
 			job = {
-				id = "ferrari_pawn",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'ferrari_pawn',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
@@ -1266,10 +1245,10 @@ _entityTypes = {
 		id = 119,
 		slots = 120,
 		capacity = 8000,
-		name = "Otto's Part Storage",
+		name = 'Otto\'s Part Storage',
 		restriction = {
 			job = {
-				id = "ottos",
+				id = 'ottos',
 			},
 		},
 	},
@@ -1277,22 +1256,22 @@ _entityTypes = {
 		id = 120,
 		slots = 60,
 		capacity = 4000,
-		name = "Otto's Mini Storage",
+		name = 'Otto\'s Mini Storage',
 		restriction = {
 			job = {
-				id = "ottos",
+				id = 'ottos',
 			},
 		},
 	},
 	{
 		id = 121,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Otto's Safe",
+		name = 'Otto\'s Safe',
 		restriction = {
 			job = {
-				id = "ottos",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'ottos',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
@@ -1301,10 +1280,10 @@ _entityTypes = {
 		id = 122,
 		slots = 120,
 		capacity = 8000,
-		name = "Dreamworks Part Storage",
+		name = 'Dreamworks Part Storage',
 		restriction = {
 			job = {
-				id = "dreamworks",
+				id = 'dreamworks',
 			},
 		},
 	},
@@ -1312,34 +1291,34 @@ _entityTypes = {
 		id = 123,
 		slots = 60,
 		capacity = 4000,
-		name = "Dreamworks Mini Storage",
+		name = 'Dreamworks Mini Storage',
 		restriction = {
 			job = {
-				id = "dreamworks",
+				id = 'dreamworks',
 			},
 		},
 	},
 	{
 		id = 124,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Dreamworks Safe",
+		name = 'Dreamworks Safe',
 		restriction = {
 			job = {
-				id = "dreamworks",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'dreamworks',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 125,
-		slots = 164,
+		slots = 165,
 		capacity = 2500,
-		name = "Casino Storage",
+		name = 'Casino Storage',
 		restriction = {
 			job = {
-				id = "casino",
+				id = 'casino',
 			},
 		},
 	},
@@ -1347,46 +1326,46 @@ _entityTypes = {
 		id = 126,
 		slots = 100,
 		capacity = 1000,
-		name = "Casino Fridge",
+		name = 'Casino Fridge',
 		restriction = {
 			job = {
-				id = "casino",
+				id = 'casino',
 			},
 		},
 	},
 	{
 		id = 127,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Casino Safe",
+		name = 'Casino Safe',
 		restriction = {
 			job = {
-				id = "casino",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'casino',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
 
 	{
 		id = 128,
-		slots = 124,
+		slots = 125,
 		capacity = 3000,
-		name = "Cafe Prego Freezer",
+		name = 'Cafe Prego Freezer',
 		restriction = {
 			job = {
-				id = "prego",
+				id = 'prego',
 			},
 		},
 	},
 
 	{
 		id = 129,
-		slots = 64,
+		slots = 65,
 		capacity = 1000,
-		name = "Cafe Prego",
+		name = 'Cafe Prego',
 		restriction = {
 			job = {
-				id = "prego",
+				id = 'prego',
 			},
 		},
 	},
@@ -1395,23 +1374,23 @@ _entityTypes = {
 		id = 130,
 		slots = 40,
 		capacity = 250,
-		name = "Cafe Prego Wine Cellar",
+		name = 'Cafe Prego Wine Cellar',
 		restriction = {
 			job = {
-				id = "prego",
+				id = 'prego',
 			},
 		},
 	},
 
 	{
 		id = 131,
-		slots = 52,
+		slots = 55,
 		capacity = 300,
-		name = "Cafe Prego Safe",
+		name = 'Cafe Prego Safe',
 		restriction = {
 			job = {
-				id = "prego",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'prego',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
@@ -1420,29 +1399,29 @@ _entityTypes = {
 		id = 132,
 		slots = 1,
 		capacity = 25,
-		name = "Gallery Gem Table",
+		name = 'Gallery Gem Table',
 		restriction = {
 			job = {
-				id = "sagma",
-				permissionKey = "JOB_USE_GEM_TABLE",
+				id = 'sagma',
+				permissionKey = 'JOB_USE_GEM_TABLE',
 			},
 		},
 		action = {
-			icon = "gem",
-			text = "Inspect",
-			event = "Businesses:Server:SAGMA:ViewGem",
+			icon = 'gem',
+			text = 'Inspect',
+			event = 'Businesses:Server:SAGMA:ViewGem',
 		}
 	},
 
 	{
 		id = 133,
-		slots = 116,
+		slots = 120,
 		capacity = 300,
-		name = "SAGMA Safe",
+		name = 'SAGMA Safe',
 		restriction = {
 			job = {
-				id = "sagma",
-				permissionKey = "JOB_ACCESS_SAFE",
+				id = 'sagma',
+				permissionKey = 'JOB_ACCESS_SAFE',
 			},
 		},
 	},
@@ -1450,10 +1429,10 @@ _entityTypes = {
 		id = 134,
 		slots = 140,
 		capacity = 4000,
-		name = "Gallery Office Storage",
+		name = 'Gallery Office Storage',
 		restriction = {
 			job = {
-				id = "sagma",
+				id = 'sagma',
 			},
 		},
 	},
@@ -1461,28 +1440,28 @@ _entityTypes = {
 		id = 135,
 		slots = 1000,
 		capacity = 8000,
-		name = "Gallery Supplies",
+		name = 'Gallery Supplies',
 		restriction = {
 			job = {
-				id = "sagma",
+				id = 'sagma',
 			},
 		},
 	},
 
 	{
 		id = 136,
-		slots = 16,
+		slots = 20,
 		capacity = 1200,
-		name = "Large Order Pick Up",
+		name = 'Large Order Pick Up',
 	},
 	{
 		id = 137,
 		slots = 100,
 		capacity = 1000,
-		name = "Fightclub Storage",
+		name = 'Fightclub Storage',
 		restriction = {
 			job = {
-				id = "triad_boxing",
+				id = 'triad_boxing',
 			},
 		},
 	},
@@ -1490,79 +1469,79 @@ _entityTypes = {
 		id = 138,
 		slots = 100,
 		capacity = 1000,
-		name = "Placed Object",
+		name = 'Placed Object',
 	},
 
 	{
 		id = 1000,
-		slots = 64,
+		slots = 80,
 		capacity = 800,
-		name = "Property Storage Tier 1",
+		name = 'Property Storage Tier 1',
 	},
 	{
 		id = 1001,
-		slots = 96,
+		slots = 120,
 		capacity = 1200,
-		name = "Property Storage Tier 2",
+		name = 'Property Storage Tier 2',
 	},
 	{
 		id = 1002,
-		slots = 128,
+		slots = 160,
 		capacity = 1600,
-		name = "Property Storage Tier 3",
+		name = 'Property Storage Tier 3',
 	},
 	{
 		id = 1003,
-		slots = 160,
+		slots = 200,
 		capacity = 2000,
-		name = "Property Storage Tier 4",
+		name = 'Property Storage Tier 4',
 	},
 	{
 		id = 1004,
-		slots = 192,
+		slots = 240,
 		capacity = 2400,
-		name = "Property Storage Tier 5",
+		name = 'Property Storage Tier 5',
 	},
 	{
 		id = 1005,
 		slots = 224,
 		capacity = 2800,
-		name = "Property Storage Tier 6",
+		name = 'Property Storage Tier 6',
 	},
 	{
 		id = 1010,
-		slots = 128,
+		slots = 180,
 		capacity = 1800,
-		name = "Warehouse Storage Tier 1",
+		name = 'Warehouse Storage Tier 1',
 	},
 	{
 		id = 1011,
-		slots = 240,
+		slots = 300,
 		capacity = 3000,
-		name = "Warehouse Storage Tier 2",
+		name = 'Warehouse Storage Tier 2',
 	},
 	{
 		id = 1012,
-		slots = 420,
+		slots = 400,
 		capacity = 4000,
-		name = "Warehouse Storage Tier 3",
+		name = 'Warehouse Storage Tier 3',
 	},
 	{
 		id = 1020,
-		slots = 128,
+		slots = 180,
 		capacity = 1800,
-		name = "Container Storage",
+		name = 'Container Storage',
 	},
 
 	{
 		id = 2000,
 		slots = 600,
 		capacity = 50000,
-		name = "PD Trash Can",
+		name = 'PD Trash Can',
 		trash = true,
 		restriction = {
 			job = {
-				id = "police",
+				id = 'police',
 				duty = true,
 			},
 		},
@@ -1572,45 +1551,123 @@ _entityTypes = {
 		id = 2001,
 		slots = 600,
 		capacity = 50000,
-		name = "EMS Trash Can",
+		name = 'EMS Trash Can',
 		trash = true,
 		restriction = {
 			job = {
-				id = "ems",
-				duty = true,
+				id = 'ems',
 			},
 		},
 	},
 
 	{
-		id = 2001,
+		id = 2002,
 		slots = 600,
 		capacity = 50000,
-		name = "Otto Trash Can",
+		name = 'Otto Trash Can',
 		trash = true,
 		restriction = {
 			job = {
-				id = "ottos",
+				id = 'ottos',
 			},
 		},
 	},
 
 	{
 		id = 3000,
-		slots = 64,
+		slots = 100,
 		capacity = 1000,
-		name = "Storage Unit Tier 1",
+		name = 'Storage Unit Tier 1',
 	},
 	{
 		id = 3001,
-		slots = 128,
+		slots = 200,
 		capacity = 2000,
-		name = "Storage Unit Tier 2",
+		name = 'Storage Unit Tier 2',
 	},
 	{
 		id = 3002,
-		slots = 192,
+		slots = 300,
 		capacity = 3000,
-		name = "Storage Unit Tier 3",
+		name = 'Storage Unit Tier 3',
+	},
+	{
+		id = 4000,
+		slots = 65,
+		capacity = 1000,
+		name = 'Dumpster',
+		trash = true,
+	},
+
+	{
+		id = 5001,
+		slots = 10,
+		capacity = 50,
+		name = 'Small Backpack',
+	},
+	{
+		id = 5002,
+		slots = 20,
+		capacity = 120,
+		name = 'Medium Backpack',
+	},
+	{
+		id = 5003,
+		slots = 50,
+		capacity = 300,
+		name = 'Large Backpack',
+	},
+	{
+		id = 5004,
+		slots = 50,
+		capacity = 150,
+		name = 'Medical Bag',
+	},
+
+	{
+		id = 5005,
+		slots = 40,
+		capacity = 200,
+		shop = true,
+		itemSet = 23,
+		name = 'Café',
+	},
+	{
+		id = 5006,
+		slots = 55,
+		capacity = 300,
+		name = 'Tuner Restricted Storage',
+		restriction = {
+			job = {
+				id = 'tuna',
+				permissionKey = 'JOB_RESTRICTED_STORAGE',
+			},
+		},
+	},
+
+	{
+		id = 5007,
+		slots = 100,
+		capacity = 120,
+		name = 'Military Backpack',
+	},
+	{
+		id = 5008,
+		slots = 100,
+		capacity = 30,
+		name = 'Evidence Bag',
+	},
+	{
+		id = 5009,
+		slots = 250,
+		capacity = 120,
+		name = 'Evidence Bag',
+	},
+
+	{
+		id = 5010,
+		slots = 28,
+		capacity = 28,
+		name = 'Easter Basket',
 	},
 }

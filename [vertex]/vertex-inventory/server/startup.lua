@@ -41,7 +41,7 @@ function ClearDropZones()
 	for k, v in pairs(LoadedEntitys) do
 		if v.trash then
 			local f2 = MySQL.query.await("DELETE FROM inventory WHERE name LIKE '%-?'", { v.id })
-			trash += f2.affectedRows
+			trash = trash + f2.affectedRows
 		end
 	end
 
@@ -54,7 +54,7 @@ end
 function countTable(t)
 	local c = 0
 	for k, v in pairs(t) do
-		c += 1
+		c = c + 1
 	end
 	return c
 end
@@ -87,7 +87,7 @@ function ClearBrokenItems()
 	-- 					)
 	-- 				end
 
-	-- 				checked += 1
+	-- 				checked = checked + 1
 	-- 			end)
 	-- 			-- MySQL.single('SELECT COUNT(*) as Count FROM inventory WHERE item_id = ? AND creationDate <= ?', {
 	-- 			-- 	v.name, deleteTime
@@ -99,14 +99,14 @@ function ClearBrokenItems()
 	-- 			-- 			if d.affectedRows > 0 then
 	-- 			-- 				Logger:Info("Inventory", string.format("^1Cleaned Up ^2%s^1 Degraded ^2%s^7", d.affectedRows, v.name))
 	-- 			-- 			end
-	-- 			-- 			checked += 1
+	-- 			-- 			checked = checked + 1
 	-- 			-- 		end)
 	-- 			-- 	else
-	-- 			-- 		checked += 1
+	-- 			-- 		checked = checked + 1
 	-- 			-- 	end
 	-- 			-- end)
 	-- 		else
-	-- 			checked += 1
+	-- 			checked = checked + 1
 	-- 		end
 	-- 	end
 	-- end)
@@ -312,8 +312,10 @@ function LoadShops()
 			shopLocations[string.format("shop:%s", id)] = v
 		end
 
-		for k, v in pairs(_entityTypes) do
-			storeBankAccounts[v.id] = f.Account
+		if f then
+			for k, v in pairs(_entityTypes) do
+				storeBankAccounts[v.id] = f.Account
+			end
 		end
 
 		Database.Game:find({
@@ -396,6 +398,7 @@ function RegisterCommands()
 		end
 		local char = player:GetData("Character")
 		MySQL.query.await("DELETE FROM inventory WHERE name = ?", { string.format("%s-%s", char:GetData("SID"), 1) })
+		TriggerClientEvent("Weapons:Client:ForceUnequip", char:GetData("Source"))
 		Execute:Client(
 			char:GetData("Source"),
 			"Notification",
@@ -446,23 +449,30 @@ function RegisterCommands()
 	}, 2)
 
 	Chat:RegisterAdminCommand("giveitem", function(source, args, rawCommand)
-		local player = exports["vertex-base"]:FetchComponent("Fetch"):Source(source)
-		local char = player:GetData("Character")
-		local identifier = player:GetData('Identifier')
-		TriggerEvent('Admin:addAdminHistory',identifier, "giveitem", false, "info: ".. table.concat(args, ", "))
+		local targetSID
+		if args[1] == "me" then
+			targetSID = Fetch:Source(source):GetData("Character"):GetData("SID")
+		else
+			targetSID = tonumber(args[1])
+		end
 
-		if tostring(args[1]) ~= nil and tonumber(args[2]) ~= nil then
-			local itemExist = itemsDatabase[args[1]]
+		local player = targetSID and exports["vertex-base"]:FetchComponent("Fetch"):SID(targetSID)
+
+		if player == nil then
+			Execute:Client(source, "Notification", "Error", "This player is not online")
+			return
+		end
+
+		local char = player:GetData("Character")
+
+		if tostring(args[2]) ~= nil and tonumber(args[3]) ~= nil then
+			local itemExist = itemsDatabase[args[2]]
 			if itemExist then
 				if itemExist.type ~= 2 then
-					Inventory:AddItem(char:GetData("SID"), args[1], tonumber(args[2]), {}, 1)
+					Inventory:AddItem(char:GetData("SID"), args[2], tonumber(args[3]), {}, 1)
+					Execute:Client(source, "Notification", "Success", "You gave " .. args[3] .. "x " .. args[2] .. " to " .. tostring(char:GetData("SID")))
 				else
-					Execute:Client(
-						source,
-						"Notification",
-						"Error",
-						"You can only give items with this command, try /giveweapon"
-					)
+					Execute:Client(source, "Notification", "Error", "You can only give items with this command, try /giveweapon")
 				end
 			else
 				Execute:Client(source, "Notification", "Error", "Item not located")
@@ -472,6 +482,10 @@ function RegisterCommands()
 		help = "Give Item",
 		params = {
 			{
+				name = "SID",
+				help = "SID of the Player or 'me' to give to yourself",
+			},
+			{
 				name = "Item Name",
 				help = "The name of the Item",
 			},
@@ -480,39 +494,43 @@ function RegisterCommands()
 				help = "The count of the Item",
 			},
 		},
-	}, 2)
+	}, 3)
 
 	Chat:RegisterAdminCommand("giveweapon", function(source, args, rawCommand)
-		local player = exports["vertex-base"]:FetchComponent("Fetch"):Source(source)
+		local targetSID
+		if args[1] == "me" then
+			targetSID = Fetch:Source(source):GetData("Character"):GetData("SID")
+		else
+			targetSID = tonumber(args[1])
+		end
+
+		local player = targetSID and exports["vertex-base"]:FetchComponent("Fetch"):SID(targetSID)
+
+		if player == nil then
+			Execute:Client(source, "Notification", "Error", "This player is not online")
+			return
+		end
+
 		local char = player:GetData("Character")
-		if tostring(args[1]) ~= nil then
-			local weapon = string.upper(args[1])
+
+		if tostring(args[2]) ~= nil then
+			local weapon = string.upper(args[2])
 			local itemExist = itemsDatabase[weapon]
 			if itemExist then
 				if itemExist.type == 2 then
 					if itemExist.isThrowable then
-						Inventory:AddItem(char:GetData("SID"), weapon, tonumber(args[2]), { ammo = 1, clip = 0 }, 1)
+						Inventory:AddItem(char:GetData("SID"), weapon, tonumber(args[3]), { ammo = 1, clip = 0 }, 1)
 					else
 						local ammo = 0
-						if args[2] ~= nil then
-							ammo = tonumber(args[2])
+						if args[3] ~= nil then
+							ammo = tonumber(args[3])
 						end
 
-						Inventory:AddItem(
-							char:GetData("SID"),
-							weapon,
-							1,
-							{ ammo = ammo, clip = 0, Scratched = args[3] == "1" or nil },
-							1
-						)
+						Inventory:AddItem(char:GetData("SID"), weapon, 1, { ammo = ammo, clip = 0, Scratched = args[4] == "1" or nil }, 1)
 					end
+					Execute:Client(source, "Notification", "Success", "You gave weapon " .. weapon .. " to " .. tostring(char:GetData("SID")))
 				else
-					Execute:Client(
-						source,
-						"Notification",
-						"Error",
-						"You can only give weapons with this command, try /giveitem"
-					)
+					Execute:Client(source, "Notification", "Error", "You can only give weapons with this command, try /giveitem")
 				end
 			else
 				Execute:Client(source, "Notification", "Error", "Weapon not located")
@@ -522,19 +540,23 @@ function RegisterCommands()
 		help = "Give Weapon",
 		params = {
 			{
+				name = "SID",
+				help = "SID of the Player or 'me' to give to yourself",
+			},
+			{
 				name = "Weapon Name",
 				help = "The name of the Weapon",
 			},
 			{
 				name = "Ammo",
-				help = "[Optional] The amount of ammo with the weapon.",
+				help = "The amount of ammo with the weapon.",
 			},
 			{
 				name = "Is Scratched?",
 				help = "Whether to spawn with a normal serial number registered to you, or a scratched serial number (1 = true, 0 = false).",
 			},
 		},
-	}, 3)
+	}, 4)
 
 	Chat:RegisterAdminCommand("vanityitem", function(source, args, rawCommand)
 		local label, image, amount, text, action = args[1], args[2], tonumber(args[3]), args[4], args[5]
@@ -583,26 +605,5 @@ function RegisterCommands()
 	end, {
 		help = "Attempts To Force Reload Inventory Items",
 	}, 0)
-
-	Chat:RegisterCommand("invScale", function(source, args, rawCommand)
-		local scale = tonumber(args[1])
-		if not scale then 
-			return Execute:Client(source, "Notification", "Error", "القيمة المدخلة ليست رقمًا!") 
-		end
-	
-		if scale < 0.5 or scale > 2.0 then
-			return Execute:Client(source, "Notification", "Error", "القيمة يجب أن تكون بين 0.5 و 2.0!") 
-		end
-	
-		TriggerClientEvent("Inventory:Client:ScaleUI", source, scale)
-	end, {
-		help = "Attempts To Force Reload Inventory Items",
-		params = {
-			{
-				name = "Number",
-				help = "between 0.5 to 2.0",
-			},
-		}
-	}, 1)
-
 end
+

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
-import { AppBar, Toolbar, IconButton, Divider } from "@material-ui/core";
+import { AppBar, Toolbar, Divider } from "@material-ui/core";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,57 +12,103 @@ import Nui from "../../util/Nui";
 import Account from "./Account";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    background: theme.palette.secondary.dark,
+  navbar: {
+    backgroundColor: theme.palette.secondary.dark,
     width: "100%",
-    height: 86,
-    zIndex: 100,
+    borderBottom: `1px solid rgba(32,134,146,0.15)`,
+    position: 'relative',
+  },
+  navbarAccent: {
+    position: 'absolute',
+    bottom: 0,
+    left: '10%',
+    right: '10%',
+    height: 1,
+    background: 'linear-gradient(90deg, transparent, rgba(32,134,146,0.5), transparent)',
   },
   logo: {
-    height: 96,
-    padding: 14,
+    height: 86,
+    padding: 12,
     userSelect: "none",
+    filter: 'drop-shadow(0 0 8px rgba(32,134,146,0.3))',
   },
   branding: {
-    marginLeft: 10,
+    marginLeft: 14,
     marginRight: 10,
-    fontSize: 22,
-    "& small": {
-      display: "block",
-      fontSize: 14,
-      color: theme.palette.text.alt,
-    },
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  brandLabel: {
+    fontSize: 9,
+    fontWeight: 600,
+    letterSpacing: '0.3em',
+    textTransform: 'uppercase',
+    color: 'rgba(32,134,146,0.7)',
+    fontFamily: "'Rajdhani', sans-serif",
+    marginBottom: 1,
+  },
+  brandTitle: {
+    fontFamily: "'Orbitron', sans-serif",
+    fontSize: 16,
+    fontWeight: 700,
+    color: '#ffffff',
+    letterSpacing: '0.08em',
+  },
+  title: {
+    flexGrow: 1,
   },
   navLinks: {
     display: "inline-flex",
     alignItems: "center",
     width: "100%",
   },
-  navbar: {
-    backgroundColor: theme.palette.secondary.main,
-    width: "100%",
-    borderBottom: `1px solid ${theme.palette.border.divider}`,
-  },
-  title: {
-    flexGrow: 1,
-  },
   right: {
     display: "inline-flex",
     alignItems: "center",
     marginRight: 10,
+    gap: 2,
   },
   user: {
     marginRight: 10,
     textAlign: "right",
     "& small": {
       display: "block",
-      color: theme.palette.text.alt,
+      fontFamily: "'Rajdhani', sans-serif",
+      fontSize: 11,
+      fontWeight: 600,
+      letterSpacing: '0.15em',
+      textTransform: 'uppercase',
+      color: 'rgba(32,134,146,0.7)',
+    },
+    "& span": {
+      fontFamily: "'Rajdhani', sans-serif",
+      fontSize: 13,
+      color: 'rgba(255,255,255,0.8)',
     },
   },
-  callsign: {
+  iconBtn: {
+    width: 36,
+    height: 36,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'transparent',
+    border: '1px solid transparent',
+    borderRadius: 2,
+    color: 'rgba(255,255,255,0.4)',
     fontSize: 14,
-    color: theme.palette.primary.main,
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    fontFamily: 'inherit',
+    '&:hover': {
+      color: '#208692',
+      borderColor: 'rgba(32,134,146,0.3)',
+      background: 'rgba(32,134,146,0.08)',
+    },
+  },
+  divider: {
+    backgroundColor: 'rgba(32,134,146,0.15)',
+    margin: '8px 6px',
   },
 }));
 
@@ -121,12 +167,13 @@ export default () => {
           onMouseLeave={() => hoverChange(false)}
         >
           <div className={classes.navLinks}>
-            <Link to="/" className={classes.logoLink}>
+            <Link to="/">
               <img src={Logo} className={classes.logo} />
             </Link>
-            <Divider orientation="vertical" flexItem />
+            <Divider orientation="vertical" flexItem className={classes.divider} />
             <div className={classes.branding}>
-              <span>Admin System</span>
+              <span className={classes.brandLabel}>Admin Panel</span>
+              <span className={classes.brandTitle}>Admin System</span>
             </div>
           </div>
         </div>
@@ -134,32 +181,33 @@ export default () => {
           <div className={classes.user}>
             <Account />
           </div>
-          <Divider orientation="vertical" flexItem />
+          <Divider orientation="vertical" flexItem className={classes.divider} />
           {permissionLevel >= 100 && (
-            <IconButton onClick={goInvisible}>
+            <button className={classes.iconBtn} onClick={goInvisible}>
               <FontAwesomeIcon icon={["fas", "eye-slash"]} />
-            </IconButton>
+            </button>
           )}
-          <IconButton onClick={toggleIds}>
+          <button className={classes.iconBtn} onClick={toggleIds}>
             <FontAwesomeIcon icon={["fas", "id-badge"]} />
-          </IconButton>
-          <IconButton onClick={viewSelf}>
+          </button>
+          <button className={classes.iconBtn} onClick={viewSelf}>
             <FontAwesomeIcon icon={["fas", "user-large"]} />
-          </IconButton>
-          <IconButton onClick={onDetach}>
+          </button>
+          <button className={classes.iconBtn} onClick={onDetach}>
             <FontAwesomeIcon icon={["fas", "link-slash"]} />
-          </IconButton>
-          <IconButton onClick={history.goBack}>
+          </button>
+          <button className={classes.iconBtn} onClick={history.goBack}>
             <FontAwesomeIcon icon={["fas", "chevron-left"]} />
-          </IconButton>
-          <IconButton onClick={history.goForward}>
+          </button>
+          <button className={classes.iconBtn} onClick={history.goForward}>
             <FontAwesomeIcon icon={["fas", "chevron-right"]} />
-          </IconButton>
-          <IconButton onClick={onClose}>
+          </button>
+          <button className={classes.iconBtn} onClick={onClose} style={{ color: 'rgba(255,255,255,0.5)' }}>
             <FontAwesomeIcon icon={["fas", "xmark"]} />
-          </IconButton>
+          </button>
         </div>
       </Toolbar>
+      <div className={classes.navbarAccent} />
     </AppBar>
   );
 };

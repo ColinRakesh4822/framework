@@ -1,7 +1,6 @@
 import React from 'react';
 import { CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-//import { Dot } from 'react-animated-dots';
 
 const useStyles = makeStyles((theme) => ({
 	wrapper: {
@@ -11,6 +10,8 @@ const useStyles = makeStyles((theme) => ({
 		position: 'relative',
 		zIndex: 100,
 		marginTop: 10,
+		fontFamily: "'Rajdhani', sans-serif",
+		color: 'rgba(255,255,255,0.7)',
 	},
 	static: {
 		width: 'fit-content',
@@ -25,9 +26,12 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: 22,
 		fontWeight: 'bold',
 		zIndex: 100,
+		fontFamily: "'Rajdhani', sans-serif",
+		color: 'rgba(255,255,255,0.7)',
 	},
 	subtext: {
 		fontSize: 14,
+		color: 'rgba(255,255,255,0.4)',
 	},
 	timer: {
 		position: 'absolute',
@@ -37,15 +41,15 @@ const useStyles = makeStyles((theme) => ({
 		margin: 'auto',
 		height: 'fit-content',
 		width: 'fit-content',
+		fontFamily: "'Orbitron', sans-serif",
+		color: '#208692',
 	},
-	dot1: {
-		color: theme.palette.primary.main,
-	},
-	dot2: {
-		color: theme.palette.text.main,
-	},
-	dot3: {
-		color: theme.palette.primary.main,
+	label: {
+		marginTop: 8,
+		fontSize: 13,
+		fontWeight: 600,
+		letterSpacing: '0.15em',
+		textTransform: 'uppercase',
 	},
 }));
 
@@ -57,7 +61,7 @@ export default (props) => {
 			{Boolean(props.number) && (
 				<span className={classes.timer}>{props.number}</span>
 			)}
-			<div>
+			<div className={classes.label}>
 				{props.text ? props.text : 'Loading Data'}
 			</div>
 			{props.subtext && (

@@ -40,7 +40,6 @@ WEAPON_PROPS = {
     { type = 'weapon', item = "WEAPON_DBSHOTGUN", model = `w_sg_doublebarrel`, x = 0.0, y = 0.0, z = 0.0, rx = 0.0, ry = 0.0, rz = 0.0 },
     { type = 'weapon', item = "WEAPON_SAWNOFFSHOTGUN", model = `w_sg_sawnoff`, x = 0.0, y = 0.0, z = 0.0, rx = 0.0, ry = 0.0, rz = 0.0 },
     { type = 'weapon', item = "WEAPON_SNIPERRIFLE2", model = `w_sr_sniperrifle2`, x = 0.0, y = 0.0, z = 0.0, rx = 0.0, ry = 0.0, rz = 0.0 },
-    { type = 'weapon', item = "WEAPON_PRESSURE1", model = `w_ar_pressure1`, x = 0.0, y = 0.0, z = 0.0, rx = 0.0, ry = 0.0, rz = 0.0 },
     { type = 'melee', item = "KATANA", model = `w_me_katana_lr`, x = 0.35, y = -0.125, z = -0.15, rx = 2.5, ry = -60.0, rz = 0.0 },
     { type = 'melee', item = "WEAPON_MACHETE", model = `w_me_machette_lr`, x = 0.2, y = -0.125, z = -0.15, rx = 5.0, ry = -60.0, rz = 0.0 },
     { type = 'melee', item = "WEAPON_PONY", model = `w_me_PONY`, x = 0.4, y = -0.125, z = -0.25, rx = 5.0, ry = -60.0, rz = 0.0 },
@@ -54,7 +53,7 @@ WEAPON_PROPS = {
     { type = 'object', item = "moneybag", model = `prop_money_bag_01`, bone = `SKEL_PelvisRoot`, x = -0.55, y = -0.11, z = 0.14, rx = 0.0, ry = 90.0, rz = 0.0 },
 }
 
-CreateThread(function()
+Citizen.CreateThread(function()
     if IsDuplicityVersion() then
         for k, v in ipairs(WEAPON_PROPS) do
             WEAPON_PROPS[v.item] = v

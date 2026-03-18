@@ -14,32 +14,42 @@ import MenuItem from './MenuItem';
 
 const useStyles = makeStyles((theme) => ({
 	link: {
-		color: theme.palette.text.main,
-		height: 60,
-		transition: 'color ease-in 0.15s, background-color ease-in 0.15s',
+		color: 'rgba(255,255,255,0.5)',
+		height: 52,
+		transition: 'all 0.2s ease',
+		fontFamily: "'Rajdhani', sans-serif",
+		borderBottom: '1px solid rgba(32,134,146,0.06)',
 		'& svg': {
-			fontSize: 20,
-			transition: 'color ease-in 0.15s',
+			fontSize: 16,
+			transition: 'color 0.2s ease',
+			color: 'rgba(255,255,255,0.3)',
+		},
+		'& .MuiListItemText-primary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 13,
+			fontWeight: 600,
+			letterSpacing: '0.08em',
 		},
 		'&:hover': {
-			color: `${theme.palette.primary.main}`,
+			color: '#ffffff',
+			background: 'rgba(32,134,146,0.05)',
 			cursor: 'pointer',
 			'& svg': {
-				color: `${theme.palette.primary.main}`,
+				color: '#208692',
 			},
 		},
 		'&.active': {
-			color: theme.palette.primary.main,
+			color: '#ffffff',
+			background: 'rgba(32,134,146,0.08)',
 			'& svg': {
-				color: theme.palette.primary.main,
-				'--fa-secondary-opacity': 1.0,
+				color: '#208692',
 			},
 		},
 	},
 	icon: {
         fontSize: '0.75vh',
         transition: '.5s',
-        color: theme.palette.primary.main,
+        color: '#208692',
 	},
 }));
 

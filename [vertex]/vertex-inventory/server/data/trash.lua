@@ -2,15 +2,14 @@ _trashCans = {
 	{
 		id = "pd-trash-1",
 		type = "box",
-		coords = vector3(481.8, -983.87, 30.69),
-		width = 1.4,
-		length = 2.8,
+		coords = vector3(469.13, -997.78, 30.71),
+		width = 1.2,
+		length = 1.2,
 		options = {
 			name = "pd-trash-1",
 			heading = 0,
-			--debugPoly=true,
-			minZ = 29.69,
-			maxZ = 32.09,
+			minZ = 29.5,
+			maxZ = 31.5,
 		},
 		data = {
 			inventory = {
@@ -22,15 +21,14 @@ _trashCans = {
 	{
 		id = "pd-trash-2",
 		type = "box",
-		coords = vector3(474.0, -1005.71, 26.27),
-		width = 2.2,
-		length = 4.8,
+		coords = vector3(462.27, -1004.93, 26.39),
+		width = 1.25,
+		length = 1.25,
 		options = {
 			name = "pd-trash-2",
 			heading = 0,
-			--debugPoly=true,
-			minZ = 25.27,
-			maxZ = 27.47,
+			minZ = 25.5,
+			maxZ = 27.5,
 		},
 		data = {
 			inventory = {
@@ -48,7 +46,6 @@ _trashCans = {
 		options = {
 			name = "pd-trash-3",
 			heading = 319,
-			--debugPoly=true,
 			minZ = 29.2,
 			maxZ = 32.2,
 		},
@@ -68,7 +65,6 @@ _trashCans = {
 		options = {
 			name = "pd-trash-4",
 			heading = 0,
-			--debugPoly=true,
 			minZ = 27.24,
 			maxZ = 29.84,
 		},
@@ -82,15 +78,14 @@ _trashCans = {
 	{
 		id = "pd-trash-5",
 		type = "box",
-		coords = vector3(1857.22, 3690.52, 29.82),
-		width = 4.2,
-		length = 3.2,
+		coords = vector3(1840.452, 3677.569, 34.189),
+		width = 1.0,
+		length = 1.0,
 		options = {
 			name = "pd-trash-5",
-			heading = 298,
-			--debugPoly=true,
-			minZ = 28.82,
-			maxZ = 31.42,
+			heading = 0.0,
+			minZ = 33.5,
+			maxZ = 35.5,
 		},
 		data = {
 			inventory = {
@@ -108,7 +103,6 @@ _trashCans = {
 		options = {
 			name = "pd-trash-6",
 			heading = 315,
-			--debugPoly=true,
 			minZ = 31.29,
 			maxZ = 33.69,
 		},
@@ -120,22 +114,21 @@ _trashCans = {
 		},
 	},
 	{
-		id = "ems-trash-1",
+		id = 'ems-trash-ls-medical',
 		type = "box",
-		coords = vector3(-430.4, -324.46, 34.91),
-		width = 3.8,
-		length = 3.0,
+		coords = vector3(53.09, -386.16, 39.38),
+		width = 4.2,
+		length = 3.5,
 		options = {
-			name = "ems-trash-1",
-			heading = 352,
-			--debugPoly=true,
-			minZ = 33.71,
-			maxZ = 36.31,
+			name ='ems-trash-ls-medical',
+			heading = 70.0,
+			minZ = 38.5,
+			maxZ = 40.5,
 		},
 		data = {
 			inventory = {
 				invType = 2001,
-				owner = "ems-trash-1",
+				owner = 'ems-trash-ls-medical',
 			},
 		},
 	},
@@ -148,14 +141,13 @@ _trashCans = {
 		options = {
 			name = "ottos-trash-1",
 			heading = 5,
-			--debugPoly=true,
 			minZ = 25.33,
 			maxZ = 27.93
 		},
 		data = {
 			business = "ottos",
 			inventory = {
-				invType = 2001,
+				invType = 2002,
 				owner = "ottos-trash-1",
 			},
 		},

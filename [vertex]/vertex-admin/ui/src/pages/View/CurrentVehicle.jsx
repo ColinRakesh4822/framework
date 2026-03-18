@@ -50,6 +50,92 @@ const useStyles = makeStyles((theme) => ({
 	editorField: {
 		marginBottom: 10,
 	},
+	actionBar: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		gap: 6,
+	},
+	actionBtn: {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 12,
+		fontWeight: 700,
+		letterSpacing: '0.1em',
+		textTransform: 'uppercase',
+		background: 'rgba(32,134,146,0.12)',
+		border: '1px solid rgba(32,134,146,0.35)',
+		borderRadius: 2,
+		color: '#208692',
+		padding: '6px 14px',
+		cursor: 'pointer',
+		transition: 'all 0.2s ease',
+		'&:hover': {
+			background: 'rgba(32,134,146,0.25)',
+			borderColor: '#208692',
+			boxShadow: '0 0 12px rgba(32,134,146,0.25)',
+		},
+		'&:disabled': {
+			opacity: 0.3,
+			cursor: 'not-allowed',
+			'&:hover': {
+				background: 'rgba(32,134,146,0.12)',
+				borderColor: 'rgba(32,134,146,0.35)',
+				boxShadow: 'none',
+			},
+		},
+	},
+	actionBtnDanger: {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 12,
+		fontWeight: 700,
+		letterSpacing: '0.1em',
+		textTransform: 'uppercase',
+		background: 'rgba(110,22,22,0.15)',
+		border: '1px solid rgba(161,52,52,0.4)',
+		borderRadius: 2,
+		color: '#a13434',
+		padding: '6px 14px',
+		cursor: 'pointer',
+		transition: 'all 0.2s ease',
+		'&:hover': {
+			background: 'rgba(110,22,22,0.3)',
+			borderColor: '#a13434',
+			boxShadow: '0 0 12px rgba(110,22,22,0.3)',
+		},
+	},
+	sectionLabel: {
+		fontSize: 9,
+		fontWeight: 700,
+		letterSpacing: '0.3em',
+		textTransform: 'uppercase',
+		color: 'rgba(32,134,146,0.5)',
+		fontFamily: "'Rajdhani', sans-serif",
+		marginBottom: 4,
+		paddingLeft: 16,
+		paddingTop: 12,
+	},
+	infoPanel: {
+		background: 'rgba(18, 16, 37, 0.96)',
+		border: '1px solid rgba(32,134,146,0.15)',
+		borderRadius: 2,
+		'& .MuiListItem-root': {
+			borderBottom: '1px solid rgba(32,134,146,0.06)',
+			'&:last-child': { borderBottom: 'none' },
+		},
+		'& .MuiListItemText-primary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 9,
+			fontWeight: 700,
+			letterSpacing: '0.2em',
+			textTransform: 'uppercase',
+			color: 'rgba(32,134,146,0.5)',
+		},
+		'& .MuiListItemText-secondary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 14,
+			fontWeight: 600,
+			color: 'rgba(255,255,255,0.8)',
+		},
+	},
 }));
 
 export default ({ match }) => {
@@ -76,24 +162,6 @@ export default ({ match }) => {
             console.log(err);
             toast.error('Unable to Load');
             setErr(true);
-
-            // setVehicle({
-            //     Make: 'BMW',
-            //     Model: 'i8',
-            //     VIN: 'ASDASDADASDASDASDAD',
-            //     Owned: true,
-            //     Plate: 'asdasd',
-            //     Value: 11111,
-            //     EntityModel: -13123,
-            //     Coords: {
-            //         x: 1,
-            //         y: 1,
-            //         z: 1,
-            //     },
-            //     Heading: 10,
-            //     Seat: 1,
-            //     Fuel: 100,
-            // })
         }
         setLoading(false);
 	};
@@ -152,32 +220,33 @@ export default ({ match }) => {
 				<>
 					<Grid className={classes.wrapper} container spacing={2}>
 						<Grid item xs={12}>
-							<ButtonGroup fullWidth variant="contained">
-								<Button onClick={() => onAction('repair')}>
+							<div className={classes.actionBar}>
+								<button className={classes.actionBtn} onClick={() => onAction('repair')}>
 									Quick Repair
-								</Button>
-                                {permissionLevel >= 90 && <Button onClick={() => onAction('repair_full')}>
+								</button>
+                                {permissionLevel >= 90 && <button className={classes.actionBtn} onClick={() => onAction('repair_full')}>
 									Full Repair
-								</Button>}
-								{permissionLevel >= 90 && <Button onClick={() => onAction('repair_engine')}>
+								</button>}
+								{permissionLevel >= 90 && <button className={classes.actionBtn} onClick={() => onAction('repair_engine')}>
 									Engine Repair
-								</Button>}
-                                {permissionLevel >= 90 && <Button onClick={() => onAction('fuel')}>
+								</button>}
+                                {permissionLevel >= 90 && <button className={classes.actionBtn} onClick={() => onAction('fuel')}>
 									Fuel
-								</Button>}
-                                {permissionLevel >= 90 && <Button onClick={() => onAction('alarm')}>
+								</button>}
+                                {permissionLevel >= 90 && <button className={classes.actionBtn} onClick={() => onAction('alarm')}>
 									Alarm
-								</Button>}
-								{permissionLevel >= 90 && <Button onClick={() => onAction('customs')}>
+								</button>}
+								{permissionLevel >= 90 && <button className={classes.actionBtn} onClick={() => onAction('customs')}>
 									Customs
-								</Button>}
-                                <Button onClick={onRefresh}>
+								</button>}
+                                <button className={classes.actionBtn} onClick={onRefresh}>
 									Refresh
-								</Button>
-							</ButtonGroup>
+								</button>
+							</div>
 						</Grid>
 						<Grid item xs={6}>
-							<List>
+							<div className={classes.sectionLabel}>Vehicle Info</div>
+							<List className={classes.infoPanel}>
                                 <ListItem>
 									<ListItemText
 										primary="Owned"
@@ -235,7 +304,8 @@ export default ({ match }) => {
 							</List>
 						</Grid>
 						<Grid item xs={6}>
-                            <List>
+							<div className={classes.sectionLabel}>Vehicle Status</div>
+                            <List className={classes.infoPanel}>
                                 <ListItem>
                                     <ListItemText
                                         primary="Fuel"
@@ -303,11 +373,11 @@ export default ({ match }) => {
                             </List>
 						</Grid>
 						<Grid item xs={12}>
-							<ButtonGroup fullWidth variant="contained">
-                                {permissionLevel >= 90 && <Button onClick={() => onAction('explode')}>
+							<div className={classes.actionBar}>
+                                {permissionLevel >= 90 && <button className={classes.actionBtnDanger} onClick={() => onAction('explode')}>
 									Explode
-								</Button>}
-							</ButtonGroup>
+								</button>}
+							</div>
 						</Grid>
 					</Grid>
 				</>

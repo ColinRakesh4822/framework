@@ -41,8 +41,8 @@ end
 local timeOut, stressTimeout, alertTimeout = false, false, false
 AddEventHandler('CEventGunShot', function(entities, eventEntity, args)
 	if timeOut then return end
-	if not currentWeapon then return end
-	if _ignored[currentWeapon] then return end
+	local _, curWep = GetCurrentPedWeapon(LocalPlayer.state.ped, true)
+	if not curWep or curWep == `WEAPON_UNARMED` or _ignored[curWep] then return end
 	if eventEntity ~= LocalPlayer.state.ped then return end
 
 	timeOut = true
@@ -50,13 +50,7 @@ AddEventHandler('CEventGunShot', function(entities, eventEntity, args)
 		timeOut = false
 	end)
 
-	if not stressTimeout then
-		stressTimeout = true
-			Status.Modify:Add("PLAYER_STRESS", 1, false, true)
-		SetTimeout(40000, function()
-			stressTimeout = false
-		end)
-	end
+	Status.Modify:Add("PLAYER_STRESS", 2, false, true)
 
 	local luck = math.random(0, 1)
 	if not alertTimeout and LocalPlayer.state.onDuty ~= "police" and luck == 0 then

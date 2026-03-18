@@ -9,7 +9,7 @@ import MenuItemSub from './MenuItemSub';
 
 const useStyles = makeStyles((theme) => ({
 	mainNav: {
-		borderRight: `1px solid ${theme.palette.border.divider}`,
+		borderRight: `1px solid rgba(32,134,146,0.15)`,
 		background: theme.palette.secondary.main,
 		width: '100%',
 		display: 'inline-block',
@@ -17,7 +17,17 @@ const useStyles = makeStyles((theme) => ({
 		height: '97.5%',
 		overflow: 'auto',
 		'&::-webkit-scrollbar': {
-			width: 0,
+			width: 4,
+		},
+		'&::-webkit-scrollbar-thumb': {
+			background: 'rgba(32,134,146,0.3)',
+			borderRadius: 2,
+		},
+		'&::-webkit-scrollbar-thumb:hover': {
+			background: '#208692',
+		},
+		'&::-webkit-scrollbar-track': {
+			background: 'transparent',
 		},
 	},
 	menu: {

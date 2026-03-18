@@ -12,7 +12,10 @@ const useStyles = makeStyles((theme) => ({
 	wrapper: {
 		height: '100%',
 		width: '100%',
-		border: `10px solid #000`,
+		border: '1px solid rgba(32,134,146,0.2)',
+		boxShadow: '0 0 0 1px rgba(32,134,146,0.06), 0 32px 80px rgba(0,0,0,0.7)',
+		borderRadius: 2,
+		backgroundColor: '#121025',
 		transition: 'opacity 500ms',
 	},
 	inner: {

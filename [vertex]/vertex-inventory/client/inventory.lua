@@ -7,10 +7,6 @@ local _openCd = false
 local _hkCd = false
 local _container = nil
 local trunkOpen = false
-local holdingProp = nil
-local notifyid = "GiveItemNotify"
-local cancelNotificationTriggered = false
-local stopSpawningObject = false
 
 function dropAnim(drop)
 	if LocalPlayer.state.doingAction then
@@ -121,7 +117,7 @@ AddEventHandler("Core:Shared:Ready", function()
 			if item.anim and (not item.pbConfig or not item.pbConfig.animation) then
 				Animations.Emotes:Play(item.anim, false, item.time, true)
 			end
-		
+
 			if item.pbConfig ~= nil then
 				Progress:Progress({
 					name = item.pbConfig.name,
@@ -140,13 +136,17 @@ AddEventHandler("Core:Shared:Ready", function()
 						disableCombat = item.pbConfig.disableCombat,
 					},
 				}, function(cancelled)
-					Animations.Emotes:ForceCancel()
+					pcall(function()
+					if Animations and Animations.Emotes then
+						Animations.Emotes:ForceCancel()
+					end
+				end)
 					cb(not cancelled)
 				end)
 			else
 				cb(true)
 			end
-		end)		
+		end)
 
 		CreateVendingMachines()
 	end)
@@ -179,75 +179,80 @@ end)
 RegisterNetEvent("Inventory:Client:Cache", function(inventory, refresh)
 	_cachedInventory = inventory
 
+	-- Send fresh inventory to NUI if it's open
+	if LocalPlayer.state.inventoryOpen then
+		SendNUIMessage({
+			type = "SET_PLAYER_INVENTORY",
+			data = inventory,
+		})
+	end
+
+	-- Update crafting counts if crafting UI is open
+	if LocalPlayer.state.craftingOpen then
+		local counts = {}
+		for _, item in ipairs(inventory.inventory or {}) do
+			if item and item.Name then
+				counts[item.Name] = (counts[item.Name] or 0) + item.Count
+			end
+		end
+		SendNUIMessage({
+			type = "UPDATE_CRAFTING_COUNTS",
+			data = {
+				myCounts = counts,
+			},
+		})
+	end
+
 	if refresh then
 		TriggerEvent("Weapons:Client:Attach")
 	end
 end)
 
 RegisterNetEvent("Inventory:Client:Open", function(inventory, inventory2)
-    if inventory ~= nil then
-        LocalPlayer.state.inventoryOpen = true
+	if inventory ~= nil then
+		LocalPlayer.state.inventoryOpen = true
+		Inventory.Set.Player:Inventory(inventory)
 
-        Inventory.Set.Player:Inventory(inventory)
+		if inventory2 ~= nil then
+			Inventory.Set.Secondary:Inventory(inventory2)
+			Inventory.Set.Secondary.Data.Open = true
+			Inventory.Open:Secondary()
+		else
+			Inventory.Set.Secondary.Data.Open = false
+		end
+		Inventory.Set.Player.Data.Open = true
 
-        if inventory2 ~= nil then
-            Inventory.Set.Secondary:Inventory(inventory2)
-            Inventory.Set.Secondary.Data.Open = true
-            Inventory.Open:Secondary()
-        else
-            Inventory.Set.Secondary.Data.Open = false
-        end
+		if SecondInventory?.invType == 10 then
+			dropAnim(true)
+		end
+		
+		SendNUIMessage({
+			type = "SET_MODE",
+			data = {
+				mode = "inventory",
+			},
+		})
+		SendNUIMessage({
+			type = "APP_SHOW",
+		})
+		SetNuiFocus(true, true)
 
-        Inventory.Set.Player.Data.Open = true
-
-        if SecondInventory?.invType == 10 then
-            dropAnim(true)
-        end
-        
-        -- Set mode to 'shop' if secondary inventory is a shop
-        local modeToSet = "inventory"
-        if inventory2 and inventory2.shop then
-            modeToSet = "shop"
-        end
-        
-        SendNUIMessage({
-            type = "SET_MODE",
-            data = {
-                mode = modeToSet,
-            },
-        })
-        SendNUIMessage({
-            type = "APP_SHOW",
-        })
-        SendNUIMessage({
-            type = "HOTBAR_HIDE",
-        })
-        SetNuiFocus(true, true)
-        CreateThread(function()
-            while LocalPlayer.state.inventoryOpen do
-                Wait(50)
-            end
-            TriggerServerEvent("Inventory:server:closePlayerInventory", LocalPlayer.state.pSID)
-        end)
-    else
-        LocalPlayer.state.inventoryOpen = false
-    end
+		CreateThread(function()
+			while LocalPlayer.state.inventoryOpen do
+				Wait(50)
+			end
+			TriggerServerEvent("Inventory:server:closePlayerInventory", LocalPlayer.state.Character:GetData("SID"))
+		end)
+	else
+		LocalPlayer.state.inventoryOpen = false
+	end
 end)
-
 
 RegisterNetEvent("Inventory:Client:Load", function(inventory, inventory2)
 	if inventory ~= nil then
-		if inventory ~= "skip" then Inventory.Set.Player:Inventory(inventory) end
+		Inventory.Set.Player:Inventory(inventory)
 		if inventory2 ~= nil then
 			Inventory.Set.Secondary:Inventory(inventory2)
-			if inventory2.shop then
-				SendNUIMessage({
-					type = "SET_MODE",
-					data = {
-						mode = "shop",
-					},
-				})
-			end
 		end
 	else
 		LocalPlayer.state.inventoryOpen = false
@@ -272,23 +277,28 @@ AddEventHandler("Vehicles:Client:ExitVehicle", function()
 end)
 
 function PlayTrunkOpenAnim()
-	local playerPed = PlayerPedId()
-	RequestAnimDict('anim@heists@prison_heiststation@cop_reactions')
-	while not HasAnimDictLoaded('anim@heists@prison_heiststation@cop_reactions') do
-		Wait(100)
-	end
-	TaskPlayAnim(playerPed, 'anim@heists@prison_heiststation@cop_reactions', 'cop_b_idle', 3.0, 3.0, -1, 49, 0.0, 0, 0, 0)
-	RemoveAnimDict('anim@heists@prison_heiststation@cop_reactions')
+    local playerPed = PlayerPedId()
+    RequestAnimDict('anim@heists@prison_heiststation@cop_reactions')
+
+    while not HasAnimDictLoaded('anim@heists@prison_heiststation@cop_reactions') do
+        Wait(100)
+    end
+
+    TaskPlayAnim(playerPed, 'anim@heists@prison_heiststation@cop_reactions', 'cop_b_idle', 3.0, 3.0, -1, 49, 0.0, 0, 0, 0)
+
+    RemoveAnimDict('anim@heists@prison_heiststation@cop_reactions')
 end
 
 function PlayTrunkCloseAnim()
 	local playerPed = PlayerPedId()
-	RequestAnimDict('anim@heists@fleeca_bank@scope_out@return_case')
-	while not HasAnimDictLoaded('anim@heists@fleeca_bank@scope_out@return_case') do
-		Wait(100)
-	end
-	TaskPlayAnim(playerPed, 'anim@heists@fleeca_bank@scope_out@return_case', 'trevor_action', 2.0, 2.0, -1, 49, 0.25, 0.0, 0.0, GetEntityHeading(playerPed))
-	RemoveAnimDict('anim@heists@fleeca_bank@scope_out@return_case')
+    RequestAnimDict('anim@heists@fleeca_bank@scope_out@return_case')
+
+    while not HasAnimDictLoaded('anim@heists@fleeca_bank@scope_out@return_case') do
+        Wait(100)
+    end
+
+    TaskPlayAnim( playerPed, 'anim@heists@fleeca_bank@scope_out@return_case', 'trevor_action', 2.0, 2.0, -1, 49, 0.25, 0.0, 0.0, GetEntityHeading(playerPed))
+    RemoveAnimDict('anim@heists@fleeca_bank@scope_out@return_case')
 end
 
 INVENTORY = {
@@ -319,6 +329,7 @@ INVENTORY = {
 				type = "APP_HIDE",
 			})
 			SetNuiFocus(false, false)
+
 			LocalPlayer.state.inventoryOpen = false
 			LocalPlayer.state.craftingOpen = false
 			Inventory.Set.Player.Data.Open = false
@@ -344,20 +355,13 @@ INVENTORY = {
 				ClearPedTasks(PlayerPedId())
 			end
 
-		if Inventory.Set.Secondary.Data.Open then
-			-- Ensure position is included for dropzones
-			local closeData = table.copy(SecondInventory)
-			if closeData.invType == 10 and not closeData.position then
-				local playerPed = PlayerPedId()
-				local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 0, -0.99))
-				closeData.position = vector3(x, y, z)
+			if Inventory.Set.Secondary.Data.Open then
+				Callbacks:ServerCallback("Inventory:CloseSecondary", SecondInventory, function()
+					SecondInventory = {}
+					_container = nil
+					Inventory.Set.Secondary.Data.Open = false
+				end)
 			end
-			Callbacks:ServerCallback("Inventory:CloseSecondary", closeData, function()
-				SecondInventory = {}
-				_container = nil
-				Inventory.Set.Secondary.Data.Open = false
-			end)
-		end
 		end,
 	},
 	Set = {
@@ -378,20 +382,15 @@ INVENTORY = {
 					data = data,
 				})
 			end,
-			Slot = function(self, slot)
+			Slot = function(self, slot, itemData)
 				SendNUIMessage({
 					type = "SET_PLAYER_SLOT",
 					data = {
 						slot = slot,
+						itemData = itemData,
 					},
 				})
 			end,
-			UpdateSlot = function(self, payload)
-				SendNUIMessage({
-					type = "UPDATE_PLAYER_SLOT",
-					data = payload
-				})
-			end
 		},
 		Secondary = {
 			Data = {
@@ -399,34 +398,20 @@ INVENTORY = {
 			},
 			Inventory = function(self, data)
 				Inventory.Set.Secondary.Data.Open = true
-				SecondInventory = data -- Store the full data including shop property
 				SendNUIMessage({
 					type = "SET_SECONDARY_INVENTORY",
 					data = data,
 				})
-				if data and data.shop then
-					SendNUIMessage({
-						type = "SET_MODE",
-						data = {
-							mode = "shop",
-						},
-					})
-				end
 			end,
-			Slot = function(self, slot)
+			Slot = function(self, slot, itemData)
 				SendNUIMessage({
 					type = "SET_SECONDARY_SLOT",
 					data = {
 						slot = slot,
+						itemData = itemData,
 					},
 				})
 			end,
-			UpdateSlot = function(self, payload)
-				SendNUIMessage({
-					type = "UPDATE_SECONDARY_SLOT",
-					data = payload
-				})
-			end
 		},
 	},
 	Used = {
@@ -553,7 +538,7 @@ INVENTORY = {
 			end,
 			HasAnyItems = function(self, items)
 				for k, v in ipairs(items) do
-					if Inventory.Items:Has(v.item, v.count) then
+					if Inventory.Items:Has(v.item, v.count or 1) then
 						return true
 					end
 				end
@@ -749,26 +734,12 @@ RegisterNetEvent("Inventory:Container:Remove", function(data, from)
 	end
 end)
 
-RegisterNetEvent("Inventory:Client:SetSlot", function(owner, type, slot)
+RegisterNetEvent("Inventory:Client:SetSlot", function(owner, type, slot, data)
 	if SecondInventory?.owner == owner and SecondInventory?.invType == type then
-		Inventory.Set.Secondary:Slot(slot)
+		Inventory.Set.Secondary:Slot(slot, data)
 	else
-		Inventory.Set.Player:Slot(slot)
+		Inventory.Set.Player:Slot(slot, data)
 	end
-end)
-
-RegisterNetEvent("Inventory:Client:UpdateSlot", function(owner, invType, slot, slotData)
-    if owner == LocalPlayer.state.pSID and invType == 1 then
-        Inventory.Set.Player:UpdateSlot({
-            slot = slot,
-            data = slotData
-        })
-    elseif SecondInventory.owner == owner and SecondInventory.invType == invType then
-        Inventory.Set.Secondary:UpdateSlot({
-            slot = slot,
-            data = slotData
-        })
-    end
 end)
 
 local runningId = 0
@@ -801,6 +772,8 @@ function OpenInventory()
 		local plate
 		local requestSecondary = false
 		local isPedInVehicle = IsPedInAnyVehicle(playerPed, true)
+		local vehicle = GetVehiclePedIsIn(playerPed, false)
+		local isOnTrain = vehicle and GetVehicleClass(vehicle)
 
 		-- do trunk check here as well maybe?
 		if isPedInVehicle then
@@ -824,8 +797,10 @@ function OpenInventory()
 		elseif not IsPedFalling(playerPed) and not IsPedClimbing(playerPed) and not IsPedDiving(playerPed) and not LocalPlayer.state.playingCasino then
 			local p = promise.new()
 
-			while GetEntitySpeed(playerPed) > 2.5 do
-				Wait(1)
+			if not isOnTrain then
+				while GetEntitySpeed(playerPed) > 2.5 do
+					Wait(1)
+				end
 			end
 
 			if Inventory:IsEnabled() then
@@ -912,100 +887,6 @@ RegisterNUICallback("SwapSlot", function(data, cb)
 	end)
 end)
 
-function RequestaModel(Model)
-    local Request = 0
-    RequestModel(Model)
-    while not HasModelLoaded(Model) and Request < 20 do
-        Citizen.Wait(10)
-        Request = Request + 1
-    end
-    return HasModelLoaded(Model)
-end
-
-CreateThread(function()
-    while true do
-        Wait(250)
-        if LocalPlayer.state.loggedIn and LocalPlayer.state.isGivingItem and not holdingProp and not stopSpawningObject then
-            local itemName = LocalPlayer.state.isGivingItem.name
-            local propThing = LocalPlayer.state.isGivingItem.PropThing
-
-            local itemConfig = Config.itemProps[itemName]
-            local itemConfig2 = Config.itemProps[propThing]
-
-            local propName = (itemConfig and itemConfig.Prop) or (itemConfig2 and itemConfig2.Prop) or "prop_box_ammo07a"
-            local model = joaat(propName)
-
-            Wait(1000)
-
-            local ped = PlayerPedId()
-
-            if not RequestaModel(model) then
-                propName = "prop_box_ammo07a"
-                model = joaat(propName)
-                RequestaModel(model)
-            end
-
-            local obj = CreateObject(model, GetEntityCoords(ped), true, true, true)
-            AttachEntityToEntity(obj, ped, GetPedBoneIndex(ped, 57005), 0.1, 0.0, 0.0, 0.0, 90.0, 0.0, true, true, false, true, 1, true)
-            SetModelAsNoLongerNeeded(model)
-
-            holdingProp = obj
-        elseif (not LocalPlayer.state.isGivingItem or not LocalPlayer.state.loggedIn) and holdingProp then
-            DeleteEntity(holdingProp)
-            holdingProp = nil
-        end
-    end
-end)
-
-AddEventHandler("Keybinds:Client:KeyUp:secondary_action", function()
-	if holdingProp then
-		DeleteEntity(holdingProp)
-		holdingProp = nil
-		Action:Hide()
-		TriggerServerEvent("Inventory:Server:TryGiveItem", nil)
-		stopSpawningObject = true
-		Citizen.SetTimeout(800, function()
-			stopSpawningObject = false
-		end)
-	end
-end)
-
-RegisterNUICallback("GiveItemAction", function(data, cb)
-    cb("OK")
-    TriggerServerEvent("Inventory:Server:TryGiveItem", data)
-	TriggerEvent("Inventory:CloseUI")
-	Action:Show('{keybind}secondary_action{/keybind} Cancel give item')
-end)
-
-RegisterNetEvent('Inventory:Client:GiveItem', function(entity, data)
-	Action:Hide()
-	Action:Hide()
-	Action:Hide()
-
-    if type(entity) == "table" and entity.serverId then
-        Callbacks:ServerCallback("Inventory:Server:TryGiveItem2", entity.serverId, function(data)
-			if data and data ~= nil then
-				Callbacks:ServerCallback("Inventory:MoveItem", data, function(success)
-					if success and success.success then
-						TriggerServerEvent("RefreshAfter:GiveItem", data.ownerTo)
-					else
-						if success and success.reason then
-							Notification:Error(success.reason, 3600)
-						end
-					end
-				end)
-			end
-		end)
-    end
-end)
-
-RegisterNetEvent("Inventory:Client:ScaleUI", function(value)
-	local data = {
-		scaleUI = value or 0.8
-	}
-	TriggerServerEvent("Inventory:Server:UpdateSettings", data)
-end)
-
 RegisterNUICallback("MoveSlot", function(data, cb)
 	cb("OK")
 	data.class = SecondInventory.class
@@ -1040,7 +921,7 @@ RegisterNUICallback("SendNotify", function(data, cb)
 		if data.alert == "success" then
 			Notification:Success(data.message, data.time)
 		elseif data.alert == "warning" then
-			Notification:Warn(data.message, data.time)
+			Notification:Warning(data.message, data.time)
 		elseif data.alert == "error" then
 			Notification:Error(data.message, data.time)
 		end
@@ -1057,52 +938,6 @@ RegisterNUICallback("UseItem", function(data, cb)
 		owner = data.owner,
 		invType = data.invType,
 	}, function(success) end)
-end)
-
-RegisterNUICallback("GetPhonesForSim", function(data, cb)
-	Callbacks:ServerCallback("Inventory:GetPhonesForSim", {}, function(phones)
-		cb(phones or {})
-	end)
-end)
-
-RegisterNUICallback("InsertSimCard", function(data, cb)
-	cb("OK")
-	TriggerServerEvent("Inventory:InsertSimCard", data.simSlot, data.phoneSlot)
-end)
-
-RegisterNUICallback("EjectSimCard", function(data, cb)
-	cb("OK")
-	TriggerServerEvent("Inventory:EjectSimCard", data.phoneSlot)
-end)
-
-RegisterNUICallback("Shop:Pay", function(data, cb)
-	cb("OK")
-	if not SecondInventory then
-		Notification:Error("No inventory open", 3000)
-		return
-	end
-	
-	Callbacks:ServerCallback("Inventory:ShopPay", {
-		items = data.items,
-		paymentType = data.paymentType,
-		total = data.total,
-		shopId = SecondInventory.invType,
-		shopOwner = SecondInventory.owner,
-	}, function(success)
-		if success and success.success then
-			Notification:Success("Purchase successful!", 3000)
-			-- Send success message to UI to clear cart and close inventory
-			SendNUIMessage({
-				type = "Shop:Pay:Success",
-			})
-		else
-			if success and success.reason then
-				Notification:Error(success.reason, 3000)
-			else
-				Notification:Error("Purchase failed", 3000)
-			end
-		end
-	end)
 end)
 
 RegisterNetEvent("Inventory:CloseUI", function()

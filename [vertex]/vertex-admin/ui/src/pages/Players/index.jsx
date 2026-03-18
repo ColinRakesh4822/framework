@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Nui from '../../util/Nui';
 import { Loader } from '../../components';
+import { inputSx } from '../../styles/theme';
 
 import Player from './Player';
 
@@ -101,14 +102,8 @@ export default (props) => {
                     AccountID: 2,
                     Source: 2,
                     Name: 'Panda',
-                    // Character: {
-                    //     First: 'Willy',
-                    //     Last: 'Western',
-                    //     SID: 4
-                    // }
                 },
             ])
-            //console.log(e)
         }
 
         setLoading(false)
@@ -134,6 +129,7 @@ export default (props) => {
                             className={classes.editorField}
                             value={includeLoggedOut}
                             onChange={(e) => setIncludeLoggedOut(e.target.value)}
+                            sx={inputSx}
                         >
                             <MenuItem key={'include-logged-out'} value={false}>
                                 Show All
@@ -151,6 +147,7 @@ export default (props) => {
                             value={searched}
                             onChange={(e) => setSearched(e.target.value)}
                             label="Search"
+                            sx={inputSx}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">

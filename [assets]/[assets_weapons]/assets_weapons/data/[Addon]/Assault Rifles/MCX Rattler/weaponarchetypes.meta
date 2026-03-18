@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CWeaponModelInfo__InitDataList>
+	<InitDatas>
+		
+		<Item>
+			<modelName>w_ar_stealthcarbine</modelName>
+			<txdName>w_ar_stealthcarbine</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="50"/>
+		</Item>
+		<Item>
+			<modelName>w_at_stealthcarbine_sight</modelName>
+			<txdName>w_at_stealthcarbine_sight</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="50"/>
+		</Item>
+		<Item>
+			<modelName>w_at_ar_supp_03</modelName>
+			<txdName>w_at_ar_supp_03</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="50"/>
+		</Item>
+		<Item>
+			<modelName>w_at_railcover_stealth</modelName>
+			<txdName>w_at_railcover_stealth</txdName>
+			<ptfxAssetName>null</ptfxAssetName>
+			<lodDist value="50"/>
+		</Item>
+
+	</InitDatas>
+</CWeaponModelInfo__InitDataList>

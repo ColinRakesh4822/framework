@@ -78,6 +78,58 @@ CraftingTables = {
 		},
 	},
 	{
+        label = "Crafting Bench",
+        targetConfig = {
+            actionString = "Crafting",
+            icon = "hammer",
+            model = "gr_prop_gr_bench_02b",
+        },
+        location = {
+            x = -478.240,
+            y = -1667.160,
+            z = 17.700,
+            h = 333.325,
+        },
+        restriction = {
+            shared = true,
+        --    schematics = true,
+        },
+        recipes = {
+            {
+                result = { name = "thermite", count = 1 },
+                items = {
+                    { name = "ironbar", count = 200 },
+                    { name = "electronic_parts", count = 150 },
+                    { name = "copperwire", count = 200 },
+                    { name = "heavy_glue", count = 300 },
+                },
+                time = 5000,
+                animation = "mechanic",
+            },
+            {
+                result = { name = "adv_electronics_kit", count = 1 },
+                items = {
+                    { name = "goldbar", count = 1 },
+                    { name = "silverbar", count = 2 },
+                    { name = "electronic_parts", count = 30 },
+                    { name = "heavy_glue", count = 5 },
+                    { name = "plastic", count = 30 },
+                    { name = "copperwire", count = 20 },
+                },
+                time = 5000,
+                animation = "mechanic",
+            },
+            {
+                result = { name = "handcuffs", count = 1 },
+                items = {
+                    { name = "ironbar", count = 20 },
+                },
+                time = 5000,
+                animation = "mechanic",
+            },
+        },
+    },
+	{
 		label = "Recycle Exchange",
 		targetConfig = {
 			actionString = "Trading",
@@ -188,6 +240,50 @@ CraftingTables = {
 				},
 				time = 5000,
 				animation = "mechanic",
+			},
+		},
+	},
+	{
+		label = "Sign Exchange",
+		targetConfig = {
+			icon = "hand-middle-finger",
+			ped = {
+				model = "s_m_y_ammucity_01",
+				task = "WORLD_HUMAN_CLIPBOARD",
+			},
+		},
+		location = {
+			x = 1746.624,
+			y = 3688.159,
+			z = 33.334,
+			h = 343.688,
+		},
+		restriction = {
+			shared = true,
+			rep = {
+				id = "SignRobbery",
+				level = 16000,
+			},
+		},
+		recipes = {
+			{
+				result = { name = "ironbar", count = 50 },
+				items = {
+					{ name = "sign_dontblock", count = 5 },
+					{ name = "sign_leftturn", count = 5 },
+					{ name = "sign_nopark", count = 5 },
+					{ name = "sign_notresspass", count = 5 },
+				},
+			},
+			{
+				result = { name = "scrapmetal", count = 75 },
+				items = {
+					{ name = "sign_rightturn", count = 5 },
+					{ name = "sign_stop", count = 5 },
+					{ name = "sign_uturn", count = 5 },
+					{ name = "sign_walkingman", count = 5 },
+					{ name = "sign_yield", count = 5 },
+				},
 			},
 		},
 	},

@@ -29,6 +29,34 @@ import Nui from '../../util/Nui';
 import { useSelector } from 'react-redux';
 import { round } from 'lodash';
 
+const inputSx = {
+	'& .MuiOutlinedInput-root': {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 14,
+		color: '#fff',
+		background: 'rgba(255,255,255,0.03)',
+		borderRadius: '2px',
+		'& fieldset': { borderColor: 'rgba(32,134,146,0.2)' },
+		'&:hover fieldset': { borderColor: 'rgba(32,134,146,0.5)' },
+		'&.Mui-focused fieldset': { borderColor: '#208692', borderWidth: '1px' },
+	},
+	'& .MuiInputLabel-root': {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 13,
+		fontWeight: 600,
+		color: 'rgba(255,255,255,0.35)',
+		'&.Mui-focused': { color: '#208692' },
+	},
+	'& .MuiFormHelperText-root': {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 11,
+	},
+	'& .MuiSelect-select': {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 14,
+	},
+};
+
 const useStyles = makeStyles((theme) => ({
 	wrapper: {
 		padding: '20px 10px 20px 20px',
@@ -58,6 +86,85 @@ const useStyles = makeStyles((theme) => ({
 	},
 	editorField: {
 		marginBottom: 10,
+	},
+	actionBar: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		gap: 6,
+	},
+	actionBtn: {
+		fontFamily: "'Rajdhani', sans-serif",
+		fontSize: 12,
+		fontWeight: 700,
+		letterSpacing: '0.1em',
+		textTransform: 'uppercase',
+		background: 'rgba(32,134,146,0.12)',
+		border: '1px solid rgba(32,134,146,0.35)',
+		borderRadius: 2,
+		color: '#208692',
+		padding: '6px 14px',
+		cursor: 'pointer',
+		transition: 'all 0.2s ease',
+		'&:hover': {
+			background: 'rgba(32,134,146,0.25)',
+			borderColor: '#208692',
+			boxShadow: '0 0 12px rgba(32,134,146,0.25)',
+		},
+		'&:disabled': {
+			opacity: 0.3,
+			cursor: 'not-allowed',
+			'&:hover': {
+				background: 'rgba(32,134,146,0.12)',
+				borderColor: 'rgba(32,134,146,0.35)',
+				boxShadow: 'none',
+			},
+		},
+	},
+	sectionLabel: {
+		fontSize: 9,
+		fontWeight: 700,
+		letterSpacing: '0.3em',
+		textTransform: 'uppercase',
+		color: 'rgba(32,134,146,0.5)',
+		fontFamily: "'Rajdhani', sans-serif",
+		marginBottom: 4,
+		paddingLeft: 16,
+		paddingTop: 12,
+	},
+	infoPanel: {
+		background: 'rgba(18, 16, 37, 0.96)',
+		border: '1px solid rgba(32,134,146,0.15)',
+		borderRadius: 2,
+		'& .MuiListItem-root': {
+			borderBottom: '1px solid rgba(32,134,146,0.06)',
+			'&:last-child': { borderBottom: 'none' },
+		},
+		'& .MuiListItemText-primary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 9,
+			fontWeight: 700,
+			letterSpacing: '0.2em',
+			textTransform: 'uppercase',
+			color: 'rgba(32,134,146,0.5)',
+		},
+		'& .MuiListItemText-secondary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 14,
+			fontWeight: 600,
+			color: 'rgba(255,255,255,0.8)',
+		},
+	},
+	disconnectedAlert: {
+		'& .MuiListItemText-primary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontWeight: 700,
+			color: '#f09348',
+		},
+		'& .MuiListItemText-secondary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 13,
+			color: 'rgba(255,255,255,0.5)',
+		},
 	},
 }));
 
@@ -123,8 +230,8 @@ export default ({ match }) => {
 			setLoading(true);
 			try {
 				let res = await (await Nui.send('GetPlayer', parseInt(match.params.id))).json();
-	
-				
+
+
 				if (res) {
 					setPlayer(res);
 				} else toast.error('Unable to Load');
@@ -132,30 +239,6 @@ export default ({ match }) => {
 				console.log(err);
 				toast.error('Unable to Load');
 				setErr(true);
-
-				// setPlayer({
-				// 	AccountID: 1,
-				// 	Source: 1,
-				// 	Name: 'Dr Nick',
-				// 	Level: 100,
-				// 	Identifier: '7888128828188291',
-				// 	StaffGroup: 'Staff',
-				// 	Character: {
-				// 		First: 'Walter',
-				// 		Last: 'Western',
-				// 		SID: 3,
-				// 		DOB: 662687999,
-				// 		Coords: {
-				// 			x: 1000.123123123,
-				// 			y: 1,
-				// 			z: 9,
-				// 		}
-				// 	},
-				// 	Disconnected: true,
-				// 	DisconnectedTime: 1641993114,
-				// 	Reconnected: 2,
-				// 	Reason: 'Exiting',
-				// })
 			}
 			setLoading(false);
 		}
@@ -294,38 +377,48 @@ export default ({ match }) => {
 				<>
 					<Grid className={classes.wrapper} container spacing={2}>
 						<Grid item xs={12}>
-							<ButtonGroup fullWidth variant="contained">
-								<Button onClick={() => onAction('goto')} disabled={!player?.Character || (user?.Source === player.Source) || player.Disconnected}>
+							<div className={classes.actionBar}>
+								<button className={classes.actionBtn} onClick={() => onAction('goto')} disabled={!player?.Character || (user?.Source === player.Source) || player.Disconnected}>
 									Goto
-								</Button>
-								<Button onClick={() => onAction('bring')} disabled={!player?.Character || (user?.Source === player.Source) || (permissionLevel < player.Level) || player.Disconnected}>
+								</button>
+								<button className={classes.actionBtn} onClick={() => onAction('bring')} disabled={!player?.Character || (user?.Source === player.Source) || (permissionLevel < player.Level) || player.Disconnected}>
 									Bring
-								</Button>
-								<Button onClick={() => onAction('heal')} disabled={!player?.Character || player.Disconnected || ((user?.Source === player.Source) && permissionLevel < 75)}>
+								</button>
+								<button className={classes.actionBtn} onClick={() => onAction('heal')} disabled={!player?.Character || player.Disconnected || ((user?.Source === player.Source) && permissionLevel < 75)}>
 									Heal
-								</Button>
-								<Button onClick={() => onAction('attach')} disabled={!player?.Character || (user?.Source === player.Source) || (permissionLevel < player.Level) || player.Disconnected}>
+								</button>
+								<button className={classes.actionBtn} onClick={() => onAction('attach')} disabled={!player?.Character || (user?.Source === player.Source) || (permissionLevel < player.Level) || player.Disconnected}>
 									Spectate
-								</Button>
-								<Button onClick={startKick} disabled={(user?.Source === player.Source) || (permissionLevel < player.Level)}>
+								</button>
+								<button className={classes.actionBtn} onClick={startKick} disabled={(user?.Source === player.Source) || (permissionLevel < player.Level)}>
 									Kick
-								</Button>
-								<Button onClick={startBan} disabled={(user?.Source === player.Source) || (permissionLevel < player.Level) || (permissionLevel < 75)}>
+								</button>
+								<button className={classes.actionBtn} onClick={startBan} disabled={(user?.Source === player.Source) || (permissionLevel < player.Level) || (permissionLevel < 75)}>
 									Ban
-								</Button>
-								<Button onClick={openForumUrl}>
+								</button>
+								<button className={classes.actionBtn} onClick={openForumUrl}>
 									Copy Forum URL
-								</Button>
-								<Button onClick={onRefresh}>
+								</button>
+								<button className={classes.actionBtn} onClick={onRefresh}>
 									Refresh
-								</Button>
-								{(permissionLevel >= 90) && <Button onClick={() => onAction('marker')} disabled={(user?.Source === player.Source)}>
+								</button>
+								{(permissionLevel >= 90) && <button className={classes.actionBtn} onClick={() => onAction('marker')} disabled={(user?.Source === player.Source)}>
 									GPS Marker
-								</Button>}
-							</ButtonGroup>
+								</button>}
+								{(permissionLevel >= 90) && player.Character && (
+									<button
+										className={classes.actionBtn}
+										onClick={() => history.push(`/items-database?sid=${player.Character.SID}&name=${encodeURIComponent(`${player.Character.First} ${player.Character.Last}`)}`)}
+										disabled={player.Disconnected}
+									>
+										<FontAwesomeIcon icon={['fas', 'box-open']} style={{ marginRight: 4 }} />
+										Give Items
+									</button>
+								)}
+							</div>
 						</Grid>
 						{player.Disconnected &&	<Grid item xs={12}>
-							<ListItem>
+							<ListItem className={classes.disconnectedAlert}>
 								<ListItemButton onClick={onDisconnectedClick}>
 									<ListItemText
 										primary="Player Has Disconnected"
@@ -335,7 +428,8 @@ export default ({ match }) => {
 							</ListItem>
 						</Grid>}
 						<Grid item xs={6}>
-							<List>
+							<div className={classes.sectionLabel}>Player Info</div>
+							<List className={classes.infoPanel}>
 								<ListItem>
 									<ListItemText
 										primary="Player Name"
@@ -369,52 +463,49 @@ export default ({ match }) => {
 							</List>
 						</Grid>
 						<Grid item xs={6}>
+							<div className={classes.sectionLabel}>Character Info</div>
 							{player.Character ? (
-								<>
-									<List>
-										<ListItem>
-											<ListItemText
-												primary="Character Name"
-												secondary={`${player.Character.First} ${player.Character.Last}`}
-											/>
-										</ListItem>
-										<ListItem>
-											<ListItemText
-												primary="Character State ID"
-												secondary={`${player.Character.SID}`}
-											/>
-										</ListItem>
-										<ListItem>
-											<ListItemText
-												primary="DOB"
-												secondary={moment(player.Character.DOB * 1000).format('LL')}
-											/>
-										</ListItem>
-										{permissionLevel >= 90 && (<ListItem>
-											<ListItemText
-												primary="Character Phone #"
-												secondary={`${player.Character.Phone}`}
-											/>
-										</ListItem>)}
-										{permissionLevel >= 90 && (<ListItem onClick={copyCoords}>
-											<ListItemText
-												primary="Coordinates"
-												secondary={`vector3(${round(player.Character.Coords?.x, 3)}, ${round(player.Character.Coords?.y, 3)}, ${round(player.Character.Coords?.z, 3)})`}
-											/>
-										</ListItem>)}
-									</List>
-								</>
+								<List className={classes.infoPanel}>
+									<ListItem>
+										<ListItemText
+											primary="Character Name"
+											secondary={`${player.Character.First} ${player.Character.Last}`}
+										/>
+									</ListItem>
+									<ListItem>
+										<ListItemText
+											primary="Character State ID"
+											secondary={`${player.Character.SID}`}
+										/>
+									</ListItem>
+									<ListItem>
+										<ListItemText
+											primary="DOB"
+											secondary={moment(player.Character.DOB * 1000).format('LL')}
+										/>
+									</ListItem>
+									{permissionLevel >= 90 && (<ListItem>
+										<ListItemText
+											primary="Character Phone #"
+											secondary={`${player.Character.Phone}`}
+										/>
+									</ListItem>)}
+									{permissionLevel >= 90 && (<ListItem onClick={copyCoords}>
+										<ListItemText
+											primary="Coordinates"
+											secondary={`vector3(${round(player.Character.Coords?.x, 3)}, ${round(player.Character.Coords?.y, 3)}, ${round(player.Character.Coords?.z, 3)})`}
+										/>
+									</ListItem>)}
+								</List>
 							) : (
-								<>
-									<List>
-										<ListItem>
-											<ListItemText
-												primary="Character"
-												secondary="Not Logged In"
-											/>
-										</ListItem>
-									</List>
-								</>
+								<List className={classes.infoPanel}>
+									<ListItem>
+										<ListItemText
+											primary="Character"
+											secondary="Not Logged In"
+										/>
+									</ListItem>
+								</List>
 							)}
 						</Grid>
 					</Grid>
@@ -435,6 +526,7 @@ export default ({ match }) => {
 							label="Kick Reason"
 							helperText="Please give a reason to kick the player."
 							multiline
+							sx={inputSx}
 							InputProps={{
 								endAdornment: (
 									<InputAdornment position="end">
@@ -469,6 +561,7 @@ export default ({ match }) => {
 							className={classes.editorField}
 							value={pendingBanLength}
 							onChange={(e) => setPendingBanLength(e.target.value)}
+							sx={inputSx}
 						>
 							{banLengths.filter(l => (permissionLevel >= l.permissionLevel)).map((l) => (
 								<MenuItem key={l.value} value={l.value}>
@@ -486,6 +579,7 @@ export default ({ match }) => {
 							label="Ban Reason"
 							helperText="Please give a reason to ban the player."
 							multiline
+							sx={inputSx}
 							InputProps={{
 								endAdornment: (
 									<InputAdornment position="end">

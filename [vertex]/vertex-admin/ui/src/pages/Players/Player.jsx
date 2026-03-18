@@ -14,20 +14,31 @@ import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
 	wrapper: {
-		padding: '20px 10px 20px 20px',
-		borderBottom: `1px solid ${theme.palette.border.divider}`,
+		padding: '14px 20px',
+		borderBottom: '1px solid rgba(32,134,146,0.1)',
+		transition: 'all 0.2s ease',
 		'&:first-of-type': {
-			borderTop: `1px solid ${theme.palette.border.divider}`,
+			borderTop: '1px solid rgba(32,134,146,0.1)',
+		},
+		'&:hover': {
+			background: 'rgba(32,134,146,0.05)',
+			cursor: 'pointer',
+		},
+		'& .MuiListItemText-primary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 9,
+			fontWeight: 700,
+			letterSpacing: '0.2em',
+			textTransform: 'uppercase',
+			color: 'rgba(32,134,146,0.5)',
+		},
+		'& .MuiListItemText-secondary': {
+			fontFamily: "'Rajdhani', sans-serif",
+			fontSize: 14,
+			fontWeight: 600,
+			color: 'rgba(255,255,255,0.8)',
 		},
 	},
-	mugshot: {
-		position: 'absolute',
-		top: 0,
-		bottom: 0,
-		margin: 'auto',
-		height: 60,
-		width: 60,
-	}
 }));
 
 export default ({ player }) => {

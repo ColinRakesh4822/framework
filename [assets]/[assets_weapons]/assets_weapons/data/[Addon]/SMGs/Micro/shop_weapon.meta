@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WeaponShopItemArray>
+	<weaponShopItems>
+		<Item>
+			<lockHash>CU_WEP_PROSMG</lockHash>
+			<nameHash>WEAPON_MICROSMG</nameHash>
+			<cost value="1200" />
+			<ammoCost value="100" />
+			<textLabel>WT_PROSMG</textLabel>
+			<weaponDesc>WTD_PROSMG</weaponDesc>
+			<weaponTT>WTT_PROSMG</weaponTT>
+			<weaponUppercase>WTU_PROSMG</weaponUppercase>
+			<id value="32" />
+			<weaponComponents>
+				<Item>
+					<componentName>COMPONENT_PROSMG_CLIP_01</componentName>
+					<cost value="100" />
+					<textLabel>WCTPROSMG_CLIP1</textLabel>
+					<componentDesc>WCDPROSMG_CLIP1</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_PROSMG_CLIP_02</componentName>
+					<cost value="342" />
+					<textLabel>WCTPROSMG_CLIP2</textLabel>
+					<componentDesc>WCDPROSMG_CLIP2</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_PROSMG_STOCK_01</componentName>
+					<cost value="1500" />
+					<textLabel>WCT_PROSMG_STOCK_01</textLabel>
+					<componentDesc>WCD_PROSMG_STOCK_01</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_PROSMG_STOCK_02</componentName>
+					<cost value="1000" />
+					<textLabel>WCT_PROSMG_STOCK_02</textLabel>
+					<componentDesc>WCD_PROSMG_STOCK_02</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_SCOPE_MACRO</componentName>
+					<cost value="1372" />
+					<textLabel>WCT_SCOPE_MAC</textLabel>
+					<componentDesc>WCD_SCOPE_MAC</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_AR_SUPP_02</componentName>
+					<cost value="1937" />
+					<textLabel>WCT_SUPP</textLabel>
+					<componentDesc>WCD_AR_SUPP2</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_PROSMG_EXTENDED_BARREL</componentName>
+					<cost value="2300" />
+					<textLabel>WCT_PROSMG_BARREL</textLabel>
+					<componentDesc>WCD_PROSMG_BARREL</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_PROSMG_SUPPRESSOR_01</componentName>
+					<cost value="1500" />
+					<textLabel>WCT_PROSMG_SUPP_01</textLabel>
+					<componentDesc>WCD_PROSMG_SUPP_01</componentDesc>
+				</Item>
+			</weaponComponents>
+		</Item>
+	</weaponShopItems>
+</WeaponShopItemArray>	

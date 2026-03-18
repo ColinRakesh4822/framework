@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WeaponShopItemArray>
+	<weaponShopItems>
+		<Item>
+			<lockHash>CU_WEP_MILITARYCARBINE</lockHash>
+			<nameHash>WEAPON_AR15</nameHash>
+			<cost value="3250" />
+			<ammoCost value="90" />
+			<textLabel>WT_MILITARYCARBINE</textLabel>
+			<weaponDesc>WT_RIFLE_MTLCBN</weaponDesc>
+			<weaponTT>WTT_MILITARYCARBINE</weaponTT>
+			<weaponUppercase>WTU_MILITARYCARBINE</weaponUppercase>
+			<id value="35" />
+			<weaponComponents>
+				<Item>
+					<componentName>COMPONENT_CARBINERIFLE_CLIP_01</componentName>
+					<cost value="115" />
+					<textLabel>WCT_CARBINERIFLE_CLIP1</textLabel>
+					<componentDesc>WCD_CARBINERIFLE_CLIP1</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_CARBINERIFLE_CLIP_02</componentName>
+					<cost value="115" />
+					<textLabel>WCT_CARBINERIFLE_CLIP2</textLabel>
+					<componentDesc>WCD_CARBINERIFLE_CLIP2</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_CARBINERIFLE_CLIP_03</componentName>
+					<cost value="115" />
+					<textLabel>WCT_CARBINERIFLE_CLIP3</textLabel>
+					<componentDesc>WCD_CARBINERIFLE_CLIP3</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_MILITARY_CLIP_01</componentName>
+					<cost value="115" />
+					<textLabel>WCT_MILITARY_CLIP1</textLabel>
+					<componentDesc>WCD_MILITARY_CLIP1</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_MILITARY_CLIP_02</componentName>
+					<cost value="115" />
+					<textLabel>WCT_MILITARY_CLIP2</textLabel>
+					<componentDesc>WCD_MILITARY_CLIP2</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_VIETNAM_CLIP_01</componentName>
+					<cost value="115" />
+					<textLabel>WCT_VIETNAM_CLIP1</textLabel>
+					<componentDesc>WCD_VIETNAM_CLIP1</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_VIETNAM_CLIP_02</componentName>
+					<cost value="115" />
+					<textLabel>WCT_VIETNAM_CLIP2</textLabel>
+					<componentDesc>WCD_VIETNAM_CLIP2</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_COMP_CLIP_01</componentName>
+					<cost value="115" />
+					<textLabel>WCT_COMP_CLIP1</textLabel>
+					<componentDesc>WCD_COMP_CLIP1</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_COMP_CLIP_02</componentName>
+					<cost value="115" />
+					<textLabel>WCT_COMP_CLIP2</textLabel>
+					<componentDesc>WCD_COMP_CLIP2</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_OMEGA_CLIP_01</componentName>
+					<cost value="115" />
+					<textLabel>WCT_OMEGA_CLIP1</textLabel>
+					<componentDesc>WCD_OMEGA_CLIP1</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_CARBINERIFLE_MK2_CLIP_01</componentName>
+					<cost value="115" />
+					<textLabel>WCT_CARBINERIFLE_MK2_CLIP1</textLabel>
+					<componentDesc>WCD_CARBINERIFLE_MK2_CLIP1</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_CARBINERIFLE_MK2_CLIP_02</componentName>
+					<cost value="115" />
+					<textLabel>WCT_CARBINERIFLE_MK2_CLIP2</textLabel>
+					<componentDesc>WCD_CARBINERIFLE_MK2_CLIP2</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_AR_FLSH</componentName>
+					<cost value="110" />
+					<textLabel>WCT_FLASH</textLabel>
+					<componentDesc>WCD_FLASH</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_SCOPE_SMALL_MK2</componentName>
+					<cost value="150" />
+					<textLabel>WCT_SIGHT</textLabel>
+					<componentDesc>WCD_SIGHT</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_AR_SUPP</componentName>
+					<cost value="815" />
+					<textLabel>WCT_SUPP</textLabel>
+					<componentDesc>WCD_SUPP</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_AR_SUPP_02</componentName>
+					<cost value="815" />
+					<textLabel>WCT_SUPP</textLabel>
+					<componentDesc>WCD_SUPP</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_AR_AFGRIP</componentName>
+					<cost value="500" />
+					<textLabel>WCT_GRIP</textLabel>
+					<componentDesc>WCD_GRIP</componentDesc>
+				</Item>
+				<Item>
+					<componentName>COMPONENT_AT_AR_AFGRIP_02</componentName>
+					<cost value="500" />
+					<textLabel>WCT_GRIP</textLabel>
+					<componentDesc>WCD_GRIP</componentDesc>
+				</Item>
+			</weaponComponents>
+			<availableInSP value="true" />
+		</Item>
+	</weaponShopItems>
+</WeaponShopItemArray>	

@@ -344,6 +344,96 @@ function RegisterCallbacks()
         end
     end)
 
+    Callbacks:RegisterServerCallback('Admin:GetItemList', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() then
+            local Inventory = exports['vertex-base']:FetchComponent('Inventory')
+            local items = Inventory:GetItemsDatabase()
+            cb(items)
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:GiveItem', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() then
+            local Inventory = exports['vertex-base']:FetchComponent('Inventory')
+
+            if not Inventory:DoesItemExist(data.itemName) then
+                cb({ success = false, message = 'Item Does Not Exist' })
+                return
+            end
+
+            local targetSID
+            if data.toSelf then
+                local char = player:GetData('Character')
+                if char then
+                    targetSID = char:GetData('SID')
+                end
+            else
+                targetSID = tonumber(data.sid)
+            end
+
+            if not targetSID then
+                cb({ success = false, message = 'Invalid Target' })
+                return
+            end
+
+            local target = Fetch:SID(targetSID)
+            if not target then
+                cb({ success = false, message = 'Player Not Online' })
+                return
+            end
+
+            local targetChar = target:GetData('Character')
+            if not targetChar then
+                cb({ success = false, message = 'Target has no active character' })
+                return
+            end
+
+            local charSID = targetChar:GetData('SID')
+            local itemName = data.itemName
+            local quantity = tonumber(data.quantity) or 1
+            local isWeapon = data.isWeapon
+            local targetName = targetChar:GetData('First') .. ' ' .. targetChar:GetData('Last')
+
+            if isWeapon then
+                local ammo = tonumber(data.ammo) or 0
+                Inventory:AddItem(charSID, itemName, 1, { ammo = ammo, clip = 0 }, 1)
+            else
+                Inventory:AddItem(charSID, itemName, quantity, {}, 1)
+            end
+
+            Logger:Warn(
+                "Admin",
+                string.format(
+                    "%s [%s] Gave Item %s (x%s) To %s (SID %s) Via Admin Panel",
+                    player:GetData("Name"),
+                    player:GetData("AccountID"),
+                    itemName,
+                    quantity,
+                    targetName,
+                    charSID
+                ),
+                {
+                    console = true,
+                    file = false,
+                    database = true,
+                    discord = {
+                        embed = true,
+                        type = "error",
+                        webhook = GetConvar("discord_admin_webhook", ''),
+                    },
+                }
+            )
+
+            cb({ success = true, message = string.format('Gave %sx %s to %s (SID %s)', quantity, itemName, targetName, charSID) })
+        else
+            cb(false)
+        end
+    end)
+
     Callbacks:RegisterServerCallback('Admin:ToggleInvisible', function(source, data, cb)
         local player = Fetch:Source(source)
         if player and player.Permissions:IsAdmin() then
@@ -368,6 +458,329 @@ function RegisterCallbacks()
 
             TriggerClientEvent('Admin:Client:Invisible', source)
             cb(true)
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:StartDoorHelper', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() then
+            TriggerClientEvent('Doors:Client:DoorHelper', source)
+            cb({ success = true })
+        else
+            cb({ success = false })
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:TeleportToCoords', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data and data.x and data.y and data.z then
+            Pwnzor.Players:TempPosIgnore(source)
+            local ped = GetPlayerPed(source)
+            SetEntityCoords(ped, data.x + 0.0, data.y + 0.0, data.z + 0.0)
+            cb({ success = true, message = 'Teleported Successfully' })
+        else
+            cb({ success = false, message = 'Invalid Coordinates' })
+        end
+    end)
+
+    -- Door Lock Tool
+    Callbacks:RegisterServerCallback('Admin:GetDoorList', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() then
+            local doors = exports['vertex-doors']:GetAllDoors()
+            cb(doors or {})
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:CreateDoor', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data then
+            if not data.model or not data.coords then
+                cb({ success = false, message = 'Missing model or coordinates' })
+                return
+            end
+
+            local doorData = {
+                id = data.id or false,
+                model = tonumber(data.model),
+                coords = { x = tonumber(data.coords.x), y = tonumber(data.coords.y), z = tonumber(data.coords.z) },
+                locked = data.locked or false,
+                maxDist = tonumber(data.maxDist) or 2.0,
+                canLockpick = data.canLockpick or false,
+                holdOpen = data.holdOpen or false,
+                autoRate = tonumber(data.autoRate) or 0,
+                autoDist = data.autoDist and tonumber(data.autoDist) or false,
+                autoLock = tonumber(data.autoLock) or 0,
+                double = data.double or false,
+                special = data.special or false,
+                restricted = data.restricted or {},
+            }
+
+            local result = exports['vertex-doors']:AddDynamicDoor(doorData)
+            if result and result.success then
+                Logger:Warn(
+                    "Admin",
+                    string.format(
+                        "%s [%s] Created Dynamic Door '%s' (Index: %s) Via Admin Panel",
+                        player:GetData("Name"),
+                        player:GetData("AccountID"),
+                        doorData.id or "unnamed",
+                        result.index
+                    ),
+                    {
+                        console = true,
+                        file = false,
+                        database = true,
+                        discord = {
+                            embed = true,
+                            type = "info",
+                            webhook = GetConvar("discord_admin_webhook", ''),
+                        },
+                    }
+                )
+                cb({ success = true, message = 'Door Created Successfully', index = result.index })
+            else
+                cb({ success = false, message = 'Failed To Create Door' })
+            end
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:UpdateDoor', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data and data.index then
+            local doorData = {
+                id = data.id or false,
+                model = tonumber(data.model),
+                coords = { x = tonumber(data.coords.x), y = tonumber(data.coords.y), z = tonumber(data.coords.z) },
+                locked = data.locked or false,
+                maxDist = tonumber(data.maxDist) or 2.0,
+                canLockpick = data.canLockpick or false,
+                holdOpen = data.holdOpen or false,
+                autoRate = tonumber(data.autoRate) or 0,
+                autoDist = data.autoDist and tonumber(data.autoDist) or false,
+                autoLock = tonumber(data.autoLock) or 0,
+                double = data.double or false,
+                special = data.special or false,
+                restricted = data.restricted or {},
+            }
+
+            local result = exports['vertex-doors']:UpdateDynamicDoor(tonumber(data.index), doorData)
+            if result then
+                Logger:Warn(
+                    "Admin",
+                    string.format(
+                        "%s [%s] Updated Dynamic Door '%s' (Index: %s) Via Admin Panel",
+                        player:GetData("Name"),
+                        player:GetData("AccountID"),
+                        doorData.id or "unnamed",
+                        data.index
+                    ),
+                    {
+                        console = true,
+                        file = false,
+                        database = true,
+                        discord = {
+                            embed = true,
+                            type = "info",
+                            webhook = GetConvar("discord_admin_webhook", ''),
+                        },
+                    }
+                )
+                cb({ success = true, message = 'Door Updated Successfully' })
+            else
+                cb({ success = false, message = 'Failed To Update Door (Not Dynamic or Not Found)' })
+            end
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:DeleteDoor', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data and data.index then
+            local result = exports['vertex-doors']:RemoveDynamicDoor(tonumber(data.index))
+            if result then
+                Logger:Warn(
+                    "Admin",
+                    string.format(
+                        "%s [%s] Deleted Dynamic Door (Index: %s) Via Admin Panel",
+                        player:GetData("Name"),
+                        player:GetData("AccountID"),
+                        data.index
+                    ),
+                    {
+                        console = true,
+                        file = false,
+                        database = true,
+                        discord = {
+                            embed = true,
+                            type = "error",
+                            webhook = GetConvar("discord_admin_webhook", ''),
+                        },
+                    }
+                )
+                cb({ success = true, message = 'Door Deleted Successfully' })
+            else
+                cb({ success = false, message = 'Failed To Delete Door (Not Dynamic or Not Found)' })
+            end
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:ToggleDoorLock', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data and data.index then
+            local Doors = exports['vertex-base']:FetchComponent('Doors')
+            local newState = Doors:SetLock(tonumber(data.index))
+            if newState ~= nil then
+                cb({ success = true, locked = newState, message = newState and 'Door Locked' or 'Door Unlocked' })
+            else
+                cb({ success = false, message = 'Door Not Found' })
+            end
+        else
+            cb(false)
+        end
+    end)
+
+    -- Elevator Tool
+    Callbacks:RegisterServerCallback('Admin:GetElevatorList', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() then
+            local elevators = exports['vertex-doors']:GetAllElevators()
+            cb(elevators or {})
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:CreateElevator', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data then
+            if not data.name then
+                cb({ success = false, message = 'Missing elevator name' })
+                return
+            end
+
+            local result = exports['vertex-doors']:AddDynamicElevator(data)
+            if result and result.success then
+                Logger:Warn(
+                    "Admin",
+                    string.format(
+                        "%s [%s] Created Dynamic Elevator '%s' (Index: %s) Via Admin Panel",
+                        player:GetData("Name"),
+                        player:GetData("AccountID"),
+                        data.name or "unnamed",
+                        result.index
+                    ),
+                    {
+                        console = true,
+                        file = false,
+                        database = true,
+                        discord = {
+                            embed = true,
+                            type = "info",
+                            webhook = GetConvar("discord_admin_webhook", ''),
+                        },
+                    }
+                )
+                cb({ success = true, message = 'Elevator Created Successfully', index = result.index })
+            else
+                cb({ success = false, message = 'Failed To Create Elevator' })
+            end
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:UpdateElevator', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data and data.index then
+            local result = exports['vertex-doors']:UpdateDynamicElevator(tonumber(data.index), data)
+            if result then
+                Logger:Warn(
+                    "Admin",
+                    string.format(
+                        "%s [%s] Updated Dynamic Elevator '%s' (Index: %s) Via Admin Panel",
+                        player:GetData("Name"),
+                        player:GetData("AccountID"),
+                        data.name or "unnamed",
+                        data.index
+                    ),
+                    {
+                        console = true,
+                        file = false,
+                        database = true,
+                        discord = {
+                            embed = true,
+                            type = "info",
+                            webhook = GetConvar("discord_admin_webhook", ''),
+                        },
+                    }
+                )
+                cb({ success = true, message = 'Elevator Updated Successfully' })
+            else
+                cb({ success = false, message = 'Failed To Update Elevator (Not Dynamic or Not Found)' })
+            end
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:DeleteElevator', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() and data and data.index then
+            local result = exports['vertex-doors']:RemoveDynamicElevator(tonumber(data.index))
+            if result then
+                Logger:Warn(
+                    "Admin",
+                    string.format(
+                        "%s [%s] Deleted Dynamic Elevator (Index: %s) Via Admin Panel",
+                        player:GetData("Name"),
+                        player:GetData("AccountID"),
+                        data.index
+                    ),
+                    {
+                        console = true,
+                        file = false,
+                        database = true,
+                        discord = {
+                            embed = true,
+                            type = "error",
+                            webhook = GetConvar("discord_admin_webhook", ''),
+                        },
+                    }
+                )
+                cb({ success = true, message = 'Elevator Deleted Successfully' })
+            else
+                cb({ success = false, message = 'Failed To Delete Elevator (Not Dynamic or Not Found)' })
+            end
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:StartElevatorZoneHelper', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() then
+            TriggerClientEvent('Doors:Client:ElevatorZoneHelper', source)
+            cb({ success = true })
+        else
+            cb(false)
+        end
+    end)
+
+    Callbacks:RegisterServerCallback('Admin:StartElevatorPositionHelper', function(source, data, cb)
+        local player = Fetch:Source(source)
+        if player and player.Permissions:IsAdmin() then
+            TriggerClientEvent('Doors:Client:ElevatorPositionHelper', source)
+            cb({ success = true })
         else
             cb(false)
         end

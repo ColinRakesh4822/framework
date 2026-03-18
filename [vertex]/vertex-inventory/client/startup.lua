@@ -41,18 +41,3 @@ function LoadItems()
 	_startup = true
 	_loading = false
 end
--- Helper function to extract name and label pairs
-local function ExtractItemNamesAndLabels()
-    local itemList = {}
-    for _, itemGroup in pairs(_itemsSource) do
-        for _, item in ipairs(itemGroup) do
-            table.insert(itemList, item.name)
-        end
-    end
-    return itemList
-end
-
--- Export the list of item names and labels for other resources
-exports("GetItemNamesAndLabels", function()
-    return ExtractItemNamesAndLabels()
-end)

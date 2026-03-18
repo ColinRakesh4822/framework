@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
-//import { NoticeBoard } from '../../components';
 import PlayerCountHistory from './PlayerCountHistory';
 import PlayerCount from './PlayerCount';
 
@@ -14,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
 		padding: '20px 10px 20px 20px',
 		height: '100%',
 	},
-	penis: {
-		height: '50%',
+	statsRow: {
+		height: '35%',
 	},
-	dicks: {
-		height: '100%',
+	chartRow: {
+		height: '65%',
 	}
 }));
 

@@ -1,256 +1,300 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material';
 import { makeStyles, withTheme } from '@mui/styles';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const useStyles = makeStyles((theme) => ({
-    statusWrapper: {
+    // ── Single unified panel ──────────────────────────────────────
+    panel: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        height: '100%',
-        width: '100%',
-        pointerEvents: 'none',
-    },
-    statusContainer: {
-        position: 'absolute',
-        bottom: 20,
-        left: '3vh',
+        bottom: 15,
+        left: '2vw',
         display: 'flex',
         flexDirection: 'row',
-        gap: 12,
-        zIndex: 50,
         alignItems: 'flex-end',
+        gap: 6,
+        pointerEvents: 'none',
+        zIndex: 3,
     },
-    barsColumn: {
+
+    // ── Bars section ─────────────────────────────────────────────
+    barsSection: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 4,
+        gap: 5,
+        width: 250, // Increased width to make bars longer
     },
     barRow: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
+        gap: 6,
+        position: 'relative', // To anchor absolutely positioned pills correctly
     },
-    rowIcon: {
-        color: '#FFFFFF',
+    barIcon: {
+        width: 13,
         fontSize: 12,
-        width: 16,
         textAlign: 'center',
-        filter: 'drop-shadow(0px 0px 1px rgba(0,0,0,0.8))',
-        opacity: 0.9,
+        flexShrink: 0,
+        filter: 'drop-shadow(0 0 2px rgba(0,0,0,1))',
     },
-    healthBarBg: {
-        width: 160,
+    barTrack: {
+        flexGrow: 1,
         height: 6,
-        background: 'rgba(21, 21, 21, 0.5)',
         borderRadius: 3,
+        background: 'rgba(0,0,0,0.4)',
         overflow: 'hidden',
+        boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.7)',
     },
-    healthBarInner: {
+    barFill: {
         height: '100%',
-        backgroundColor: '#00e676',
-        transition: 'width 0.5s ease-in-out',
         borderRadius: 3,
-        boxShadow: '0 0 8px rgba(0, 230, 118, 0.4)',
+        transition: 'width 0.2s ease-in-out',
     },
-    healthBarDead: {
-        height: '100%',
-        backgroundColor: '#e74c3c',
-        transition: 'width 0.5s ease-in-out',
-        borderRadius: 3,
+
+    // ── Divider between bars and pills ───────────────────────────
+    sectionDivider: {
+        width: 1,
+        height: 28,
+        background: 'rgba(255,255,255,0.10)',
+        flexShrink: 0,
     },
-    armorBarBg: {
-        width: 160,
-        height: 6,
-        background: 'rgba(21, 21, 21, 0.5)',
-        borderRadius: 3,
-        overflow: 'hidden',
-    },
-    armorBarInner: {
-        height: '100%',
-        backgroundColor: '#00d2ff',
-        transition: 'width 0.5s ease-in-out',
-        borderRadius: 3,
-        boxShadow: '0 0 8px rgba(0, 210, 255, 0.4)',
-    },
-    fuelBarBg: {
-        width: 160,
-        height: 6,
-        background: 'rgba(21, 21, 21, 0.5)',
-        borderRadius: 3,
-        overflow: 'hidden',
-    },
-    fuelBarInner: {
-        height: '100%',
-        backgroundColor: '#f39c12',
-        transition: 'width 0.5s ease-in-out',
-        borderRadius: 3,
-        boxShadow: '0 0 8px rgba(243, 156, 18, 0.4)',
-    },
-    rowValue: {
-        color: '#FFFFFF',
-        fontSize: 13,
-        fontFamily: 'Akshar, sans-serif',
-        fontWeight: 600,
-        textShadow: '0px 0px 2px rgba(0,0,0,0.8)',
-        width: 24,
-        textAlign: 'left',
-    },
-    smallStatusesContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 10,
-        alignItems: 'center',
-        marginBottom: 2,
-    },
-    smallStatusWrapper: {
+
+    // ── Pills section ────────────────────────────────────────────
+    pillsSection: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 5,
+        gap: 6,
+        marginLeft: 4,
     },
-    smallStatusBg: {
+    pillCol: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 3,
+    },
+    pillIcon: {
+        fontSize: 11,
+        color: '#fff',
+        lineHeight: 1,
+        filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.9))',
+    },
+    pillTrack: {
         width: 3,
         height: 16,
-        background: 'rgba(21, 21, 21, 0.5)',
         borderRadius: 2,
+        background: 'rgba(0,0,0,0.4)',
         display: 'flex',
         flexDirection: 'column-reverse',
         overflow: 'hidden',
+        boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.5)',
     },
-    smallStatusBar: {
+    pillFill: {
         width: '100%',
-        transition: 'height 0.2s ease-in-out',
         borderRadius: 2,
+        transition: 'height 0.3s ease-in-out',
     },
-    smallStatusIcon: {
-        color: '#FFFFFF',
-        fontSize: 12,
-        filter: 'drop-shadow(0px 0px 1px rgba(0,0,0,0.8))',
+    boostBar: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        bottom: 0,
+        left: 0,
+        zIndex: 10,
+        overflow: 'hidden',
+    },
+    boostBarFill: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        transition: 'height 0.2s ease',
+        background: 'linear-gradient(to top, #FFD700, #FFA500)',
+        boxShadow: '0 0 0.5vh #FFD700',
+    },
+    pillDivider: {
+        width: 1,
+        height: 14,
+        background: 'rgba(255,255,255,0.10)',
+        flexShrink: 0,
+    },
+
+    '@keyframes hudPulse': {
+        '0%': { opacity: 1 },
+        '50%': { opacity: 0.35 },
+        '100%': { opacity: 1 },
+    },
+    pulseBar: {
+        animation: '$hudPulse 1.4s ease-in-out infinite',
     },
 }));
 
-export default withTheme(() => {
+const StatusDefault = () => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const inVeh = useSelector((state) => state.vehicle.showing);
-    const isDead = useSelector((state) => state.status.isDead);
-    const health = useSelector((state) => state.status.health);
-    const armor = useSelector((state) => state.status.armor);
-    const statuses = useSelector((state) => state.status.statuses);
-    const fuelHide = useSelector((state) => state.vehicle.fuelHide);
-    const fuel = useSelector((state) => state.vehicle.fuel);
+    const statuses = useSelector((s) => s.status.statuses);
+    const isDead = useSelector((s) => s.status.isDead);
+    const health = useSelector((s) => s.status.health);
+    const maxHealth = useSelector((s) => s.status.maxHealth);
+    const armor = useSelector((s) => s.status.armor);
 
-    const GetFuel = () => {
-        if (!inVeh || fuelHide) return null;
-        return (
-            <CSSTransition key="fuel" timeout={500} classNames="fade">
-                <div className={classes.barRow}>
-                    <FontAwesomeIcon icon="gas-pump" className={classes.rowIcon} />
-                    <div className={classes.fuelBarBg}>
-                        <div
-                            className={classes.fuelBarInner}
-                            style={{ width: `${fuel}%` }}
-                        />
-                    </div>
-                    <div className={classes.rowValue}>{Math.round(fuel)}</div>
-                </div>
-            </CSSTransition>
-        );
-    };
+    const voip = useSelector((s) => s.hud.voip);
+    const isTalking = useSelector((s) => s.hud.talking);
+    const voipIcon = useSelector((s) => s.hud.voipIcon);
 
-    const GetHealth = () => {
-        return (
-            <div className={classes.barRow}>
-                <FontAwesomeIcon icon="heart" className={classes.rowIcon} />
-                <div className={classes.healthBarBg}>
-                    <div
-                        className={isDead ? classes.healthBarDead : classes.healthBarInner}
-                        style={{ width: isDead ? '100%' : `${health}%` }}
-                    />
-                </div>
-                <div className={classes.rowValue}>{Math.round(health)}</div>
-            </div>
-        );
-    };
+    const [smoothVoip, setSmoothVoip] = useState(0);
+    useEffect(() => {
+        const id = setInterval(() => {
+            setSmoothVoip((prev) => {
+                const target = voip >= 0 && voip <= 3 ? (voip / 3) * 100 : Math.min(100, voip);
+                return prev + (target - prev) * 0.2;
+            });
+        }, 50);
+        return () => clearInterval(id);
+    }, [voip]);
 
-    const GetArmor = () => {
-        if (armor <= 0 || isDead) return null;
+    const [prevStress, setPrevStress] = useState(0);
+    const [isStressful, setIsStressful] = useState(false);
 
-        return (
-            <CSSTransition key="armor" timeout={500} classNames="fade">
-                <div className={classes.barRow}>
-                    <FontAwesomeIcon icon="shield" className={classes.rowIcon} />
-                    <div className={classes.armorBarBg}>
-                        <div className={classes.armorBarInner} style={{ width: `${armor}%` }} />
-                    </div>
-                    <div className={classes.rowValue}>{Math.round(armor)}</div>
-                </div>
-            </CSSTransition>
-        );
-    };
+    const stressStatus = statuses.find((s) => s.name.toLowerCase() === 'stress');
+    const stressValue = stressStatus?.value || 0;
 
-    const otherStatuses = statuses;
+    useEffect(() => {
+        if (stressValue > prevStress) {
+            setIsStressful(true);
+            const timeout = setTimeout(() => {
+                setIsStressful(false);
+            }, 3000);
+            return () => clearTimeout(timeout);
+        }
+        setPrevStress(stressValue);
+    }, [stressValue]);
 
-    const rightElements = otherStatuses
-        .sort((a, b) => a.options.id - b.options.id)
-        .map((status, i) => {
+    const armorColor = '#00CFFF';
+    const healthColor = isDead ? '#d32f2f' : '#00E676';
+    const voipColor = isTalking ? '#00E676' : '#FFB300';
+    const healthPct = Math.max(0, Math.min(100, ((isDead ? 0 : health) / (maxHealth || 100)) * 100));
+    const isLowHealth = !isDead && health < 25;
+
+    const pillStatuses = statuses
+        .sort((a, b) => (a.options?.id ?? 0) - (b.options?.id ?? 0))
+        .filter((status) => {
+            if (status.name === '_voip' || status.icon === 'microphone') return false;
             if (
                 (status.value >= 90 && status?.options?.hideHigh) ||
-                (status.value === 0 && status?.options?.hideZero) ||
-                (isDead && !status?.options?.visibleWhileDead) ||
-                (status.name === 'voice' && false) // We keep voice here to match circuit HUD 1:1
+                (status.value == 0 && status?.options?.hideZero) ||
+                (isDead && !status?.options?.visibleWhileDead)
             )
-                return null;
-
-            return (
-                <CSSTransition
-                    key={`status-${i}`}
-                    timeout={500}
-                    classNames="fade"
-                >
-                    <div className={classes.smallStatusWrapper}>
-                        <div className={classes.smallStatusBg}>
-                            <div
-                                className={classes.smallStatusBar}
-                                style={{
-                                    backgroundColor: status.color ? status.color : theme.palette.text.main,
-                                    height: `${status.value}%`,
-                                    boxShadow: `0 0 6px ${status.color ? status.color : theme.palette.text.main}60`,
-                                }}
-                            />
-                        </div>
-                        <FontAwesomeIcon
-                            icon={status.icon ? status.icon : 'question'}
-                            className={classes.smallStatusIcon}
-                        />
-                    </div>
-                </CSSTransition>
-            );
+                return false;
+            return true;
         });
 
-    return (
-        <div className={classes.statusWrapper}>
-            <div className={classes.statusContainer}>
-                <div className={classes.barsColumn}>
-                    <TransitionGroup component={null}>
-                        {GetArmor()}
-                    </TransitionGroup>
-                    {GetHealth()}
-                    <TransitionGroup component={null}>
-                        {GetFuel()}
-                    </TransitionGroup>
-                </div>
+    const allPills = [
+        ...pillStatuses,
+    ];
 
-                <TransitionGroup component="div" className={classes.smallStatusesContainer}>
-                    {rightElements}
-                </TransitionGroup>
+    return (
+        <div className={classes.panel}>
+
+            {/* ── Bars ── */}
+            <div className={classes.barsSection}>
+                {armor > 0 && (
+                    <div className={classes.barRow}>
+                        <div className={classes.barIcon} style={{ color: '#fff' }}>
+                            <FontAwesomeIcon icon="shield" />
+                        </div>
+                        <div style={{ display: 'flex', gap: 5, flexGrow: 1 }}>
+                            {[0, 1, 2].map((idx) => {
+                                const segmentCap = 100 / 3;
+                                const segmentStart = idx * segmentCap;
+                                const pct = Math.max(0, Math.min(100, ((armor - segmentStart) / segmentCap) * 100));
+
+                                return (
+                                    <div key={idx} className={classes.barTrack} style={{ flexGrow: 1 }}>
+                                        <div
+                                            className={classes.barFill}
+                                            style={{
+                                                width: `${pct}%`,
+                                                background: armorColor,
+                                            }}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div style={{ marginLeft: 'auto', minWidth: 24, textAlign: 'right', color: '#fff', fontSize: 13, fontWeight: 700, fontFamily: '"Oswald"', textShadow: '0 0 3px #000' }}>
+                            {Math.round(armor)}
+                        </div>
+                    </div>
+                )}
+                <div className={classes.barRow}>
+                    <div className={classes.barIcon} style={{ color: '#fff' }}>
+                        <FontAwesomeIcon icon={isDead ? 'skull' : 'heart'} />
+                    </div>
+                    <div className={classes.barTrack}>
+                        <div
+                            className={`${classes.barFill}${(isLowHealth || isDead) ? ' ' + classes.pulseBar : ''}`}
+                            style={{
+                                width: `${healthPct}%`,
+                                background: healthColor,
+                            }}
+                        />
+                    </div>
+                    <div style={{ marginLeft: 'auto', minWidth: 24, textAlign: 'right', color: '#fff', fontSize: 13, fontWeight: 700, fontFamily: '"Oswald"', textShadow: '0 0 3px #000' }}>
+                        {isDead ? 0 : Math.round(health)}
+                    </div>
+
+                    {/* ── Pills (Absolutely positioned outside row width bounds for strict column alignment) ── */}
+                    {allPills.length > 0 && (
+                        <div style={{ position: 'absolute', left: '100%', marginLeft: 8, display: 'flex', alignItems: 'center' }}>
+                            <div className={classes.pillsSection} style={{ marginLeft: 0 }}>
+                                {allPills.map((s, i) => {
+                                    const pct = Math.max(0, Math.min(100, ((s.value ?? 0) / (s.max || 100)) * 100));
+                                    const col = s.color || '#fff';
+                                    const hasBoost = s?.options?.progressModifier !== undefined;
+                                    const boostValue = s?.options?.progressModifier || 0;
+                                    const isVoip = s.name === '_voip' || s.icon === 'microphone';
+
+                                    return (
+                                        <React.Fragment key={s.name || i}>
+                                            <div className={classes.pillCol}>
+                                                {!isVoip && (
+                                                    <div className={classes.pillTrack} style={{ position: 'relative' }}>
+                                                        <div
+                                                            className={classes.pillFill}
+                                                            style={{
+                                                                height: `${pct}%`,
+                                                                background: col,
+                                                            }}
+                                                        />
+                                                        {hasBoost && (
+                                                            <div className={classes.boostBar}>
+                                                                <div
+                                                                    className={classes.boostBarFill}
+                                                                    style={{ height: `${boostValue}%` }}
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                <div className={classes.pillIcon} style={{ color: '#fff' }}>
+                                                    <FontAwesomeIcon icon={s.icon || 'question'} />
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
+
         </div>
     );
-});
+};
+
+export default withTheme(StatusDefault);

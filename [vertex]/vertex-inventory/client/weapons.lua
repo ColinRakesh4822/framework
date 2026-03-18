@@ -372,14 +372,6 @@ local anims = {
 			RemoveAllPedWeapons(ped)
 
 			if hash ~= -538741184 then
-				-- Request weapon asset for custom weapons
-				RequestWeaponAsset(hash, 31, false)
-				local attempts = 0
-				while not HasWeaponAssetLoaded(hash) and attempts < 50 do
-					Wait(10)
-					attempts = attempts + 1
-				end
-				
 				loadAnimDict(dict)
 				TaskPlayAnim(ped, dict, anim, 10.0, 2.3, -1, 49, 1, 0, 0, 0)
 				Wait(600)
@@ -407,14 +399,6 @@ local anims = {
 
 				SetCurrentPedWeapon(ped, hash, 1)
 			else
-				-- Request weapon asset for custom weapons
-				RequestWeaponAsset(hash, 31, false)
-				local attempts = 0
-				while not HasWeaponAssetLoaded(hash) and attempts < 50 do
-					Wait(10)
-					attempts = attempts + 1
-				end
-				
 				GiveWeaponToPed(ped, hash, 0, true, false)
 
 				if item.MetaData.WeaponTint ~= nil then
@@ -477,14 +461,6 @@ local anims = {
 			local anim = "intro"
 			RemoveAllPedWeapons(ped)
 			if hash ~= -538741184 then
-				-- Request weapon asset for custom weapons
-				RequestWeaponAsset(hash, 31, false)
-				local attempts = 0
-				while not HasWeaponAssetLoaded(hash) and attempts < 50 do
-					Wait(10)
-					attempts = attempts + 1
-				end
-				
 				local animLength = GetAnimDuration(dict, anim) * 1000
 				loadAnimDict(dict)
 				TaskPlayAnim(ped, dict, anim, 1.0, 1.0, -1, 50, 0, 0, 0, 0)
@@ -513,14 +489,6 @@ local anims = {
 
 				SetCurrentPedWeapon(ped, hash, 1)
 			else
-				-- Request weapon asset for custom weapons
-				RequestWeaponAsset(hash, 31, false)
-				local attempts = 0
-				while not HasWeaponAssetLoaded(hash) and attempts < 50 do
-					Wait(10)
-					attempts = attempts + 1
-				end
-				
 				GiveWeaponToPed(ped, hash, 0, true, false)
 
 				if item.MetaData.WeaponTint ~= nil then
@@ -907,8 +875,8 @@ function DisableFiring(duration)
 end
 
 function DoFlashFx(shakeAmp, time)
-	flashTimersRunning += 1
-	totalFlashShakeAmp += shakeAmp
+	flashTimersRunning = flashTimersRunning + 1
+	totalFlashShakeAmp = totalFlashShakeAmp + shakeAmp
 
 
 	AnimpostfxPlay("Dont_tazeme_bro", 0, true)
@@ -920,8 +888,8 @@ function DoFlashFx(shakeAmp, time)
 
 	Wait(time)
 
-	flashTimersRunning -= 1
-	totalFlashShakeAmp -= shakeAmp
+	flashTimersRunning = flashTimersRunning - 1
+	totalFlashShakeAmp = totalFlashShakeAmp - shakeAmp
 
 	if flashTimersRunning == 0 then
 		ClearPedTasks(PlayerPedId())
