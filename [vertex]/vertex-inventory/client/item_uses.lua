@@ -1,23 +1,5 @@
 local _energyCd = false
 
-AddEventHandler("ItemUses:Shared:DependencyUpdate", RetrieveItemUsesComponents)
-function RetrieveItemUsesComponents()
-	Animations = exports["vertex-base"]:FetchComponent("Animations")
-	Sounds = exports["vertex-base"]:FetchComponent("Sounds")
-end
-
-AddEventHandler("Core:Shared:Ready", function()
-	exports["vertex-base"]:RequestDependencies("ItemUses", {
-		"Animations",
-		"Sounds",
-	}, function(error)
-		if #error > 0 then
-			return
-		end
-		RetrieveItemUsesComponents()
-	end)
-end)
-
 function RegisterRandomItems() end
 
 function RunSpeed(modifier, duration, cd, ss)
@@ -27,7 +9,7 @@ function RunSpeed(modifier, duration, cd, ss)
 			AnimpostfxPlay("DrugsTrevorClownsFight", 0, true)
 		end
 		while LocalPlayer.state.loggedIn and c < duration and not LocalPlayer.state.drugsRunSpeed do
-			c = c + 1
+			c += 1
 			SetPedMoveRateOverride(PlayerPedId(), modifier)
 			Wait(1)
 		end
@@ -69,10 +51,4 @@ end)
 
 RegisterNetEvent("Inventory:Client:RandomItems:BirthdayCake", function()
 	Sounds.Play:Distance(20.0, "birthday.ogg", 0.2)
-end)
-
-RegisterNetEvent("Inventory:Client:Signs:UseSign", function(item)
-	if item.Name then
-		Animations.Emotes:Play(item.Name, false, false, false)
-	end
 end)

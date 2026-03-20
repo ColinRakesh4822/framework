@@ -1,5 +1,3 @@
---shared_scripts { '@FiniAC/fini_events.lua' }
-
 fx_version 'cerulean'
 games { 'gta5' } -- 'gta5' for GTAv / 'rdr3' for Red Dead 2, 'gta5','rdr3' for both
 lua54 'yes'
@@ -11,14 +9,13 @@ server_script "@oxmysql/lib/MySQL.lua"
 description 'ARP Inventory'
 name 'ARP: vertex-inventory'
 author 'Cool People Team (Mainly Alzar)'
-version '1.0.1'
+version 'v1.0.0'
 url 'https://authenticrp.com'
 
-ui_page 'ui/build/index.html'
+ui_page 'ui/dist/index.html'
 
 files {
-    'ui/build/*.*',
-    'ui/build/assets/*.*',
+    'ui/dist/*.*',
     "ui/images/items/*.webp"
 }
 
@@ -27,10 +24,9 @@ client_scripts {
 }
 
 shared_scripts {
-    '@ox_lib/init.lua',
-    
     'config.lua',
     'schematic_config.lua',
+    'item_props_config.lua',
     'items/**/*.lua',
     'shared/**/*.lua',
 }

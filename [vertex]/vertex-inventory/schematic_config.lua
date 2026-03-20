@@ -17,7 +17,7 @@ _schematics = {
 		time = 1000,
 	},
 	ar_ammo = {
-		result = { name = "AMMO_RIFLE", count = 2 },
+		result = { name = "AMMO_AR", count = 2 },
 		items = {
 			{ name = "copperwire", count = 12 },
 			{ name = "scrapmetal", count = 24 },
@@ -34,14 +34,6 @@ _schematics = {
 			{ name = "copperwire", count = 200 },
 		},
 		time = 1000,
-	},
-	fakeplates = {
-		result = { name = "fakeplates", count = 2 },
-		items = {
-			{ name = "plastic", count = 1 },
-			{ name = "scrapmetal", count = 1 },
-		},
-		time = 10000,
 	},
 	blindfold = {
 		result = { name = "blindfold", count = 1 },
@@ -352,17 +344,6 @@ _schematics = {
 		},
 		time = 5000,
 		cooldown = 1000 * 60 * 60 * 4,
-	},
-	combatpistol = {
-		result = { name = "WEAPON_COMBATPISTOL", count = 1 },
-		items = {
-			{ name = "scrapmetal", count = 4 },
-			{ name = "rubber", count = 5 },
-			{ name = "heavy_glue", count = 2 },
-			{ name = "plastic", count = 4 },
-		},
-		time = 15000,
-		cooldown = 1000 * 60 * 60 * 12,
 	},
 	appistol = {
 		result = { name = "WEAPON_APPISTOL", count = 1 },

@@ -30,7 +30,7 @@ function setupStores(shops)
 				"shop-" .. v.id,
 				GetHashKey(v.npc),
 				vector3(v.coords.x, v.coords.y, v.coords.z),
-				(v.coords.w or v.coords.h),
+				v.coords.h,
 				25.0,
 				{
 					menu,

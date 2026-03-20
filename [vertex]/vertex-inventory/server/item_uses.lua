@@ -84,42 +84,6 @@ function RegisterRandomItems()
 		TriggerClientEvent('Inventory:Client:RandomItems:BirthdayCake', source)
 	end)
 
-	Inventory.Items:RegisterUse("sign_dontblock", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_leftturn", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_nopark", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_notresspass", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_rightturn", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_stop", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_uturn", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_walkingman", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
-	Inventory.Items:RegisterUse("sign_yield", "Signs", function(source, item)
-		TriggerClientEvent('Inventory:Client:Signs:UseSign', source, item)
-	end)
-
 	Inventory.Items:RegisterUse("parachute", "RandomItems", function(source, item)
 		Callbacks:ClientCallback(source, "Weapons:CanEquipParachute", {}, function(canEquip)
 			if canEquip then

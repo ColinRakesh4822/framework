@@ -41,7 +41,7 @@ function ClearDropZones()
 	for k, v in pairs(LoadedEntitys) do
 		if v.trash then
 			local f2 = MySQL.query.await("DELETE FROM inventory WHERE name LIKE '%-?'", { v.id })
-			trash = trash + f2.affectedRows
+			trash += f2.affectedRows
 		end
 	end
 
@@ -54,7 +54,7 @@ end
 function countTable(t)
 	local c = 0
 	for k, v in pairs(t) do
-		c = c + 1
+		c += 1
 	end
 	return c
 end
@@ -87,7 +87,7 @@ function ClearBrokenItems()
 	-- 					)
 	-- 				end
 
-	-- 				checked = checked + 1
+	-- 				checked += 1
 	-- 			end)
 	-- 			-- MySQL.single('SELECT COUNT(*) as Count FROM inventory WHERE item_id = ? AND creationDate <= ?', {
 	-- 			-- 	v.name, deleteTime
@@ -99,14 +99,14 @@ function ClearBrokenItems()
 	-- 			-- 			if d.affectedRows > 0 then
 	-- 			-- 				Logger:Info("Inventory", string.format("^1Cleaned Up ^2%s^1 Degraded ^2%s^7", d.affectedRows, v.name))
 	-- 			-- 			end
-	-- 			-- 			checked = checked + 1
+	-- 			-- 			checked += 1
 	-- 			-- 		end)
 	-- 			-- 	else
-	-- 			-- 		checked = checked + 1
+	-- 			-- 		checked += 1
 	-- 			-- 	end
 	-- 			-- end)
 	-- 		else
-	-- 			checked = checked + 1
+	-- 			checked += 1
 	-- 		end
 	-- 	end
 	-- end)
@@ -233,7 +233,11 @@ function LoadItems()
 				end)
 			elseif v.type == 10 then
 				Inventory.Items:RegisterUse(v.name, "Containers", function(source, item)
-					Inventory.Container:Open(source, item, item.MetaData.Container)
+					if v.name == "backpack" or v.name == "large_backpack" or v.name == "military_backpack" or v.name == "tactical_backpack" then
+						return
+					else
+						Inventory.Container:Open(source, item, item.MetaData.Container)
+					end
 				end)
 			elseif v.type == 15 and v.gangChain ~= nil then
 				Inventory.Items:RegisterUse(v.name, "GangChains", function(source, item)
@@ -288,6 +292,29 @@ function LoadEntityTypes()
 	for k, v in ipairs(_entityTypes) do
 		LoadedEntitys[tonumber(v.id)] = v
 	end
+	
+	-- Utility envanteri için manuel ekleme
+	LoadedEntitys[3] = {
+		id = 3,
+		name = "Utility",
+		slots = 9,
+		capacity = 200,
+		restriction = nil,
+		shop = false,
+		trash = false,
+	}
+	
+	-- Çanta envanteri için manuel ekleme
+	LoadedEntitys[6] = {
+		id = 6,
+		name = "Backpack",
+		slots = 20,
+		capacity = 100,
+		restriction = nil,
+		shop = false,
+		trash = false,
+	}
+	
 	Logger:Trace("Inventory", string.format("Loaded ^2%s^7 Inventory Entity Types", #_entityTypes))
 end
 
@@ -312,10 +339,8 @@ function LoadShops()
 			shopLocations[string.format("shop:%s", id)] = v
 		end
 
-		if f then
-			for k, v in pairs(_entityTypes) do
-				storeBankAccounts[v.id] = f.Account
-			end
+		for k, v in pairs(_entityTypes) do
+			storeBankAccounts[v.id] = f.Account
 		end
 
 		Database.Game:find({
@@ -391,27 +416,55 @@ function RegisterCommands()
 	}, 2)
 
 	Chat:RegisterAdminCommand("clearinventory", function(source, args, rawCommand)
-		local player = exports["vertex-base"]:FetchComponent("Fetch"):SID(tonumber(args[1]))
-		if player == nil then
-			Execute:Client(source, "Notification", "Error", "This player is not online")
+		if not args[1] or not tonumber(args[1]) then
+			if source == 0 then
+				print("You must provide a valid SID.")
+			else
+				Execute:Client(source, "Notification", "Error", "You must provide a valid SID.")
+			end
 			return
 		end
-		local char = player:GetData("Character")
-		MySQL.query.await("DELETE FROM inventory WHERE name = ?", { string.format("%s-%s", char:GetData("SID"), 1) })
-		TriggerClientEvent("Weapons:Client:ForceUnequip", char:GetData("Source"))
-		Execute:Client(
-			char:GetData("Source"),
-			"Notification",
-			"Error",
-			"Your inventory was cleared by " .. tostring(Fetch:Source(source):GetData("Character"):GetData("SID"))
-		)
-		Execute:Client(
-			source,
-			"Notification",
-			"Success",
-			"You cleared the inventory of " .. tostring(char:GetData("SID"))
-		)
-		refreshShit(char:GetData("SID"), true)
+
+		local sid = tonumber(args[1])
+		local name = string.format("%s-%s", sid, 1)
+
+		local query = "DELETE FROM inventory WHERE name = ?"
+
+		local queryResult = MySQL.query.await(query, { name })
+		if not queryResult then
+			if source == 0 then
+			else
+				Execute:Client(source, "Notification", "Error", "Failed to clear the inventory. Database error.")
+			end
+			return
+		end
+
+		if source == 0 then
+		else
+			Execute:Client(
+				source,
+				"Notification",
+				"Success",
+				"You cleared the inventory of SID: " .. tostring(sid)
+			)
+		end
+
+		local player = exports["vertex-base"]:FetchComponent("Fetch"):SID(sid)
+		if player then
+			local char = player:GetData("Character")
+			if char then
+				Execute:Client(
+					char:GetData("Source"),
+					"Notification",
+					"Error",
+					"Your inventory has been cleared"
+				)
+				TriggerClientEvent("Weapons:Client:ForceUnequip", char:GetData("Source"))
+				if itemsDatabase then
+					refreshShit(sid, true)
+				end
+			end
+		end
 	end, {
 		help = "Clear Player Inventory",
 		params = {
@@ -456,7 +509,7 @@ function RegisterCommands()
 			targetSID = tonumber(args[1])
 		end
 
-		local player = targetSID and exports["vertex-base"]:FetchComponent("Fetch"):SID(targetSID)
+		local player = targetSID and Fetch:SID(targetSID)
 
 		if player == nil then
 			Execute:Client(source, "Notification", "Error", "This player is not online")
@@ -504,7 +557,7 @@ function RegisterCommands()
 			targetSID = tonumber(args[1])
 		end
 
-		local player = targetSID and exports["vertex-base"]:FetchComponent("Fetch"):SID(targetSID)
+		local player = targetSID and Fetch:SID(targetSID)
 
 		if player == nil then
 			Execute:Client(source, "Notification", "Error", "This player is not online")
@@ -526,7 +579,13 @@ function RegisterCommands()
 							ammo = tonumber(args[3])
 						end
 
-						Inventory:AddItem(char:GetData("SID"), weapon, 1, { ammo = ammo, clip = 0, Scratched = args[4] == "1" or nil }, 1)
+						Inventory:AddItem(
+							char:GetData("SID"),
+							weapon,
+							1,
+							{ ammo = ammo, clip = 0, Scratched = args[4] == "1" or nil },
+							1
+						)
 					end
 					Execute:Client(source, "Notification", "Success", "You gave weapon " .. weapon .. " to " .. tostring(char:GetData("SID")))
 				else
@@ -606,4 +665,3 @@ function RegisterCommands()
 		help = "Attempts To Force Reload Inventory Items",
 	}, 0)
 end
-

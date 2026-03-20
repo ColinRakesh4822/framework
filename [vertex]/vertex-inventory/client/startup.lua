@@ -38,6 +38,31 @@ function LoadItems()
 		type = "ITEMS_LOADED",
 	})
 	TriggerEvent("Inventory:Client:ItemsLoaded")
+	
+	-- Utility envanteri yükle
+	Callbacks:ServerCallback("Inventory:GetUtilityInventory", {}, function(utilityData)
+		if utilityData then
+			_cachedUtilityInventory = utilityData
+			
+			-- Utility envanterinde backpack itemi varsa otomatik aç
+			for _, slot in ipairs(utilityData.inventory or {}) do
+				if slot and (slot.Name == "backpack" or slot.Name == "large_backpack" or slot.Name == "military_backpack" or slot.Name == "tactical_backpack") then
+					-- Backpack envanterini aç
+					Callbacks:ServerCallback("Inventory:OpenBackpackFromUtility", {slotId = slot.id, backpackName = slot.Name}, function(backpackData)
+						if backpackData then
+							_cachedBackpackInventory = backpackData
+							SendNUIMessage({
+								type = "SET_BACKPACK_INVENTORY",
+								data = backpackData,
+							})
+						end
+					end)
+					break -- Sadece ilk backpack itemini aç
+				end
+			end
+		end
+	end)
+	
 	_startup = true
 	_loading = false
 end

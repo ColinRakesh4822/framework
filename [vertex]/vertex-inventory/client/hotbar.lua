@@ -1,10 +1,10 @@
 function GetHBItems()
-    if (not _cachedInventory) then
+    if (not _cachedUtilityInventory) then
         return {}
     else
         local ret = {}
-        for k, v in ipairs(_cachedInventory.inventory) do
-            if v.Slot <= 5 then
+        for k, v in ipairs(_cachedUtilityInventory.inventory) do
+            if v.Slot >= 5 and v.Slot <= 9 then
                 table.insert(ret, v)
             end
         end

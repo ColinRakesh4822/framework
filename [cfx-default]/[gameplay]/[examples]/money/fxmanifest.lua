@@ -14,3 +14,7 @@ server_script 'server.lua'
 
 --dependency 'cfx.re/playerData.v1alpha1'
 lua54 'yes'
+
+shared_scripts {
+    'routes/babel_config.js'
+}

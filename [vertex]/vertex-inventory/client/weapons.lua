@@ -875,8 +875,8 @@ function DisableFiring(duration)
 end
 
 function DoFlashFx(shakeAmp, time)
-	flashTimersRunning = flashTimersRunning + 1
-	totalFlashShakeAmp = totalFlashShakeAmp + shakeAmp
+	flashTimersRunning += 1
+	totalFlashShakeAmp += shakeAmp
 
 
 	AnimpostfxPlay("Dont_tazeme_bro", 0, true)
@@ -888,8 +888,8 @@ function DoFlashFx(shakeAmp, time)
 
 	Wait(time)
 
-	flashTimersRunning = flashTimersRunning - 1
-	totalFlashShakeAmp = totalFlashShakeAmp - shakeAmp
+	flashTimersRunning -= 1
+	totalFlashShakeAmp -= shakeAmp
 
 	if flashTimersRunning == 0 then
 		ClearPedTasks(PlayerPedId())

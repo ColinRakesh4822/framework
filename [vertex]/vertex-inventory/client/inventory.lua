@@ -1,4 +1,6 @@
 _cachedInventory = nil
+_cachedUtilityInventory = nil
+_cachedBackpackInventory = nil
 SecondInventory = {}
 
 _inUse = false
@@ -78,6 +80,7 @@ AddEventHandler("Core:Shared:Ready", function()
 			return
 		end
 		RetrieveComponents()
+		
 		RegisterKeyBinds()
 		RegisterRandomItems()
 		LoadItems()
@@ -136,11 +139,7 @@ AddEventHandler("Core:Shared:Ready", function()
 						disableCombat = item.pbConfig.disableCombat,
 					},
 				}, function(cancelled)
-					pcall(function()
-					if Animations and Animations.Emotes then
-						Animations.Emotes:ForceCancel()
-					end
-				end)
+					Animations.Emotes:ForceCancel()
 					cb(not cancelled)
 				end)
 			else
@@ -178,30 +177,6 @@ end)
 
 RegisterNetEvent("Inventory:Client:Cache", function(inventory, refresh)
 	_cachedInventory = inventory
-
-	-- Send fresh inventory to NUI if it's open
-	if LocalPlayer.state.inventoryOpen then
-		SendNUIMessage({
-			type = "SET_PLAYER_INVENTORY",
-			data = inventory,
-		})
-	end
-
-	-- Update crafting counts if crafting UI is open
-	if LocalPlayer.state.craftingOpen then
-		local counts = {}
-		for _, item in ipairs(inventory.inventory or {}) do
-			if item and item.Name then
-				counts[item.Name] = (counts[item.Name] or 0) + item.Count
-			end
-		end
-		SendNUIMessage({
-			type = "UPDATE_CRAFTING_COUNTS",
-			data = {
-				myCounts = counts,
-			},
-		})
-	end
 
 	if refresh then
 		TriggerEvent("Weapons:Client:Attach")
@@ -382,12 +357,12 @@ INVENTORY = {
 					data = data,
 				})
 			end,
-			Slot = function(self, slot, itemData)
+			Slot = function(self, slot, data)
 				SendNUIMessage({
 					type = "SET_PLAYER_SLOT",
 					data = {
 						slot = slot,
-						itemData = itemData,
+						data = data,
 					},
 				})
 			end,
@@ -403,12 +378,54 @@ INVENTORY = {
 					data = data,
 				})
 			end,
-			Slot = function(self, slot, itemData)
+			Slot = function(self, slot, data)
 				SendNUIMessage({
 					type = "SET_SECONDARY_SLOT",
 					data = {
 						slot = slot,
-						itemData = itemData,
+						data = data,
+					},
+				})
+			end,
+		},
+		Utility = {
+			Data = {
+				Open = false,
+			},
+			Inventory = function(self, data)
+				Inventory.Set.Utility.Data.Open = true
+				SendNUIMessage({
+					type = "SET_UTILITY_INVENTORY",
+					data = data,
+				})
+			end,
+			Slot = function(self, slot, data)
+				SendNUIMessage({
+					type = "SET_UTILITY_SLOT",
+					data = {
+						slot = slot,
+						data = data,
+					},
+				})
+			end,
+		},
+		Backpack = {
+			Data = {
+				Open = false,
+			},
+			Inventory = function(self, data)
+				Inventory.Set.Backpack.Data.Open = true
+				SendNUIMessage({
+					type = "SET_BACKPACK_INVENTORY",
+					data = data,
+				})
+			end,
+			Slot = function(self, slot, data)
+				SendNUIMessage({
+					type = "SET_BACKPACK_SLOT",
+					data = {
+						slot = slot,
+						data = data,
 					},
 				})
 			end,
@@ -417,19 +434,22 @@ INVENTORY = {
 	Used = {
 		HotKey = function(self, control)
 			if not _hkCd and not _inUse and not Hud:IsDisabled() then
+				-- Utility inventory hot key'leri: 1,2,3,4,5 -> slot 5,6,7,8,9
+				local utilitySlot = control + 4 -- 1->5, 2->6, 3->7, 4->8, 5->9
+				
 				SendNUIMessage({
-					type = "USE_ITEM_PLAYER",
+					type = "USE_ITEM_UTILITY",
 					data = {
-						originSlot = control,
+						originSlot = utilitySlot,
 					},
 				})
 				_hkCd = true
-				Callbacks:ServerCallback("Inventory:UseSlot", { slot = control }, function(state)
+				Callbacks:ServerCallback("Inventory:UseSlotUtility", { slot = utilitySlot }, function(state)
 					if not state then
 						SendNUIMessage({
-							type = "SLOT_NOT_USED",
+							type = "SLOT_NOT_USED_UTILITY",
 							data = {
-								originSlot = control,
+								originSlot = utilitySlot,
 							},
 						})
 					end
@@ -538,7 +558,7 @@ INVENTORY = {
 			end,
 			HasAnyItems = function(self, items)
 				for k, v in ipairs(items) do
-					if Inventory.Items:Has(v.item, v.count or 1) then
+					if Inventory.Items:Has(v.item, v.count) then
 						return true
 					end
 				end
@@ -651,6 +671,15 @@ RegisterNUICallback("Close", function(data, cb)
 	Inventory:Enable()
 end)
 
+RegisterNUICallback("ProcessCartPayment", function(data, cb)
+	cb('OK')
+	print("Client: ProcessCartPayment received from UI")
+	print("Client: Payment type:", data.paymentType)
+	print("Client: Cart items:", #data.cart)
+	print("Client: Shop ID:", data.shopId)
+	TriggerServerEvent("Inventory:Server:ProcessCartPayment", data)
+end)
+
 RegisterNUICallback("BrokeShit", function(data, cb)
 	cb(true)
 	startCd()
@@ -735,11 +764,33 @@ RegisterNetEvent("Inventory:Container:Remove", function(data, from)
 end)
 
 RegisterNetEvent("Inventory:Client:SetSlot", function(owner, type, slot, data)
+	
 	if SecondInventory?.owner == owner and SecondInventory?.invType == type then
 		Inventory.Set.Secondary:Slot(slot, data)
+	elseif type == 3 then
+		Inventory.Set.Utility:Slot(slot, data)
+	elseif type == 4 and _cachedBackpackInventory?.owner == owner then
+		Inventory.Set.Backpack:Slot(slot, data)
+	elseif type == 4 then
 	else
 		Inventory.Set.Player:Slot(slot, data)
 	end
+end)
+
+RegisterNetEvent("Inventory:Client:SetUtility", function(utilityData)
+	_cachedUtilityInventory = utilityData
+	SendNUIMessage({
+		type = "SET_UTILITY_INVENTORY",
+		data = utilityData,
+	})
+end)
+
+RegisterNetEvent("Inventory:Client:SetBackpack", function(backpackData)
+	_cachedBackpackInventory = backpackData
+	SendNUIMessage({
+		type = "SET_BACKPACK_INVENTORY",
+		data = backpackData,
+	})
 end)
 
 local runningId = 0
@@ -772,8 +823,6 @@ function OpenInventory()
 		local plate
 		local requestSecondary = false
 		local isPedInVehicle = IsPedInAnyVehicle(playerPed, true)
-		local vehicle = GetVehiclePedIsIn(playerPed, false)
-		local isOnTrain = vehicle and GetVehicleClass(vehicle)
 
 		-- do trunk check here as well maybe?
 		if isPedInVehicle then
@@ -797,10 +846,8 @@ function OpenInventory()
 		elseif not IsPedFalling(playerPed) and not IsPedClimbing(playerPed) and not IsPedDiving(playerPed) and not LocalPlayer.state.playingCasino then
 			local p = promise.new()
 
-			if not isOnTrain then
-				while GetEntitySpeed(playerPed) > 2.5 do
-					Wait(1)
-				end
+			while GetEntitySpeed(playerPed) > 2.5 do
+				Wait(1)
 			end
 
 			if Inventory:IsEnabled() then
@@ -839,6 +886,15 @@ RegisterNUICallback("MergeSlot", function(data, cb)
 
 	Callbacks:ServerCallback("Inventory:MergeItem", data, function(success)
 		if success and success.success then
+			-- Disabled slot'ları temizle
+			SendNUIMessage({
+				type = "SLOT_NOT_USED",
+				payload = {
+					originSlot = data.slotFrom,
+					destSlot = data.slotTo,
+				},
+			})
+			
 			if SecondInventory.netId then
 				local veh = NetToVeh(SecondInventory.netId)
 				if veh then
@@ -848,9 +904,12 @@ RegisterNUICallback("MergeSlot", function(data, cb)
 					end
 				end
 			end
-			if SecondInventory ~= nil and SecondInventory.invType == 10 and (data.ownerFrom ~= data.ownerTo) then
+		if SecondInventory ~= nil and SecondInventory.invType == 10 and (data.ownerFrom ~= data.ownerTo) and data.invTypeTo ~= 3 and data.invTypeFrom ~= 3 and data.invTypeTo ~= 6 and data.invTypeFrom ~= 6 then
+			-- Araba bagajı için animasyon (invType 10 ama backpack değil)
+			if SecondInventory.netId then
 				dropAnim(data.invTypeTo == 10)
 			end
+		end
 		else
 			if success and success.reason then
 				Notification:Error(success.reason, 3600)
@@ -867,6 +926,15 @@ RegisterNUICallback("SwapSlot", function(data, cb)
 
 	Callbacks:ServerCallback("Inventory:SwapItem", data, function(success)
 		if success and success.success then
+			-- Disabled slot'ları temizle
+			SendNUIMessage({
+				type = "SLOT_NOT_USED",
+				payload = {
+					originSlot = data.slotFrom,
+					destSlot = data.slotTo,
+				},
+			})
+			
 			if SecondInventory.netId then
 				local veh = NetToVeh(SecondInventory.netId)
 				if veh then
@@ -876,9 +944,12 @@ RegisterNUICallback("SwapSlot", function(data, cb)
 					end
 				end
 			end
-			if SecondInventory ~= nil and SecondInventory.invType == 10 and (data.ownerFrom ~= data.ownerTo) then
+		if SecondInventory ~= nil and SecondInventory.invType == 10 and (data.ownerFrom ~= data.ownerTo) and data.invTypeTo ~= 3 and data.invTypeFrom ~= 3 and data.invTypeTo ~= 6 and data.invTypeFrom ~= 6 then
+			-- Araba bagajı için animasyon (invType 10 ama backpack değil)
+			if SecondInventory.netId then
 				dropAnim(data.invTypeTo == 10)
 			end
+		end
 		else
 			if success and success.reason then
 				Notification:Error(success.reason, 3600)
@@ -895,6 +966,15 @@ RegisterNUICallback("MoveSlot", function(data, cb)
 
 	Callbacks:ServerCallback("Inventory:MoveItem", data, function(success)
 		if success and success.success then
+			-- Disabled slot'ları temizle
+			SendNUIMessage({
+				type = "SLOT_NOT_USED",
+				payload = {
+					originSlot = data.slotFrom,
+					destSlot = data.slotTo,
+				},
+			})
+			
 			if SecondInventory.netId then
 				local veh = NetToVeh(SecondInventory.netId)
 				if veh then
@@ -904,9 +984,12 @@ RegisterNUICallback("MoveSlot", function(data, cb)
 					end
 				end
 			end
-			if SecondInventory ~= nil and SecondInventory.invType == 10 and (data.ownerFrom ~= data.ownerTo) then
+		if SecondInventory ~= nil and SecondInventory.invType == 10 and (data.ownerFrom ~= data.ownerTo) and data.invTypeTo ~= 3 and data.invTypeFrom ~= 3 and data.invTypeTo ~= 6 and data.invTypeFrom ~= 6 then
+			-- Araba bagajı için animasyon (invType 10 ama backpack değil)
+			if SecondInventory.netId then
 				dropAnim(data.invTypeTo == 10)
 			end
+		end
 		else
 			if success and success.reason then
 				Notification:Error(success.reason, 3600)
@@ -944,4 +1027,11 @@ RegisterNetEvent("Inventory:CloseUI", function()
 	startCd()
 	Inventory.Close:All()
 	Inventory:Enable()
+end)
+
+RegisterNetEvent("Inventory:Client:CloseBackpack", function()
+	_cachedBackpackInventory = nil
+	SendNUIMessage({
+		type = "CLOSE_BACKPACK_INVENTORY",
+	})
 end)

@@ -1,27 +1,3 @@
-AddEventHandler("Crafting:Shared:DependencyUpdate", RetrieveCraftingComponents)
-function RetrieveCraftingComponents()
-	Callbacks = exports["vertex-base"]:FetchComponent("Callbacks")
-	Animations = exports["vertex-base"]:FetchComponent("Animations")
-	Progress = exports["vertex-base"]:FetchComponent("Progress")
-	Notification = exports["vertex-base"]:FetchComponent("Notification")
-	Targeting = exports["vertex-base"]:FetchComponent("Targeting")
-end
-
-AddEventHandler("Core:Shared:Ready", function()
-	exports["vertex-base"]:RequestDependencies("Crafting", {
-		"Callbacks",
-		"Animations",
-		"Progress",
-		"Notification",
-		"Targeting",
-	}, function(error)
-		if #error > 0 then
-			return
-		end
-		RetrieveCraftingComponents()
-	end)
-end)
-
 CRAFTING = {
 	Benches = {
 		Open = function(self, bench)
